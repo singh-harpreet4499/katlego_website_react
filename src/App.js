@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 
-function App() {
+import Navbar from './components/navbar/Navbar';
+import Auth from './pages/Auth';
+import Home from './pages/Home';
+import {Switch,Route, withRouter} from 'react-router-dom';
+import Otp from './components/auth/Otp';
+import Login from './components/auth/Login';
+import ProductInfo from './pages/ProductInfo';
+import ProductList from './pages/ProductList';
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { get_session } from './components/server/api';
+import { setCurrentUser } from "./redux/user/user.action";
+import { useEffect } from 'react';
+
+
+const App = (props) => {
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.user.currentUser);
+
+
+
+  const check_session = async () => {
+    const session =await get_session();
+    if(session.status){
+      dispatch(setCurrentUser(session.data,session.token,session.refreshToken))
+    }
+  }
+
+  useEffect(() => {
+    check_session();
+  }, [])
+
+
+
+  var navbar = <Navbar />;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <Switch>
+      <Route exact path="/" render={()=><div>{navbar}<Home user_login={user} /></div>} />
+      <Route exact path="/signup" render={()=>!user ? <div><Auth /></div> : <div>{navbar}<Home user_login={user} /></div>} />
+      <Route exact path="/otp" render={()=>!user ? <div><Otp /></div> : <div>{navbar}<Home user_login={user} /></div>} />
+      <Route exact path="/login" render={()=><div><Auth component={<Login></Login>} /></div>} />
+
+      <Route path="/product-details/:productName/:id" render={()=><div>{navbar}<ProductInfo /></div>}/>
+
+      <Route path="/product-list/:categoryName/:id" render={()=><div>{navbar}<ProductList /></div>}/>
+
+
+      </Switch>
     </div>
   );
 }
 
-export default App;
+
+// const mapStateToProps = ({user}) => ({
+//   currentUser : user.currentUser
+// })
+export default withRouter(connect()(App));
