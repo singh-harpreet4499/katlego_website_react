@@ -11,6 +11,15 @@ export const setCurrentUser = (user,token,refreshToken) => (
 
 
 
+export const setUserLocation = (location) => (
+    {
+        type:UserActionTypes.SET_LOCATION,
+        location:location,
+    }
+) 
+
+
+
 export const logoutUser = () => (
     {
         type:UserActionTypes.LOGOUT_USER

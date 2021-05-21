@@ -1,6 +1,7 @@
 import {UserActionTypes} from './cart.types'
 const INITIAL_STATE = {
     items:[],
+    total_amount:0,
 }
 
 const cartReducer = (state = INITIAL_STATE,action) => {
@@ -9,6 +10,7 @@ const cartReducer = (state = INITIAL_STATE,action) => {
             return {
                 ...state,
                 items:action.items,
+                total_amount:action.total_amount
             }
             break;
 

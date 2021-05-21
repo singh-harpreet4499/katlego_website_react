@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router';
 import ProductDetails from '../components/product/ProductDetails';
 import { fetch_product_details } from '../components/server/api';
+import Footer from '../components/footer/Footer';
 
 class ProductInfo extends React.Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class ProductInfo extends React.Component {
         return (
             <main className="main">
                 <ProductDetails {...productdata} />
+                <Footer/>
         </main>
         );
     }

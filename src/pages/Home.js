@@ -40,6 +40,8 @@ class Home extends React.Component {
         })
     }
 
+    
+
     componentDidMount(){
         this.loadEssentialdata();
     }
@@ -47,7 +49,7 @@ class Home extends React.Component {
     render() {
         const {best_sellers,categories,combos}=this.state
         return (
-            <>
+            <div className="page-wrapper">
                 <Header categories={categories}/>
                 {/* <Location /> */}
                 <HomeSlider />
@@ -96,7 +98,7 @@ class Home extends React.Component {
     
             <Newsletter />
             <Footer/>
-            </>
+            </div>
         );
     }
     

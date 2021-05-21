@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Footer from "../components/footer/Footer";
 import Product from "../components/product/Product";
 import ProductCard from "../components/product/ProductCard";
 import { fetch_products_by_category } from "../components/server/api";
@@ -71,13 +72,15 @@ const ProductList = (props) => {
                             }
                             </div>
                             {/* <ProductCard/> */}
-
+                           
                         </div>
                     </div>
                     </div>
                 </div>
             </section>
+            <Footer/>
         </main>
+        
     )
 
 }

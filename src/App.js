@@ -9,9 +9,10 @@ import Login from './components/auth/Login';
 import ProductInfo from './pages/ProductInfo';
 import ProductList from './pages/ProductList';
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { get_session } from './components/server/api';
+import { get_cart_items, get_session } from './components/server/api';
 import { setCurrentUser } from "./redux/user/user.action";
 import { useEffect } from 'react';
+import { updatecarts } from './redux/cart/cart.action';
 
 
 const App = (props) => {
@@ -24,6 +25,11 @@ const App = (props) => {
     const session =await get_session();
     if(session.status){
       dispatch(setCurrentUser(session.data,session.token,session.refreshToken))
+      get_cart_items().then((rs)=>{
+          if(rs.status){
+              dispatch(updatecarts(rs))
+          }
+      })
     }
   }
 

@@ -17,6 +17,13 @@ const userReducer = (state = INITIAL_STATE,action) => {
             }
             break;
 
+        case UserActionTypes.SET_LOCATION:
+            return {
+                ...state,
+                location:action.location,
+            }
+            break;
+
             // case UserActionTypes.SIGNUP_REQUEST:
             //     return {
             //         ...state,

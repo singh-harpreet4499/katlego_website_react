@@ -33,29 +33,22 @@ const Product =(props) => {
             product_id:id,
             qty:new_qty
         }
-        if(new_qty===0){
+        if(new_qty==0){
            await remove_cart_item({
                 id:cartdata?cartdata.id:0,
-            })
-
-            get_cart_items().then((rs)=>{
-                if(rs.status){
-                    dispatch(updatecarts(rs.data))
-                }
             })
         }else{
             add_cart(reqdata)
         }
+        await get_cart_items().then((rs)=>{
+            if(rs.status){
+                dispatch(updatecarts(rs))
+            }
+        })
 
         setCompData({
             qty:new_qty
         })
-        get_cart_items().then((rs)=>{
-            if(rs.status){
-                dispatch(updatecarts(rs.data))
-            }
-        })
-
     }
 
 
@@ -76,7 +69,7 @@ const Product =(props) => {
         }
         // console.log('ppppp',props);
 
-    }, [])
+    }, [props])
 
 
     return (

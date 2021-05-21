@@ -163,6 +163,11 @@ export const fetch_homepage_web_auth = async (data) => {
   const serverdata = await hitServerApi("fetch_homepage_web_auth", data);
   return serverdata;
 };
+
+export const fetch_location_by_id = async (data) => {
+  const serverdata = await hitServerApi("fetch_location_by_id", data);
+  return serverdata;
+};
   
 
   
@@ -214,4 +219,9 @@ export const get_cart_items = async (data={}) => {
   return serverdata;
 };
 
+
+export const fetch_areas = async (data={}) => {
+  const serverdata = await hitServerApi("fetch_areas", data);
+  return serverdata;
+};
 

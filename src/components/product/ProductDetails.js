@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser';
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { updatecarts } from '../../redux/cart/cart.action';
+import { add_cart, get_cart_items, remove_cart_item } from '../server/api';
 
 
 const ProductDetails = (props) =>  {
+    const dispatch = useDispatch();
+    const user = useSelector(state=>state.user.currentUser);
+    const cart = useSelector(state=>state.cart);
+    const {name,imageUrl,description,mrp,discount,selling_price,net_wt,unit,cartdata,id,is_cart}=props;
 
-    const [formData, updateFormData] = useState({
-        qty:1
-    });
+
+    const [compData,setCompData] = useState({
+        qty:0
+    })
+    console.log('props',props);
+
 
     const updateCartQty = async (logic) => {
-        var old_qty =parseInt(formData.qty);
+        var old_qty =parseInt(compData.qty);
         var new_qty=old_qty;
         if(logic==='plus'){
 
@@ -18,11 +28,43 @@ const ProductDetails = (props) =>  {
             new_qty = old_qty-1;
             if(new_qty<0){new_qty=0;}
         }
-        updateFormData({
+        const reqdata = {
+            product_id:id,
+            qty:new_qty
+        }
+        console.log('reqdata',reqdata);
+        if(new_qty===0){
+            await remove_cart_item({
+                 id:cartdata?cartdata.id:0,
+             })
+         }else{
+             add_cart(reqdata)
+         }
+         await get_cart_items().then((rs)=>{
+             if(rs.status){
+                 dispatch(updatecarts(rs))
+             }
+         })
+         setCompData({
             qty:new_qty
         })
+       
 
     }
+
+    useEffect(() => {
+        if(props.is_cart){
+            setCompData({
+                qty:props.cartdata.qty
+            })
+        }else{
+            setCompData({
+                qty:0
+            })
+        }
+        // console.log('ppppp',props);
+
+    }, [props])
 
   const handleChange = (e) => {
       e.preventDefault();
@@ -35,7 +77,6 @@ const ProductDetails = (props) =>  {
     };
     
 
-        const {name,imageUrl,description,mrp,discount_type,discount,selling_price,net_wt,unit,hifen_name}=props;
         return (
             // <main className="main">
 
@@ -55,8 +96,20 @@ const ProductDetails = (props) =>  {
                                 </div> */}
                             </div>
                             <div className="pd-f d-flex align-items-center mb-3">
-                                <a href="cart.html" className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</a>
-                                <a href="cart.html" className="btn btn-success p-3 rounded btn-block d-flex align-items-center justify-content-center btn-lg m-0"><i className="icofont-cart m-0 mr-2"></i> BUY NOW</a>
+                                {
+                                     parseInt(compData.qty) ?''
+                                            // <div className="ml-auto" >
+                                            //     <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
+                                            //         <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
+                                            //         <input type='text'  name='qty' onClick={handleChange} value={compData.qty} className='qty form-control' />
+                                            //         <input type='button' name="plus" onClick={handleChange} value='+' className='qtyplus btn btn-success btn-sm'/>
+                                            //     </form>
+                                            // </div>
+                                     :
+                                     <button type="button"  name="plus" onClick={handleChange} className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</button>
+                                }
+                                
+                                {/* <a href="cart.html" className="btn btn-success p-3 rounded btn-block d-flex align-items-center justify-content-center btn-lg m-0"><i className="icofont-cart m-0 mr-2"></i> BUY NOW</a> */}
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -106,7 +159,7 @@ const ProductDetails = (props) =>  {
                                             <div className="ml-auto" >
                                                 <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
                                                     <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
-                                                    <input type='text'  name='qty' onClick={handleChange} value={formData.qty} className='qty form-control' />
+                                                    <input type='text'  name='qty' onClick={handleChange} value={compData.qty} className='qty form-control' />
                                                     <input type='button' name="plus" onClick={handleChange} value='+' className='qtyplus btn btn-success btn-sm'/>
                                                 </form>
                                             </div>
@@ -133,4 +186,4 @@ const ProductDetails = (props) =>  {
 
 }
 
-export default ProductDetails;
+export default connect()(ProductDetails);

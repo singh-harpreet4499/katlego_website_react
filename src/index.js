@@ -10,12 +10,12 @@ import store from './redux/store';
 
 import './libs/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css'
 import './libs/css/bootstrap.min.css'
-import './libs/css2/style.css'
 
 import './libs/css/plugins/owl-carousel/owl.carousel.css'
 import './libs/css/plugins/magnific-popup/magnific-popup.css';
 import './libs/css/plugins/jquery.countdown.css'
 import './libs/css/style.css'
+import './libs/css2/style.css'
 
 import './libs/css/demos/demo-2.css';
 
