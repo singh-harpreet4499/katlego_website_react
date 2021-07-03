@@ -3,6 +3,7 @@ import Splash from "../components/auth/Splash"
 
 const Auth = (props) => {
     const {component} = props
+   
 
     return (
         <div>

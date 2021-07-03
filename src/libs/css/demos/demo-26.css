@@ -90,12 +90,13 @@ sup {
     transition: box-shadow 0.35s, background-color 0.35s;
 }
 .category-body {
-    left: 50%;
+    left: 50% !important;
     bottom: 10%;
     transform: translateX(-50%);
 }
 .category-title {
     color: #999;
+    font-size: 14px;
 }
 .category-title:hover {
     color: #61ab00;
@@ -544,11 +545,6 @@ sup {
     }
     .fashion .banner {
         left: 33.33%;
-    }
-}
-@media (max-width: 1549px) {
-    .owl-nav {
-        display: none;
     }
 }
 @media screen and (max-width: 991px) {

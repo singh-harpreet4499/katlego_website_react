@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import cartReducer from "./cart/cart.reducer";
+import redirectReducer from "./redirect/redirect.reducer";
 import userReducer from "./user/user.reducer";
 
 export default combineReducers({
     user:userReducer,
-    cart:cartReducer
+    cart:cartReducer,
+    redirection:redirectReducer
 })

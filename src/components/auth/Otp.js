@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router";
+import { setCurrentUser } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
 import { set_session, user_signup_verify } from "../server/api";
 
@@ -8,7 +10,7 @@ const Otp = (props) => {
     // console.log('otp props',props);
   var history = useHistory();
   const [errormessage,setErrormessage] = useState('');
-
+    const dispatch = useDispatch();
     const initialFormData = Object.freeze({
         id: "",
         otp: "",
@@ -22,6 +24,7 @@ const Otp = (props) => {
         four: "",
       });
       const [requestdata,setRequestdata] = useState(initialFormData);
+      const [cursor_allow,setCursorAllow] = useState(1);
 
       const handleChange = (e) => {
         setRequestdata({
@@ -37,7 +40,9 @@ const Otp = (props) => {
     const response =await user_signup_verify(requestdata);
     // alert(response.message)
     if(response.status){
+        setCursorAllow(0);
         set_session(response)
+        dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
         history.push('/')
     }else{
         setErrormessage(response.message)
@@ -83,7 +88,7 @@ const Otp = (props) => {
                                 </div>
                                 {/* <p><a href="/" className="text-decoration-none text-success">Resend Code</a></p>
                                 <p><a href="/" className="text-decoration-none text-dark">Call me instead</a></p> */}
-                                <button type="submit" className="btn btn-success btn-block btn-lg">Continue</button>
+                                <button type="submit" className="btn btn-success btn-block btn-lg" style={{cursor:cursor_allow ? 'pointer':'not-allowed'}} disabled={cursor_allow?false:true}>Continue</button>
                             </form>
                         </div>
                     </div>

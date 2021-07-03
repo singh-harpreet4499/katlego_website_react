@@ -8,8 +8,8 @@
   background-color: #8a8988; }
 
 .intro-slide {
-  display: flex;
-  align-items: center;
+  /*display: flex;*/
+  /*align-items: center;*/
   background-size: cover;
   background-position: center center; }
   .intro-slide .btn-primary {
@@ -93,7 +93,8 @@
   font-weight: 300;
   font-size: 1.4rem;
   letter-spacing: -.01em;
-  margin-bottom: .6rem; }
+  margin-bottom: 0px; 
+}
   .banner-subtitle.text-grey {
     color: #ebebeb; }
 
@@ -106,11 +107,15 @@
 
 .banner-text {
   color: #666666;
-  font-weight: 300;
+  font-weight: 700;
   font-size: 2.4rem;
   line-height: 1.25;
   letter-spacing: -.01em;
-  margin-bottom: 1.3rem; }
+  margin-bottom: 1.3rem;
+  font-family: 'Lato', sans-serif; 
+}
+
+
   .banner-title + .banner-text {
     margin-top: -1.4rem; }
   .banner-large .banner-text {
@@ -164,7 +169,7 @@
 .deal-container .banner-content.banner-content-top {
   top: 4rem; }
 .deal-container .banner-text {
-  font-weight: 600; }
+  font-weight: 700; }
 
 .deal {
   display: flex;
@@ -330,12 +335,12 @@
 .footer .widget-title {
   font-weight: 600; }
 
-.footer-newsletter .input-group {
+/*.footer-newsletter .input-group {
   flex-direction: column;
-  align-items: center; }
-.footer-newsletter .form-control {
+  align-items: center; }*/
+/*.footer-newsletter .form-control {
   width: 100%;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem; }*/
 .footer-newsletter .btn-primary {
   background-color: #fff;
   color: #333;
@@ -346,8 +351,8 @@
   border: none; }
   .footer-newsletter .btn-primary:hover, .footer-newsletter .btn-primary:focus {
     color: #fff;
-    background-color: #a6c76c;
-    border-color: #a6c76c; }
+    background-color: #eb2627;
+    border-color: #eb2627; }
 
 @media screen and (min-width: 576px) {
   .intro-slider-container,

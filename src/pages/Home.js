@@ -1,10 +1,8 @@
 import React from 'react';
 import Dealday from '../components/app/Dealday';
 import { Heading } from '../components/app/Heading';
-import Newsletter from '../components/app/Newsletter';
 import Category2 from '../components/category/Category2';
 import ExperienceRow from '../components/experience/ExperienceRow';
-import Footer from '../components/footer/Footer';
 import FooterSupport from '../components/footer/FooterSupport';
 import Header from '../components/header/Header';
 import Adds from '../components/offers/Adds';
@@ -12,7 +10,9 @@ import Product from '../components/product/Product';
 import ProductSlider from '../components/product/ProductSlider';
 import HomeSlider from '../components/slider/HomeSlider';
 import {fetch_homepage_web} from '../components/server/api'
-import Location from '../components/location/Location';
+import Aboutus from '../components/app/Aboutus';
+import Ourrecipe from '../components/app/Ourecipe';
+import SpinLoader from '../components/loader/SpinLoader';
 
 class Home extends React.Component {
     
@@ -21,20 +21,22 @@ class Home extends React.Component {
         this.state={
             categories:[],
             best_sellers:[],
-            combos:[]
+            combos:[],
+            canMove:0
         }
     }
 
     loadEssentialdata = async () => {
-        // if(this.props.user_login){
-            
-        // }
+        console.log('loadEssentialdata');
         await fetch_homepage_web({}).then((response)=>{
+            console.log('happy',response);
             if(response.status){
+                
                 this.setState({
                     categories:response.categories,
                     best_sellers:response.best_sellers,
-                    combos:response.combos
+                    combos:response.combos,
+                    canMove:1
                 })
             }
         })
@@ -49,9 +51,8 @@ class Home extends React.Component {
     render() {
         const {best_sellers,categories,combos}=this.state
         return (
-            <div className="page-wrapper">
-                <Header categories={categories}/>
-                {/* <Location /> */}
+            <div >
+                <Header canMove={this.state.canMove} categories={categories}/>
                 <HomeSlider />
                 <ExperienceRow />
                 <div className="container">
@@ -69,7 +70,7 @@ class Home extends React.Component {
                                     {
                                         best_sellers.length ? (
                                             best_sellers.map(({id,...otherData})=><Product id={id} key={id} {...otherData} />)
-                                        ) : ''
+                                        ) : <SpinLoader />
                                     }
                                 </div>
                             </div>
@@ -79,9 +80,13 @@ class Home extends React.Component {
     
                 <Adds />
     
-                <Heading title="Combos product" />
-                <ProductSlider products={combos} />
+                <Heading  title="Combos product" />
+                {
+                    this.state.canMove ?  <ProductSlider products={combos} /> : <SpinLoader />
+                }
+                
                 <Dealday />
+
     
                 <Heading title="Explore by categories" horizontalLine={false} />
                 <div className="container">
@@ -94,10 +99,25 @@ class Home extends React.Component {
                         <Category2 defaultImage={6}/>
                     </div>
                 </div>
+                <Aboutus />
+
+
+                {
+                    combos.length?
+                    <div
+                    >
+                        <Heading title="OUR HOT-SELLING PRODUCTS" />
+                        <div className="container">
+                            <div className="row">
+                        {combos.map(({id,...otherdata})=><Product id={id} key={id}  {...otherdata} />)}
+                        </div>
+                        </div>
+                    </div>
+                    :''
+                }
+                <Ourrecipe />
             <FooterSupport />
     
-            <Newsletter />
-            <Footer/>
             </div>
         );
     }

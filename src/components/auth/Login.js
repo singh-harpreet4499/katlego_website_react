@@ -41,7 +41,6 @@ const Login = (props) => {
     }
     if(can_move){
         setCursorAllow(0)
-        console.log(formData);
         const response =await user_login(formData);
         console.log(response);
         if(response.status){

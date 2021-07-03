@@ -138,14 +138,6 @@ const LocationModal = (props) => {
 				if (check_service_location.status) {
                     setPincode(check_service_location.pincode)
                     setAddress(check_service_location.formatted_address)
-					// this.setState({
-					// all_data_fetch: 1,
-					// is_location_available: 1,
-					// formatted_address: check_service_location.formatted_address,
-					// city: check_service_location.city,
-					// state: check_service_location.state,
-					// pincode: check_service_location.pincode,
-					// });
                     setErrormessage({
                         message:"Congratulations, We are providing services in this area",
                         class:"success"
@@ -202,7 +194,7 @@ const LocationModal = (props) => {
 
                             {
                                 props.locations.length ?
-                                props.locations.map((lc)=><option  value={lc.id} >{lc.name}</option>)
+                                props.locations.map((lc)=><option key={lc.id}  value={lc.id} >{lc.name}</option>)
 
                                 :''
                             }
@@ -214,7 +206,7 @@ const LocationModal = (props) => {
                             <option value="" >Select Area</option>
                             {
                                 areas.length ?
-                                areas.map((lc)=><option  value={lc.id} >{lc.name}</option>)
+                                areas.map((lc)=><option key={lc.id} value={lc.id} >{lc.name}</option>)
 
                                 :''
                             }

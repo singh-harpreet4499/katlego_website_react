@@ -1,7 +1,11 @@
 // import React, {Component} from 'react';
 import axios from "axios";
+import { redirectUnauthUser, setRedirectFalse } from "../../redux/redirect/redirect.action";
+import store from '../../redux/store';
+const moment = require('moment');
 const axiosinstance = axios.create();
 const BASE_URL = "http://localhost:3030/api/";
+// const BASE_URL = "http://139.59.67.166:3030/api/";
 
 // const get_session_token = () => {
 //   return localStorage.getItem("accessToken");
@@ -9,25 +13,56 @@ const BASE_URL = "http://localhost:3030/api/";
 
 //request interceptor to add the auth token header to requests
 axiosinstance.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    const token_expiry = localStorage.getItem("token_expiry");
+    // if (accessToken && token_expiry) {
+    //   if(moment().isBefore(moment(token_expiry))){
+    //     config.headers["authorization"] = accessToken;
+    //   }else{
+    //     // await hitServerApi('regenerateToken',{refreshToken:refreshToken}).then(async (res) => {
+    //     //   if (res.status) {
+    //     //     axiosinstance.defaults.headers.common['authorization'] = res.data.token;
+    //     //     await set_session(res);
+    //     //     console.log("Access token refreshed!in");
+    //     //   }else{
+    //     //     logout_user();
+           
+    //     //   }
+    //     // });
+    //   }
+    // }else{
+      
+    // }
+
+    if(accessToken){
       config.headers["authorization"] = accessToken;
     }
     return config;
   },
   (error) => {
+
     Promise.reject(error);
   }
 );
 //response interceptor to refresh token on receiving token expired error
 axiosinstance.interceptors.response.use(
   (response) => {
+    // console.log('response',response);
+    if(response.data.message === "Unauthorized"){
+      store.dispatch(redirectUnauthUser())
+      store.dispatch(setRedirectFalse())
+
+    }
+
     return response;
   },
-  function (error) {
+  async function (error) {
+    // debugger;
     const originalRequest = error.config;
-   
+    // console.log('originalRequest',originalRequest);
+
     let refreshToken = localStorage.getItem("refreshToken");
     if (
       refreshToken &&
@@ -35,15 +70,16 @@ axiosinstance.interceptors.response.use(
     ) {
 
       originalRequest._retry = true;
-      hitServerApi('regenerateToken',{refreshToken:refreshToken}).then(async (res) => {
+      await hitServerApi('regenerateToken',{refreshToken:refreshToken}).then(async (res) => {
           if (res.status) {
             axiosinstance.defaults.headers.common['authorization'] = res.data.token;
-            localStorage.setItem("accessToken", res.data.token);
+            // localStorage.setItem("accessToken", res.data.token);
             await set_session(res);
             console.log("Access token refreshed!");
-            return axiosinstance(originalRequest);
+            await axiosinstance(originalRequest);
           }else{
-
+            store.dispatch(redirectUnauthUser())
+      store.dispatch(setRedirectFalse())
           //  return <Redirect
           //   to={{
           //     pathname: "/login",
@@ -51,6 +87,9 @@ axiosinstance.interceptors.response.use(
           // />
           }
         });
+    }else{
+      // console.log('sdfnfvnfnjfn');
+      
     }
     return Promise.reject(error);
   }
@@ -113,22 +152,34 @@ export const set_session =async (response) => {
     localStorage.setItem("accessToken", response.token);
     localStorage.setItem("data", response.data);
     localStorage.setItem("refreshToken", response.refreshtoken);
+    localStorage.setItem("token_expiry", response.token_expiry);
+}
+
+export const logout_user = async () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("data");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("token_expiry");
 }
 
 
 export const get_session =async (response) => {
  const token= localStorage.getItem("accessToken");
  const refreshToken= localStorage.getItem("refreshToken");
-var data;
- const userdataget =await user_profile()
- if(userdataget.status){
-  data = userdataget.data;
-
- }
+  var data;
+  var userdataget;
+  if(token){
+    userdataget =await user_profile()
+    if(userdataget.status){
+      data = userdataget.data;
+    }
+  }
+  const token_expiry =await localStorage.getItem("token_expiry");
 
  const obj = {
    status:token && userdataget ? true : false,
    token:token,
+   token_expiry:token_expiry,
    data:data,
    refreshToken:refreshToken
  }
@@ -196,12 +247,14 @@ export const fetch_products_by_category = async (data) => {
 
 export const user_profile = async (data={}) => {
   const serverdata = await hitServerApi("user_profile", data);
+  console.log('serverdata',serverdata);
   return serverdata;
 };
 
 
 export const add_cart = async (data={}) => {
   const serverdata = await hitServerApi("add_cart", data);
+  // console.log('add crt',serverdata);
   return serverdata;
 };
 
@@ -224,4 +277,30 @@ export const fetch_areas = async (data={}) => {
   const serverdata = await hitServerApi("fetch_areas", data);
   return serverdata;
 };
+
+
+
+export const fetch_showcase_category = async (data={}) => {
+  const serverdata = await hitServerApi("fetch_showcase_category", data);
+  return serverdata;
+};
+
+export const fetch_showcase_products = async (data={}) => {
+  const serverdata = await hitServerApi("fetch_showcase_products", data);
+  return serverdata;
+};
+
+export const edit_user_profile = async (data={}) => {
+  const serverdata = await hitServerApi("edit_user_profile", data);
+  return serverdata;
+};
+
+
+export const change_password_by_old_password = async (data={}) => {
+  const serverdata = await hitServerApi("change_password_by_old_password", data);
+  return serverdata;
+};
+
+
+
 

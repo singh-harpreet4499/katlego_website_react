@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect,useHistory } from 'react-router-dom';
 import defaultImage from '../../libs/images/demos/demo-2/products/product-5-1.jpg';
 import { connect, useSelector, useDispatch } from 'react-redux'
 import {add_cart, remove_cart_item,get_cart_items} from '../server/api'
 import { updatecarts } from '../../redux/cart/cart.action';
+import './product.css'
+import { setRedirectFalse } from '../../redux/redirect/redirect.action';
+
 
 const Product =(props) => {
     const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata}=props
     const dispatch = useDispatch();
 
-    const user = useSelector(state=>state.user.currentUser);
+    // const user = useSelector(state=>state.user.currentUser);
+    // const redirection = useSelector(state=>state.redirection.redirect);
+    // // const history = useHistory();
+    // // if(redirection){
+    // //     dispatch(setRedirectFalse())
+    // //     history.push(redirection)
+    // // }
 
     const [compData,setCompData] = useState({
         qty:0
@@ -20,6 +29,7 @@ const Product =(props) => {
     };
 
     const updateCartQty = async (logic) => {
+        // console.log('add',logic);
         var old_qty =parseInt(compData.qty);
         var new_qty=old_qty;
         if(logic==='plus'){
@@ -38,10 +48,10 @@ const Product =(props) => {
                 id:cartdata?cartdata.id:0,
             })
         }else{
-            add_cart(reqdata)
+          await  add_cart(reqdata)
         }
         await get_cart_items().then((rs)=>{
-            if(rs.status){
+            if(rs && rs.status){
                 dispatch(updatecarts(rs))
             }
         })
@@ -79,18 +89,16 @@ const Product =(props) => {
                     <span className="product-label label-circle label-new best-bu">
                     Best Buy
                     </span>
-                    <a href="product_details.html">
-                    <Link
-                                            to={{
-                                                pathname: "/product-details/"+hifen_name+"/"+(id),
-                                            }}>
-                    <img
-                        src={imageUrl?imageUrl:defaultImage}
-                        alt="Product"
-                        className="product-image"
-                    />
+                        <Link
+                            to={{
+                                pathname: "/product-details/"+hifen_name+"/"+(id),
+                            }}>
+                        <img
+                            src={imageUrl?imageUrl:defaultImage}
+                            alt="Product"
+                            className="product-image"
+                        />
                     </Link>
-                    </a>
 
                     <div className="product-action-vertical">
                     <div  className="btn-product-icon btn-wishlist">
@@ -158,22 +166,10 @@ const Product =(props) => {
                             </form>
                         </div>
                         :
-                        // .product.product-11 .btn-product span {
-                        //     font-size: 1.4rem;
-                        // }
-                        
-                        // .btn-product span {
-                            // color: #666666;
-                            // font-weight: 400;
-                            // font-size: 1.3rem;
-                            // letter-spacing: -.01em;
-                            // transition: all .35s ease;
-                        // }
                         <button name="plus" value="1" onClick={handleChange} className="btn-product btn-cart hsbutonhover">
                             add to cart
                         </button>
                     }
-                    
                 </div>
             </div>
         </div>

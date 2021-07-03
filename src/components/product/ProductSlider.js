@@ -7,6 +7,7 @@ import Product from "./Product";
 const options = {
     margin:10,
     loop: false,
+    dots:false,
     nav:true,
     responsive:{
         0: {
@@ -22,7 +23,7 @@ const options = {
             items:4
         },
         1200: {
-            items:5
+            items:4
         },
         1600: {
             items:6,

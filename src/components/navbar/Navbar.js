@@ -1,14 +1,72 @@
-	import logo from "../../libs/images/logo.png";
-	import React from "react";
-
-	import { geolocated } from "react-geolocated";
-	import { check_if_service_location, fetch_locations } from "../server/api";
-	import NavCart from "../cart/NavCart";
-	import { connect } from "react-redux";
+import logo from "../../libs/images/logo.png";
+import React from "react";
+import { geolocated } from "react-geolocated";
+import { check_if_service_location, fetch_locations } from "../server/api";
+import NavCart from "../cart/NavCart";
+import { connect } from "react-redux";
 import LocationModal from "../modals/LocationModal";
 import { setUserLocation } from "../../redux/user/user.action";
+import { Link } from "react-router-dom";
 
 
+const MobileMenu = (props) => {
+
+	return (
+		<div>
+			<div className="mobile-menu-overlay"></div>
+
+				<div className="mobile-menu-container mobile-menu-light">
+					<div className="mobile-menu-wrapper">
+						<span onClick={closeMobileMenue} className="mobile-menu-close"><i className="icon-close"></i></span>
+
+						<form action="/" method="get" className="mobile-search">
+							<label htmlFor="mobile-search" className="sr-only">Search</label>
+							<input type="search" className="form-control" name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
+							<button className="btn btn-primary" type="submit"><i className="icon-search"></i></button>
+						</form>
+
+						<ul className="nav nav-pills-mobile nav-border-anim" role="tablist">
+							<li className="nav-item">
+								<a className="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab" role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
+							</li>
+						</ul>
+
+						<div className="tab-content">
+							<div className="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
+								<nav className="mobile-nav">
+									<ul className="mobile-menu">
+										<li className="active" style={{backgroundColor:'#fff'}}>
+											<a href="/">Home</a>
+
+
+										</li>
+										
+
+									</ul>
+								</nav>
+							</div>
+
+						</div>
+
+						<div className="social-icons">
+							<a href="/" className="social-icon" target="_blank" title="Facebook"><i className="icon-facebook-f"></i></a>
+							<a href="/" className="social-icon" target="_blank" title="Twitter"><i className="icon-twitter"></i></a>
+							<a href="/" className="social-icon" target="_blank" title="Instagram"><i className="icon-instagram"></i></a>
+							<a href="/" className="social-icon" target="_blank" title="Youtube"><i className="icon-youtube"></i></a>
+						</div>
+					</div>
+				</div>
+		</div>
+	)
+}
+const openMobileMenue = (event) => {
+	 document.body.classList.add('loaded');
+	 document.body.classList.add('mmenu-active');
+}
+const closeMobileMenue = (event) => {
+	document.body.classList.add('loaded');
+	document.body.classList.remove('mmenu-active');
+}
 	class Navbar extends React.Component {
 		constructor(props) {
 			super(props);
@@ -23,8 +81,15 @@ import { setUserLocation } from "../../redux/user/user.action";
 			is_location_available: 0,
 			city: "",
 			state: "",
+
 			};
 		}
+
+	
+		// hideMobileMenu = (event) => {
+		// 	document.body.classList.remove('loaded');
+		// 	this.setState({ showModal: false });
+		// }
 
 		locationstatus = async () => {
 			const locationapi = await fetch_locations({});
@@ -102,11 +167,7 @@ import { setUserLocation } from "../../redux/user/user.action";
 					location_modal:true
 				})
 			}
-			
-			
 		};
-
-	
 
 		componentDidMount() {
 			this.locationstatus();
@@ -115,59 +176,30 @@ import { setUserLocation } from "../../redux/user/user.action";
 					location_modal:false
 				})
 			}
-			// navigator.geolocation.getCurrentPosition(function(position) {
-			//   console.log("Latitude is :", position.coords.latitude);
-			//   console.log("Longitude is :", position.coords.longitude);
-			//   this.update_location_stats(position.coords.latitude,position.coords.longitude)
-			// },
-			// function(error) {
-			//   console.error("Error Code = " + error.code + " - " + error.message);
-			// }
-
-			// );
 		}
 
 		render() {
 			console.log("location state", this.state);
-			const { all_data_fetch, formatted_address, city, state, locations ,location_modal} =this.state;
+			const { locations ,location_modal} =this.state;
 			var lc_modal = <LocationModal show={location_modal} locations={locations} />
 
 			return (
 			<div>
 				{lc_modal}
+				<MobileMenu />
 
 				<header className="header">
 					<div className="header-middle ">
 						<div className="container">
 							<div className="header-left">
-								<button className="mobile-menu-toggler">
+								<button onClick={openMobileMenue} className="mobile-menu-toggler">
 								<span className="sr-only">Toggle mobile menu</span>
 								<i className="icon-bars"></i>
 								</button>
 
-								<a href="/" className="logo">
+								<Link to={{pathname:'/'}} className="logo">
 								<img src={logo} alt="Katlego" width="130" />
-								</a>
-
-								{/* <div className="header-dropdown">
-									<a href="/" className="del">
-										<i className="fa fa-map-marker mr-2"></i>{" "}
-										{city + " " + state}
-									</a>
-									<div className="header-menu">
-										<ul>
-										{locations.length
-											? locations.map(({ id, name }) => {
-												return (
-												<li>
-													<a href="/">{name}</a>
-												</li>
-												);
-											})
-											: ""}
-										</ul>
-									</div>
-								</div> */}
+								</Link>
 
 								<nav className="main-nav">
 								<ul className="menu sf-arrows">
@@ -215,7 +247,7 @@ import { setUserLocation } from "../../redux/user/user.action";
 									>
 									<i className="icon-search"></i>
 									</a>
-									<form action="search.html" method="get">
+									<form action="#" method="get">
 									<div className="header-search-wrapper">
 										<label htmlFor="q" className="sr-only">
 										Search
@@ -231,9 +263,13 @@ import { setUserLocation } from "../../redux/user/user.action";
 									</div>
 									</form>
 								</div>
-								<div className="dropdown cart-dropdown">
-										<a
-										href="/"
+								{
+									this.props.currentUser?(
+										<div className="dropdown cart-dropdown">
+										<Link
+										to={{
+											pathname:'/checkout'
+										}}
 										className="dropdown-toggle"
 										role="button"
 										data-toggle="dropdown"
@@ -248,16 +284,19 @@ import { setUserLocation } from "../../redux/user/user.action";
 
 											: ''
 										}
-										</a>
+										</Link>
 
 										<NavCart
 										total_amount={this.props.total_amount}
 										cart={this.props.cart}
 										/>
 								</div>
+									) : ''
+								}
+								
 
 								<div className="header-dropdown use-account">
-									<a href="/" className="use-mar"><i className="icon-user"></i>
+									<Link to={{pathname:'/my_account'}} className="use-mar"><i className="icon-user"></i>
 										<div className="header-menu">
 											<ul>
 												<li><a href="/">My Account</a></li>
@@ -265,13 +304,12 @@ import { setUserLocation } from "../../redux/user/user.action";
 												<li><a href="/">Logout</a></li>
 											</ul>
 										</div>
-									</a>
+									</Link>
 								</div>
 
 								<div className="header-dropdown">
-									<a href="#" className="del">
+									<a href="/" className="del">
 										<i className="fa fa-map-marker mr-2"  onClick={()=>this.setState({location_modal:true})} ></i>{" "}
-										{/* {city + " " + state} */}
 										{this.props.locationstate ? (this.props.locationstate.name) : ''}
 									</a>
 									<div className="header-menu">
@@ -279,9 +317,8 @@ import { setUserLocation } from "../../redux/user/user.action";
 										{locations.length
 											? locations.map(({ id, name }) => {
 												return (
-													
-												<li>
-													<a style={{cursor:'pointer'}} onClick={()=>this.setState({location_modal:true})} >{name}</a>
+												<li  key={id}>
+													<div style={{cursor:'pointer'}} id={id} onClick={()=>this.setState({location_modal:true})} >{name}</div>
 												</li>
 												);
 											})
@@ -292,11 +329,6 @@ import { setUserLocation } from "../../redux/user/user.action";
 							</div>
 						</div>
 					</div>
-
-
-
-
-					{/* sticky-header */}
 				</header>
 			</div>
 			);

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { get_cart_items, remove_cart_item } from "../server/api"
 
-import { connect, useDispatch } from 'react-redux'
+import { connect, useDispatch,useSelector } from 'react-redux'
 import { updatecarts } from "../../redux/cart/cart.action";
 
 import { v4 as uuidv4 } from 'uuid';
@@ -68,7 +68,7 @@ export const NavCartItem =  (props) => {
 
 const NavCart = (props) => {
 
-
+    const user = useSelector(state=>state.user.currentUser);
    
 
 
@@ -93,16 +93,23 @@ const NavCart = (props) => {
                     </div>
 
                     <div className="dropdown-cart-action">
-                        <a href="/" className="btn btn-primary">
-                            View Cart
-                        </a>
-                        <a
-                            href="/"
+                        <Link
+                            to={{
+                                pathname:'/checkout'
+                            }}
+                            className="btn btn-primary"
+                        >
+                        View Cart
+                        </Link>
+                        <Link
+                            to={{
+                                pathname:'/checkout'
+                            }}
                             className="btn btn-outline-primary-2"
                         >
                             <span>Checkout</span>
                             <i className="icon-long-arrow-right"></i>
-                        </a>
+                        </Link>
                     </div>
             </div>
     )

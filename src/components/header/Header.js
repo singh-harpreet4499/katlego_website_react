@@ -1,6 +1,8 @@
 import Category from "../category/Category";
 import OwlCarousel from "react-owl-carousel";
+import SpinLoader from '../loader/SpinLoader';
 
+import './header.css'
 // import defaultImage from '../../libs/images/1.png'
 // import defaultImage2 from '../../libs/images/2.png'
 // import defaultImage3 from '../../libs/images/3.png'
@@ -40,32 +42,38 @@ const options = {
 
 
 const Header = (props) => {
-  const { categories } = props;
-  console.log(categories);
-  return (
-    <div>
-      <div className="container banner-group-1">
-        <div className="categories">
-          {categories.length ? (
-            <OwlCarousel
-              className="
-					owl-carousel
-					carousel-theme carousel-simple carousel-with-shadow
-					row
-					cols-2 cols-xs-3 cols-sm-4 cols-md-5 cols-lg-6 cols-xl-8"
-              {...options}
-            >
-              {categories.map(({ id, name, ...otherData }) => (
-                <Category key={id} id={id} name={name}  {...otherData} />
-              ))}
-            </OwlCarousel>
-          ) : (
-            ""
-          )}
+  const { categories,canMove } = props;
+
+  // console.log(categories);
+  if(canMove===0){
+    return (<SpinLoader />)
+  }else{
+    return (
+      <div>
+        <div className="container banner-group-1">
+          <div className="categories">
+            {categories.length ? (
+              <OwlCarousel
+                className="
+            owl-carousel
+            carousel-theme carousel-simple carousel-with-shadow
+            row
+            cols-2 cols-xs-3 cols-sm-4 cols-md-5 cols-lg-6 cols-xl-8"
+                {...options}
+              >
+                {categories.map(({ id, name, ...otherData }) => (
+                  <Category key={id} id={id} name={name}  {...otherData} />
+                ))}
+              </OwlCarousel>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
 }
 
 export default Header;

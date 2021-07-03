@@ -38,10 +38,9 @@ class ProductInfo extends React.Component {
     render() {
         const {productdata}=this.state;
         return (
-            <main className="main">
+            <main>
                 <ProductDetails {...productdata} />
-                <Footer/>
-        </main>
+            </main>
         );
     }
 
