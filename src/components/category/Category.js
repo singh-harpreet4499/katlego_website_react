@@ -7,7 +7,7 @@ function Category(props) {
       <div className="category-image">
       <Link
             to={{
-                pathname: "/product-list/"+props.name+"/"+(props.id),
+                pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
                 state:{...props}
             }}>
           <img src={props.imageUrl}  alt={props.name}/>

@@ -29,7 +29,7 @@ class Home extends React.Component {
     loadEssentialdata = async () => {
         console.log('loadEssentialdata');
         await fetch_homepage_web({}).then((response)=>{
-            console.log('happy',response);
+            // console.log('happy',response);
             if(response.status){
                 
                 this.setState({
@@ -79,15 +79,12 @@ class Home extends React.Component {
                 </div>
     
                 <Adds />
-    
+                <Dealday />
                 <Heading  title="Combos product" />
                 {
                     this.state.canMove ?  <ProductSlider products={combos} /> : <SpinLoader />
                 }
-                
-                <Dealday />
 
-    
                 <Heading title="Explore by categories" horizontalLine={false} />
                 <div className="container">
                     <div className="row justify-content-center">

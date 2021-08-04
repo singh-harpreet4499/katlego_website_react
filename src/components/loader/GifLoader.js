@@ -1,15 +1,15 @@
 
-import loaderimg from '../../libs/images/loader.gif'
-
+import loaderimg from '../../libs/gif/food.gif'
+import './loader.css'
 
 const GifLoader = (props) => {
 
     return (
-        <div style={{textAlign:'center'}}>
-            <img src={loaderimg} alt="loading..." style={{
+        <div id="loadingDiv" style={{textAlign:'center'}}>
+            {/* <img src={loaderimg} alt="loading..." style={{
                  width: '120px',
                  height: 'auto'
-            }} />
+            }} /> */}
         </div>
     )
 }

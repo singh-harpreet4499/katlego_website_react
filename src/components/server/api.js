@@ -1,5 +1,8 @@
 // import React, {Component} from 'react';
 import axios from "axios";
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
+
+import { showCustomAlert } from "../../redux/alert/alert.action";
 import { redirectUnauthUser, setRedirectFalse } from "../../redux/redirect/redirect.action";
 import store from '../../redux/store';
 const moment = require('moment');
@@ -10,6 +13,29 @@ const BASE_URL = "http://localhost:3030/api/";
 // const get_session_token = () => {
 //   return localStorage.getItem("accessToken");
 // };
+
+
+// Function that will be called to refresh authorization
+const refreshAuthLogic = failedRequest =>hitServerApi('regenerateToken',{refreshToken:localStorage.getItem("refreshToken")}).then(async res => {
+  console.log('====================================');
+  console.log('ddd');
+  console.log('====================================');
+  if (res.status) {
+   
+    axiosinstance.defaults.headers.common['authorization'] = res.data.token;
+    await set_session(res);
+  return Promise.resolve();
+
+  }else{
+    // store.dispatch(redirectUnauthUser())
+    // store.dispatch(setRedirectFalse())
+    localStorage.clear();
+  return Promise.reject();
+
+  }
+});
+
+createAuthRefreshInterceptor(axiosinstance, refreshAuthLogic);
 
 //request interceptor to add the auth token header to requests
 axiosinstance.interceptors.request.use(
@@ -78,13 +104,9 @@ axiosinstance.interceptors.response.use(
             console.log("Access token refreshed!");
             await axiosinstance(originalRequest);
           }else{
+            localStorage.clear();
             store.dispatch(redirectUnauthUser())
-      store.dispatch(setRedirectFalse())
-          //  return <Redirect
-          //   to={{
-          //     pathname: "/login",
-          //   }}
-          // />
+            store.dispatch(setRedirectFalse())
           }
         });
     }else{
@@ -160,6 +182,7 @@ export const logout_user = async () => {
   localStorage.removeItem("data");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("token_expiry");
+  localStorage.clear();
 }
 
 
@@ -169,10 +192,13 @@ export const get_session =async (response) => {
   var data;
   var userdataget;
   if(token){
-    userdataget =await user_profile()
-    if(userdataget.status){
-      data = userdataget.data;
-    }
+    userdataget =await user_profile().then((user)=>{
+      if(user.status){
+        data = user.data;
+      }
+    })
+    .catch((er)=>null)
+
   }
   const token_expiry =await localStorage.getItem("token_expiry");
 
@@ -301,6 +327,41 @@ export const change_password_by_old_password = async (data={}) => {
   return serverdata;
 };
 
+
+export const add_address = async (data={}) => {
+  const serverdata = await hitServerApi("add_address", data);
+  return serverdata;
+};
+
+
+export const fetch_addresses = async (data={}) => {
+  const serverdata = await hitServerApi("fetch_addresses", data);
+  return serverdata;
+};
+
+
+export const delete_address = async (data={}) => {
+  const serverdata = await hitServerApi("delete_address", data);
+  return serverdata;
+};
+
+
+  
+export const you_may_like = async (data) => {
+  const serverdata = await hitServerApi("you_may_like", data);
+  return serverdata;
+};
+
+export const showAlertMessage = (title='alert',message='',success=false,danger='false') => {
+  const alert_config =  {
+      show_alert:true,
+      title:title,
+      message:message,
+      success:success,
+      danger:danger
+  }
+  store.dispatch(showCustomAlert(alert_config))
+}
 
 
 

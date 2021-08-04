@@ -42,7 +42,7 @@ const Login = (props) => {
     if(can_move){
         setCursorAllow(0)
         const response =await user_login(formData);
-        console.log(response);
+        // console.log(response);
         if(response.status){
            await set_session(response)
            dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))

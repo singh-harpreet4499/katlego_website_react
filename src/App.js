@@ -1,6 +1,5 @@
 // import './App.css';
 
-import Navbar from './components/navbar/Navbar';
 import Auth from './pages/Auth';
 import Home from './pages/Home';
 import {Switch,Route, withRouter, Redirect, useHistory} from 'react-router-dom';
@@ -13,7 +12,6 @@ import { get_cart_items, get_session } from './components/server/api';
 import { setCurrentUser } from "./redux/user/user.action";
 import { useEffect, useState } from 'react';
 import { updatecarts } from './redux/cart/cart.action';
-import Loader from 'react-loader-spinner';
 import Template from './pages/Template';
 import CartData from './pages/CartData';
 import Dashboard from './components/account/Dashboard';
@@ -25,6 +23,7 @@ import SpinLoader from './components/loader/SpinLoader';
 const App = (props) => {
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user.currentUser);
+  
   
   const [canmove,setCanMove] = useState(0);
 
@@ -60,22 +59,23 @@ const App = (props) => {
       {!canmove ? <SpinLoader /> :
       <Switch>
 
-      <Route exact path="/" render={()=><div>{<Template component={homecomponent} />}</div>} />
-      <Route exact path="/signup" render={()=>!user ? <div><Auth /></div> : <Template component={homecomponent} /> } />
-      <Route exact path="/otp" render={()=>!user ? <div><Otp /></div> : <Template component={homecomponent} /> } />
-      <Route exact path="/login" render={()=> !user ? <div><Auth component={<Login />} /></div>  : <Template component={homecomponent} />   } />
+        <Route exact path="/" render={()=><div>{<Template component={homecomponent} />}</div>} />
+        <Route exact path="/signup" render={()=>!user ? <div><Auth /></div> : <Template component={homecomponent} /> } />
+        <Route exact path="/otp" render={()=>!user ? <div><Otp /></div> : <Template component={homecomponent} /> } />
+        <Route exact path="/login" render={()=> !user ? <div><Auth component={<Login />} /></div>  : <Template component={homecomponent} />   } />
 
-      <Route path="/product-details/:productName/:id" render={()=><Template component={productinfocomponent} />}/>
+        <Route path="/product-details/:productName/:id" render={()=><Template component={productinfocomponent} />}/>
 
-      <Route path="/product-list/:categoryName/:id" render={()=><Template component={productlistcomponent} />}/>
+        <Route path="/product-list/:categoryName/:id" render={()=><Template component={productlistcomponent} />}/>
 
-      <Route path="/checkout" render={()=><Template hide_newsletter={true} component={cartcomponent} />}/>
+        <Route path="/checkout" render={()=><Template hide_newsletter={true} component={cartcomponent} />}/>
 
-      <Route path="/my_account" render={()=><Template hide_newsletter={true} component={dashboardcomponent} />}/>
+        <Route path="/my_account" render={()=><Template hide_newsletter={true} component={dashboardcomponent} />}/>
 
 
       
       </Switch>
+      
       }
      
     </div>

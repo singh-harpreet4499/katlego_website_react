@@ -79,7 +79,7 @@ const NavCart = (props) => {
 
                     {
                         props.cart.length ? 
-                        props.cart.map((dt)=><NavCartItem {...dt} />)
+                        props.cart.map((dt)=><NavCartItem key={dt.id} {...dt} />)
                         :
                         ''
                     }

@@ -6,10 +6,11 @@ import {add_cart, remove_cart_item,get_cart_items} from '../server/api'
 import { updatecarts } from '../../redux/cart/cart.action';
 import './product.css'
 import { setRedirectFalse } from '../../redux/redirect/redirect.action';
+import ProductLabel from './ProductLabel';
 
 
 const Product =(props) => {
-    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata}=props
+    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers}=props
     const dispatch = useDispatch();
 
     // const user = useSelector(state=>state.user.currentUser);
@@ -81,14 +82,19 @@ const Product =(props) => {
 
     }, [props])
 
+    var label='';
+    if(mark_as_bestoffers){
+        label = <ProductLabel name="Best Offer" color="red" />
+    }else if(mark_as_new){
+        label = <ProductLabel name="New" color="blue" />
+    }
 
     return (
         <div className={props.column_not_cut ? '' : 'col-6 col-md-3 col-lg-3'}>
             <div className="product product-11 text-center">
                 <figure className="product-media">
-                    <span className="product-label label-circle label-new best-bu">
-                    Best Buy
-                    </span>
+                    {label}
+
                         <Link
                             to={{
                                 pathname: "/product-details/"+hifen_name+"/"+(id),
@@ -126,7 +132,6 @@ const Product =(props) => {
                             : 
                             (<span className="new-price">₹{selling_price}</span>)
                         }
-                   
                     </div>
                 </div>
                 <div className="product-action">

@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { Button, Modal,InputGroup,FormControl } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import Infomsg from "../app/Infomsg";
+import { add_address, showAlertMessage } from "../server/api";
 
 
 const AddAddressModal = (props) => {
 
-
+    const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const [formData, updateFormData] = useState({
-        state:'',city:'',landmark:'',location:'',lat:'',lng:'',address_type:''
+        state:'',city:'',landmark:'',location:'',lat:'',lng:''
     });
+    const [address_type,setAddressType] = useState('');
+    
+    const [address_type_class1,setAddressTypeClass1] = useState('btn btn-outline-secondary');
+    const [address_type_class2,setAddressTypeClass2] = useState('btn btn-outline-secondary');
+    const [address_type_class3,setAddressTypeClass3] = useState('btn btn-outline-secondary');
     const [errormessage,setErrormessage] = useState('');
-    const [can_move,setCanmove] = useState(0);
     const [cursor_allow,setCursorAllow] = useState(1);
     
     const handleChange = (e) => {
@@ -22,72 +28,128 @@ const AddAddressModal = (props) => {
         });
     };
 
-    
-  const handleSubmit =async (e) => {
-    e.preventDefault()
-    const {location_id} = formData;
-
-    if(!location_id){
-        setErrormessage({
-            message:"Please select location!",
-            class:"danger"
-        })
-    }else{
-        
+    const set_address_type = (type='') => {
+        setAddressType(type)
+        if(type==='home'){
+            setAddressTypeClass1('btn btn-outline-secondary active')
+            setAddressTypeClass2('btn btn-outline-secondary')
+            setAddressTypeClass3('btn btn-outline-secondary')
+        }else if(type==='work'){
+            setAddressTypeClass1('btn btn-outline-secondary')
+            setAddressTypeClass2('btn btn-outline-secondary active')
+            setAddressTypeClass3('btn btn-outline-secondary')
+        }else if(type ==='other'){
+            setAddressTypeClass1('btn btn-outline-secondary')
+            setAddressTypeClass2('btn btn-outline-secondary')
+            setAddressTypeClass3('btn btn-outline-secondary active')
+        }
     }
-  }
-    useEffect(() => {
-        if (props.show) {
-        setShow(true);
-        } else {
-        setShow(false);
+
+    const handleSubmit =async (e) => {
+        e.preventDefault()
+        const {state,city,location} = formData;
+        const reqdata = {...formData,address_type:address_type};
+        if(!state){
+            setErrormessage({
+                message:"Please add your state!",
+                class:"danger"
+            })
+        }else if(!city){
+            setErrormessage({
+                message:"Please add your city!",
+                class:"danger"
+            })
+        }else if(!location){
+            setErrormessage({
+                message:"Please add your complete address!",
+                class:"danger"
+            })
+        }else if(!address_type){
+            setErrormessage({
+                message:"Please select nickname!",
+                class:"danger"
+            })
+        }else{
+            setCursorAllow(0);
+            const response =await add_address(reqdata);
+            if(response.status){
+                showAlertMessage('Success','Address added successfully',true,false)
+
+            }else{
+                showAlertMessage('',response.message,false,true)
+            }
+            setCursorAllow(1);
+            setShow(false)
+
+            // alert(response.message)
         }
 
-    }, [props]);
+    }
+    const toggleModal =  () => {
+        setShow(!show);
+    }
+
 
     return (
         <div>
-            <Modal size="lg"  show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add Delivery Address</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form className="">
-                    {<Infomsg type={errormessage.class} message={errormessage.message} ></Infomsg>}
-                        <div className="form-row">
-                            <div className="col-md-4 form-group"><label className="form-label">State</label><input   placeholder="Delhi" type="text" className="form-control" /></div>
+            {/* <form method="POST" > */}
+          
+                <div className="card-header bg-white border-0 p-0" id="headingtwo">
+                    <h2 className="mb-0">
+                        <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
+                        <span className="c-number">2</span> Order Address <span onClick={toggleModal} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span>
+                        </button>
+                    </h2>
+                </div>
+                <Modal shouldCloseOnOverlayClick={false}  size="lg"  show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Delivery Address</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    
+                        {<Infomsg type={errormessage.class} message={errormessage.message} ></Infomsg>}
+                            <div className="form-row">
+                                <div className="col-md-4 form-group"><label className="form-label">State</label><input onChange={handleChange}  placeholder="Delhi" type="text" name="state" className="form-control" /></div>
 
-                            <div className="col-md-4 form-group"><label className="form-label">City</label><input placeholder="New Delhi" type="text" className="form-control" /></div>
+                                <div className="col-md-4 form-group"><label className="form-label">City</label><input onChange={handleChange} placeholder="New Delhi" name="city" type="text" className="form-control" /></div>
 
-                            <div className="col-md-4 form-group"><label className="form-label">Landmark</label><input placeholder="Metro Station" type="text" className="form-control" /></div>
+                                <div className="col-md-4 form-group"><label className="form-label">Landmark</label><input  onChange={handleChange} placeholder="Metro Station" name="landmark" type="text" className="form-control" /></div>
 
-                            <div className="col-md-12 form-group"><label className="form-label">Complete Address</label><input placeholder="Complete Address e.g. house number, street name, landmark" type="text" className="form-control" /></div>
+                                <div className="col-md-12 form-group"><label className="form-label">Complete Address</label><input onChange={handleChange} name="location" placeholder="Complete Address e.g. house number, street name, landmark" type="text" className="form-control"  /></div>
 
-                            <div className="col-md-12 form-group"><label className="form-label">Delivery Instructions</label><input placeholder="Delivery Instructions e.g. Opposite Gold Souk Mall" type="text" className="form-control" /></div>
-
-                            <div className="mb-0 col-md-12 form-group">
-                                <label className="form-label">Nickname</label>
-                                <div className="btn-group btn-group-toggle w-100" data-toggle="buttons">
-                                    <label className="btn btn-outline-secondary active">
-                                        <input type="radio" name="options" id="option1" checked /> Home
-                                    </label>
-                                    <label className="btn btn-outline-secondary">
-                                        <input type="radio" name="options" id="option2" /> Work
-                                    </label>
-                                    <label className="btn btn-outline-secondary">
-                                        <input type="radio" name="options" id="option3" /> Other
-                                    </label>
+                                {/* <GooglePlacesAutocomplete
+                                apiKey="AIzaSyD7BIoSvmyufubmdVEdlb2sTr4waQUexHQ
+"
+                                /> */}
+                                <div className="col-md-12 form-group">
+                                
+                                </div>
+                                <div className="mb-0 col-md-12 form-group">
+                                    <label className="form-label">Nickname</label>
+                                    <div className="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                                        <label className={address_type_class1} onClick={()=>set_address_type('home')}>
+                                            <input type="radio"  name="address_type" id="option1"   /> Home
+                                        </label>
+                                        <label className={address_type_class2} onClick={()=>set_address_type('work')} >
+                                            <input type="radio"  name="address_type" id="option2"  /> Work
+                                        </label>
+                                        <label className={address_type_class3}  onClick={()=>set_address_type('other')} >
+                                            <input type="radio"  name="address_type" id="option3" /> Other
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                    </Modal.Body>
+                    <Modal.Footer>
+                            <div class="col-6 m-0 p-0">
+                                <button type="button" class="btn border-top btn-lg btn-block"  onClick={handleClose} data-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col-6 m-0 p-0">
+                                <button type="button" onClick={handleSubmit} class="btn btn-success btn-lg btn-block conti" style={{cursor:cursor_allow ? 'pointer':'not-allowed'}} disabled={cursor_allow?false:true}>Save changes</button>
+                            </div>
+                    </Modal.Footer>
+                </Modal>
+            {/* </form> */}
         </div>
        
     );

@@ -1,13 +1,45 @@
 import Infomsg from "../components/app/Infomsg";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { add_cart, get_cart_items, remove_cart_item } from "../components/server/api";
+import { add_cart, delete_address, fetch_addresses, get_cart_items, remove_cart_item, showAlertMessage } from "../components/server/api";
 import { updatecarts } from "../redux/cart/cart.action";
 import { Link } from "react-router-dom"
 import StickyPayout from "../components/cart/StickyPayout";
 import FooterSupport from "../components/footer/FooterSupport";
 import AddAddressModal from "../components/modals/AddAddressModal";
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+  } from 'react-places-autocomplete';
 
+const AddressItem = (props) => {
+    const {address_type,location,city,state,id} = props;
+
+    const delete_add = async ()=>{
+        return await delete_address({id:id})
+    }
+    return (
+        <div className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" defaultChecked />
+            <label className="custom-control-label w-100" htmlFor="customRadioInline1">
+                <div>
+                    <div className="p-3 bg-white rounded shadow-sm w-100">
+                        <div className="d-flex align-items-center mb-2">
+                            <p className="mb-0 h6">{address_type}</p>
+                            <p className="mb-0 badge badge-success ml-auto"><i className="icofont-check-circled"></i> Default</p>
+                        </div>
+                        <p className="small text-muted m-0">{location}</p>
+                        <p className="small text-muted m-0">{city} {state}</p>
+                        <p className="pt-2 m-0 text-right"><span className="small"><span style={{cursor:"pointer"}} onClick={delete_add}  className="text-decoration-none text-info">Delete</span></span></p>
+                    </div>
+                    <span className="btn btn-light border-top btn-lg btn-block">
+                        Deliver Here
+                    </span>
+                </div>
+            </label>
+        </div>
+    );
+}
 
 const CartItem = (props) => {
     const {name,id,cart_id,qty,cart_amount,discount,imageUrl,mrp,selling_price,net_wt,unit,hifen_name} = props;
@@ -41,6 +73,11 @@ const CartItem = (props) => {
             })
         }else{
            await add_cart(reqdata)
+           
+
+            setCompData({
+                qty:new_qty
+            })
         }
         await get_cart_items().then((rs)=>{
             if(rs.status){
@@ -48,9 +85,7 @@ const CartItem = (props) => {
             }
         })
 
-        setCompData({
-            qty:new_qty
-        })
+        
     }
 
 
@@ -75,7 +110,7 @@ const CartItem = (props) => {
                 <div className="d-flex  align-items-center p-3">
                     <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}}><img src={imageUrl} alt="x" className="img-fluid" /></Link>
                     <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}}  className="ml-3 text-dark text-decoration-none w-100">
-                        <h5 className="mb-1">{name})</h5>
+                        <h5 className="mb-1">{name}</h5>
                         <p className="text-muted mb-2"> {parseFloat(mrp) > parseFloat(selling_price) ? <del className="text-success mr-1">₹{mrp}{'/'}{net_wt+''+unit}</del> : ''}  ₹{selling_price}{'/'}{net_wt+''+unit}</p>
                         <div className="d-flex align-items-center">
                             <p className="total_price font-weight-bold m-0">₹{cart_amount}</p>
@@ -123,21 +158,36 @@ const CartData = (props) => {
         const dispatch = useDispatch()
         const {items} = useSelector(state => state.cart)
 
-    const [cartdata,setCartData] = useState([])
     const [showAddAddress,setAddAddress] = useState(0)
+    const [addressList,setAddressList] = useState([])
 
     const fetch_carts_data =async () => {
         await get_cart_items().then((rs)=>{
             if(rs.status){
-                setCartData(rs.data)
                 dispatch(updatecarts(rs))
+                if(rs.data.length === 0){
+                    showAlertMessage('','No Items in your Cart',false,true)
+                }
             }
         })
+    }
+
+    const fetch_address =async () => {
+        await fetch_addresses().then((rs)=>{
+            if(rs.status){
+               setAddressList(rs.data)
+            }
+        })
+    }
+
+    const toggleModal =  () => {
+        setAddAddress(!showAddAddress);
     }
 
 
     useEffect(() => {
         fetch_carts_data();
+        fetch_address();
     }, [])
     return (
         <div>
@@ -186,62 +236,27 @@ const CartData = (props) => {
                                     {/* order address */}
                                     <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
 
-                                        <div className="card-header bg-white border-0 p-0" id="headingtwo">
+                                        {/* <div className="card-header bg-white border-0 p-0" id="headingtwo">
                                             <h2 className="mb-0">
                                                 <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
-                                                <span className="c-number">2</span> Order Address <span onClick={()=>setAddAddress(1)} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span>
+                                                <span className="c-number">2</span> Order Address <span onClick={toggleModal} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span>
                                                 </button>
                                             </h2>
-                                        </div>
-                                        {
-                                            showAddAddress ? <AddAddressModal show={true} /> : ''
-                                        }
+                                        </div> */}
 
-                                        
+                                        <AddAddressModal  show={showAddAddress} /> 
+
+
 
                                         <div id="collapsetwo" className="collapse show" aria-labelledby="headingtwo" data-parent="#accordionExample">
                                             <div className="card-body p-0 border-top">
                                                 <div className="osahan-order_address">
                                                     <div className="p-3 row">
-                                                        <div className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio">
-                                                            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" checked />
-                                                            <label className="custom-control-label w-100" for="customRadioInline1">
-                                                                <div>
-                                                                    <div className="p-3 bg-white rounded shadow-sm w-100">
-                                                                        <div className="d-flex align-items-center mb-2">
-                                                                            <p className="mb-0 h6">Home</p>
-                                                                            <p className="mb-0 badge badge-success ml-auto"><i className="icofont-check-circled"></i> Default</p>
-                                                                        </div>
-                                                                        <p className="small text-muted m-0">1001 Veterans Blvd</p>
-                                                                        <p className="small text-muted m-0">Redwood City, CA 94063</p>
-                                                                        <p className="pt-2 m-0 text-right"><span className="small"><a href="#" data-toggle="modal" data-target="#exampleModal" className="text-decoration-none text-info">Edit</a></span></p>
-                                                                    </div>
-                                                                    <span className="btn btn-light border-top btn-lg btn-block">
-                                                                        Deliver Here
-                                                                    </span>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio">
-                                                            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" checked />
-                                                            <label className="custom-control-label w-100" for="customRadioInline1">
-                                                                <div>
-                                                                    <div className="p-3 bg-white rounded shadow-sm w-100">
-                                                                        <div className="d-flex align-items-center mb-2">
-                                                                            <p className="mb-0 h6">Home</p>
-                                                                            <p className="mb-0 badge badge-success ml-auto"><i className="icofont-check-circled"></i> Default</p>
-                                                                        </div>
-                                                                        <p className="small text-muted m-0">1001 Veterans Blvd</p>
-                                                                        <p className="small text-muted m-0">Redwood City, CA 94063</p>
-                                                                        <p className="pt-2 m-0 text-right"><span className="small"><a href="#" data-toggle="modal" data-target="#exampleModal" className="text-decoration-none text-info">Edit</a></span></p>
-                                                                    </div>
-                                                                    <span className="btn btn-light border-top btn-lg btn-block">
-                                                                        Deliver Here
-                                                                    </span>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <a href="#" className="btn btn-success btn-lg btn-block mt-3 conti" type="button" data-toggle="collapse" data-target="#collapsethree" aria-expanded="true" aria-controls="collapsethree">Continue</a>
+                                                        {
+                                                            addressList.length>0?
+                                                            addressList.map((data)=><AddressItem  {...data} />)
+                                                            : ''
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -253,14 +268,13 @@ const CartData = (props) => {
                             </div>
                             <StickyPayout />
 
-                            
-
                         </div>
                     </div>
                 </section>
                 )
                 :
-                <Infomsg type="danger" message="No Items in your cart" />
+                ''
+                // <Infomsg type="danger" message="No Items in your cart" />
             }
             
             <FooterSupport />

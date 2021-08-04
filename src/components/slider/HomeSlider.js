@@ -21,39 +21,39 @@ const HomeSliderItem = (props) => (
 );
 
 const HomeCategoryItem = ({mrp,name,imageUrl,hifen_name,id,selling_price,discount,net_wt,unit}) => (
-    <div class="owl-item " data-swiper-slide-index="0" style={{width:'272.5px',marginRight:'10px'}}>
+    <div className="owl-item " data-swiper-slide-index="0" style={{width:'272.5px',marginRight:'10px'}}>
         <div className="set-slide" >
             <Link 
             to={{
                     pathname: "/product-details/"+hifen_name+"/"+(id),
                 }}
                 className="setfire" >
-                <figure class="new_swiper-slide-inner">
-                    <img class="swiper-slide-image" style={{borderRadius:'50%'}} src={imageUrl} alt={name} />
+                <figure className="new_swiper-slide-inner">
+                    <img className="swiper-slide-image" style={{borderRadius:'50%'}} src={imageUrl} alt={name} />
                 </figure>
 
-                <span class="content-fire">
-                    <span class="plant-title">{name ? name.substring(0, 15)+'..' : ''}</span>
+                <span className="content-fire">
+                    <span className="plant-title">{name ? name.substring(0, 15)+'..' : ''}</span>
 
-                    <ul class="anti">
-                        <div class="row">
-                            <div class="col-md-12">
-                                {/* <li class="ch-lis">
+                    <ul className="anti">
+                        <div className="row">
+                            <div className="col-md-12">
+                                {/* <li className="ch-lis">
                                 100% Antibiotics Free
                                         </li> */}
-                                <li class="ch-lis">
+                                <li className="ch-lis">
                                 Net Wt: {net_wt} {unit}
                                 </li>
                             </div>
                         </div>
                     </ul>
 
-                    <div class="align-items-center mt-1">
-                        <div class="row">
-                            <div class="bu-box">
-                                <button type="submit" class="btn buy-btn-2">Buy Now</button>
+                    <div className="align-items-center mt-1">
+                        <div className="row">
+                            <div className="bu-box">
+                                <button type="submit" className="btn buy-btn-2">Buy Now</button>
                             </div>
-                            <div class="pri-bo">
+                            <div className="pri-bo">
                                 {
                                     mrp>selling_price ? (
                                         <>
