@@ -17,19 +17,17 @@ const BASE_URL = "http://localhost:3030/api/";
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = failedRequest =>hitServerApi('regenerateToken',{refreshToken:localStorage.getItem("refreshToken")}).then(async res => {
-  console.log('====================================');
-  console.log('ddd');
-  console.log('====================================');
+
   if (res.status) {
    
     axiosinstance.defaults.headers.common['authorization'] = res.data.token;
     await set_session(res);
-  return Promise.resolve();
+    return Promise.resolve();
 
   }else{
     // store.dispatch(redirectUnauthUser())
     // store.dispatch(setRedirectFalse())
-    localStorage.clear();
+    // localStorage.clear();
   return Promise.reject();
 
   }

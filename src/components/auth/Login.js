@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import Infomsg from "../app/Infomsg";
-import { set_session, user_login } from "../server/api";
+import { get_cart_items, set_session, user_login } from "../server/api";
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser } from "../../redux/user/user.action";
+import { updatecarts } from "../../redux/cart/cart.action";
 
 
 const Login = (props) => {
@@ -37,22 +38,26 @@ const Login = (props) => {
       setCanmove(0)
       setErrormessage('Password should not be empty!')
     }else{
-      setCanmove(1)
-    }
-    if(can_move){
-        setCursorAllow(0)
-        const response =await user_login(formData);
-        // console.log(response);
-        if(response.status){
-           await set_session(response)
-           dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
-          history.push('/')
-        }else{
-            setCursorAllow(1)
+      // setCanmove(1)
+      setCursorAllow(0)
+      const response =await user_login(formData);
+      // console.log(response);
+      if(response.status){
+          await set_session(response)
+          dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
+          get_cart_items().then((rs)=>{
+            if(rs.status){
+                dispatch(updatecarts(rs))
+            }
+        })
+        history.push('/')
+      }else{
+          setCursorAllow(1)
 
-            setErrormessage(response.message)
-        }
+          setErrormessage(response.message)
+      }
     }
+   
 
   };
 

@@ -5,6 +5,7 @@ export const UserActionTypes = {
     LOGOUT_USER:'LOGOUT_USER',
     UPDATE_USER:'UPDATE_USER',
     SET_LOCATION:'SET_LOCATION',
+    SET_ADDRESS_LIST:'SET_ADDRESS_LIST'
 
 
 

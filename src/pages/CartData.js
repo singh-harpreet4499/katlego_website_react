@@ -11,12 +11,23 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
   } from 'react-places-autocomplete';
+import { setUserAddressList } from "../redux/user/user.action";
+import DeliveryConfig from "../components/timeslot/DeliveryConfig";
 
 const AddressItem = (props) => {
     const {address_type,location,city,state,id} = props;
+    const dispatch = useDispatch();
+    
 
-    const delete_add = async ()=>{
-        return await delete_address({id:id})
+    const delete_add = ()=>{
+        delete_address({id:id}).then((dt)=>{
+            showAlertMessage('Success','Address removed successfully',true,false)
+                 fetch_addresses().then((rs)=>{
+                    if(rs.status){
+                       dispatch(setUserAddressList(rs.data))
+                    }
+                })
+        })
     }
     return (
         <div className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio">
@@ -25,7 +36,7 @@ const AddressItem = (props) => {
                 <div>
                     <div className="p-3 bg-white rounded shadow-sm w-100">
                         <div className="d-flex align-items-center mb-2">
-                            <p className="mb-0 h6">{address_type}</p>
+                            <p className="mb-0 h6">{address_type.toUpperCase()}</p>
                             <p className="mb-0 badge badge-success ml-auto"><i className="icofont-check-circled"></i> Default</p>
                         </div>
                         <p className="small text-muted m-0">{location}</p>
@@ -101,7 +112,6 @@ const CartItem = (props) => {
     return (
         <div className="osahan-cart">
             <div className="cart-items bg-white position-relative border-bottom">
-                {/* <a href="product_details.html" className="position-absolute"> */}
                 <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}} className="position-absolute">
                     {
                         parseInt(discount)>0 ? <span className="badge badge-danger m-3">{discount}%</span>  : ''
@@ -157,9 +167,7 @@ const CartItem = (props) => {
 const CartData = (props) => {
         const dispatch = useDispatch()
         const {items} = useSelector(state => state.cart)
-
-    const [showAddAddress,setAddAddress] = useState(0)
-    const [addressList,setAddressList] = useState([])
+        const address_list = useSelector(state => state.user.address_list)
 
     const fetch_carts_data =async () => {
         await get_cart_items().then((rs)=>{
@@ -175,13 +183,9 @@ const CartData = (props) => {
     const fetch_address =async () => {
         await fetch_addresses().then((rs)=>{
             if(rs.status){
-               setAddressList(rs.data)
+               dispatch(setUserAddressList(rs.data))
             }
         })
-    }
-
-    const toggleModal =  () => {
-        setAddAddress(!showAddAddress);
     }
 
 
@@ -244,7 +248,7 @@ const CartData = (props) => {
                                             </h2>
                                         </div> */}
 
-                                        <AddAddressModal  show={showAddAddress} /> 
+                                        <AddAddressModal  /> 
 
 
 
@@ -253,8 +257,8 @@ const CartData = (props) => {
                                                 <div className="osahan-order_address">
                                                     <div className="p-3 row">
                                                         {
-                                                            addressList.length>0?
-                                                            addressList.map((data)=><AddressItem  {...data} />)
+                                                            address_list.length>0?
+                                                            address_list.map((data)=><AddressItem  {...data} />)
                                                             : ''
                                                         }
                                                     </div>
@@ -262,6 +266,8 @@ const CartData = (props) => {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <DeliveryConfig />
                                     {/* end order address */}
 
                                 </div>

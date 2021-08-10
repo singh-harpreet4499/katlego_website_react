@@ -19,6 +19,17 @@ export const setUserLocation = (location) => (
 ) 
 
 
+export const setUserAddressList = (list) => {
+    console.log('====================================');
+    console.log('setUserAddressList',list);
+    console.log('====================================');
+    return {
+        type:UserActionTypes.SET_ADDRESS_LIST,
+        address_list:list,
+    }
+}
+
+
 
 export const logoutUser = () => (
     {

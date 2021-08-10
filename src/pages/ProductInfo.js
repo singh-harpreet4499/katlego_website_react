@@ -18,7 +18,6 @@ class ProductInfo extends React.Component {
         await fetch_product_details({
             id:id
         }).then((rs)=>{
-            console.log('product_details',rs);
             if(rs.status){
                 this.setState({
                     productdata:rs.data
