@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     currentUser : null,
     token:null,
     refreshToken:null,
-    address_list:[]
+    address_list:[],
+    location:{}
 }
 
 const userReducer = (state = INITIAL_STATE,action) => {

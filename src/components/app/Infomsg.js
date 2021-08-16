@@ -5,7 +5,6 @@ const Infomsg = (props) => {
     }else{
         return '';
     }
-  
 }
 
 export default Infomsg

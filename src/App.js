@@ -9,7 +9,7 @@ import ProductInfo from './pages/ProductInfo';
 import ProductList from './pages/ProductList';
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { get_cart_items, get_session } from './components/server/api';
-import { setCurrentUser } from "./redux/user/user.action";
+import { setCurrentUser, setUserLocation } from "./redux/user/user.action";
 import { useEffect, useState } from 'react';
 import { updatecarts } from './redux/cart/cart.action';
 import Template from './pages/Template';
@@ -18,6 +18,8 @@ import Dashboard from './components/account/Dashboard';
 import GifLoader from './components/loader/GifLoader';
 import Loader2 from "react-loader-spinner";
 import SpinLoader from './components/loader/SpinLoader';
+import OrderSuccessPage from './pages/OrderSuccessPage';
+import AboutPage from './pages/AboutPage';
 
 
 const App = (props) => {
@@ -29,8 +31,11 @@ const App = (props) => {
 
   const check_session = async () => {
     const session =await get_session();
-    setCanMove(1)
-
+    const location = await localStorage.getItem('setUserLocation')
+    if(location){
+      const location_obj = JSON.parse(location);
+      dispatch(setUserLocation(location_obj))
+    }
     if(session.status){
       dispatch(setCurrentUser(session.data,session.token,session.refreshToken))
       await get_cart_items().then((rs)=>{
@@ -39,6 +44,7 @@ const App = (props) => {
           }
       })
     }
+    setCanMove(1)
   }
 
   useEffect(() => {
@@ -52,6 +58,10 @@ const App = (props) => {
   const cartcomponent = <CartData user_login={user} />;
 
   const dashboardcomponent = user? <Dashboard user_login={user} /> : <Redirect to={{pathname:'/login'}} />;
+
+  const orderSuccess = <OrderSuccessPage user_login={user} />;
+
+  const aboutUs = <AboutPage user_login={user} />;
 
   
   return (
@@ -72,6 +82,9 @@ const App = (props) => {
 
         <Route path="/my_account" render={()=><Template hide_newsletter={true} component={dashboardcomponent} />}/>
 
+        <Route path="/orderSuccess" render={()=><Template  component={orderSuccess} />}/>
+
+        <Route path="/about-us" render={()=><Template  component={aboutUs} />}/>
 
       
       </Switch>

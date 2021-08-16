@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactHtmlParser from 'react-html-parser';
 import { connect, useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom';
 import { updatecarts } from '../../redux/cart/cart.action';
 import { add_cart, get_cart_items, remove_cart_item, you_may_like } from '../server/api';
 import ProductCard from './ProductCard';
@@ -8,9 +9,11 @@ import ProductCard from './ProductCard';
 
 const ProductDetails = (props) =>  {
     const dispatch = useDispatch();
+    const params = useParams();
     const [compData,setCompData] = useState({
         qty:0
     })
+    const [paramset,setParamsData] = useState(null)
     const [you_maylike,setYouMayLike] = useState([])
 
     const user = useSelector(state=>state.user.currentUser);
@@ -20,7 +23,7 @@ const ProductDetails = (props) =>  {
 
     const fetchOtherData = () => {
         you_may_like({
-            not_id:id
+            not_id:params.id
         }).then((response)=>{
             if(response.status){
                 setYouMayLike(response.data)
@@ -61,6 +64,10 @@ const ProductDetails = (props) =>  {
         })
     }
 
+    const set_page_params = (params) => {
+        setParamsData(params)
+    }
+
     useEffect(() => {
         if(props.is_cart){
             setCompData({
@@ -71,9 +78,20 @@ const ProductDetails = (props) =>  {
                 qty:0
             })
         }
-        fetchOtherData()
 
-    }, [props])
+        if(paramset){
+            if(paramset.id != params.id){
+                fetchOtherData();
+                setParamsData(params)
+            }
+
+        }else{
+            fetchOtherData()
+
+        }
+
+
+    }, [props,paramset])
 
   const handleChange = (e) => {
       e.preventDefault();
@@ -200,7 +218,6 @@ const ProductDetails = (props) =>  {
                     {
                         you_maylike.length ? 
                         <>
-            
                             <h5 className="mt-1 mb-3">Maybe You Like this</h5>
                             <div className="row hidden-xs hidden-sm">
                                 {

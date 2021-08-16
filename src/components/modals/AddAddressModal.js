@@ -3,26 +3,39 @@ import { Button, Modal,InputGroup,FormControl } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { setUserAddressList } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
-import { add_address, check_if_service_location, fetch_addresses, showAlertMessage } from "../server/api";
+import { add_address, check_if_service_location, fetch_addresses, fetch_areas, showAlertMessage } from "../server/api";
 import PlacesAutocomplete,{
     geocodeByAddress,
     geocodeByPlaceId,
     getLatLng,
   } from 'react-places-autocomplete';
 
+
+export const getPostcodeByLatLng = async (lat, lng) => {
+    if (!lat || !lng) return null
+    const res = await fetch(`https://api.postcodes.io/?lon=${lng}&lat=${lat}`)
+    console.log('====================================');
+    console.log('getPostcodeByLatLng',res);
+    console.log('====================================');
+    return res
+  }
+  
+
 const AddAddressModal = (props) => {
 
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
+    const [pincode, setPincode] = useState(false);
     const handleClose = () => setShow(false);
     const [formData, updateFormData] = useState({
-        state:'',city:'',landmark:'',
+        state:'',city:'',landmark:'',location_id:'',area_id:''
     });
     const [latlng, setLatLng] = useState({
         lat:"",lng:""
     });
     const [address_type,setAddressType] = useState('');
     const [address,setAddress] = useState('');
+    const [areas,setAreas] = useState([])
 
     const [address_type_class1,setAddressTypeClass1] = useState('btn btn-outline-secondary');
     const [address_type_class2,setAddressTypeClass2] = useState('btn btn-outline-secondary');
@@ -35,7 +48,20 @@ const AddAddressModal = (props) => {
         ...formData,
         [e.target.name]: e.target.value.trim()
         });
+
+        if(e.target.name==='location_id'){
+            var location_id = e.target.value.trim();
+            fetch_areas({
+                location_id:location_id
+            }).then(areas=>areas?setAreas(areas.data):'')
+        }
     };
+
+    const area_fetch = async () => {
+        fetch_areas({
+            location_id:props.location_id
+        }).then(areas=>areas?setAreas(areas.data):'')
+    }
 
     const set_address_type = (type='') => {
         setAddressType(type)
@@ -57,41 +83,56 @@ const AddAddressModal = (props) => {
 
     const handleSubmit =async (e) => {
         e.preventDefault()
-        const {state,city} = formData;
-        const reqdata = {...formData,address_type:address_type,location:address};
-        if(!state){
+        const reqdata = {...formData,address_type:address_type};
+        // if(!state){
+        //     setErrormessage({
+        //         message:"Please add your state!",
+        //         class:"danger"
+        //     })
+        // }else if(!city){
+        //     setErrormessage({
+        //         message:"Please add your city!",
+        //         class:"danger"
+        //     })
+        // }else if(!address){
+        //     setErrormessage({
+        //         message:"Please add your complete address!",
+        //         class:"danger"
+        //     })
+        // }else 
+        
+        if(!address_type){
             setErrormessage({
-                message:"Please add your state!",
+                message:"Please select address type!",
                 class:"danger"
             })
-        }else if(!city){
+        }else if(formData.location_id === ''){
             setErrormessage({
-                message:"Please add your city!",
-                class:"danger"
-            })
-        }else if(!address){
-            setErrormessage({
-                message:"Please add your complete address!",
-                class:"danger"
-            })
-        }else if(!address_type){
-            setErrormessage({
-                message:"Please select nickname!",
-                class:"danger"
-            })
-        }else if(latlng.lat === ''){
-            setErrormessage({
-                message:"Please select address from the dropdown list!",
+                message:"Please select location from the dropdown list!",
                 class:"danger"
             })
         }
+        // else if(formData.area_id === ''){
+        //     setErrormessage({
+        //         message:"Please select area from the dropdown list!",
+        //         class:"danger"
+        //     })
+        // }
+        // else if(latlng.lat === ''){
+            // setErrormessage({
+            //     message:"Please select address from the dropdown list!",
+            //     class:"danger"
+            // })
+        // }
         else{
             setCursorAllow(0);
             // console.log('reqdata',reqdata);
             const response =await add_address(reqdata);
             if(response.status){
                 showAlertMessage('Success','Address added successfully',true,false)
-                 fetch_addresses().then((rs)=>{
+                 fetch_addresses({
+                     location_id:props.location_id
+                 }).then((rs)=>{
                     if(rs.status){
                        dispatch(setUserAddressList(rs.data))
                     }
@@ -111,15 +152,15 @@ const AddAddressModal = (props) => {
     }
 
     const handleChangeAddress = address => {
-        // console.log('address',address);
         setAddress(address);
     };
 
     const handleSelect =async address => {
         setAddress(address)
         geocodeByAddress(address)
-            .then(results => {
-                console.log('====================================');
+            .then(async results => {
+                console.log('====================================',results);
+               
                 const ad = {
                     state:results[0]['address_components'][2]['long_name'],
                     city:results[0]['address_components'][1]['long_name'],
@@ -137,6 +178,9 @@ const AddAddressModal = (props) => {
                         latitude: res.lat,
                         longitude: res.lng,
                     };
+                    // const postcode = await getPostcodeByLatLng(res.lat,res.lng);
+                    // console.log('postcode',postcode);
+                    // setPincode(postcode)
                     // console.log('lat_lon',lat_lon);
                     const check_service_location = await check_if_service_location(lat_lon);
                     if(!check_service_location.status){
@@ -157,6 +201,13 @@ const AddAddressModal = (props) => {
             .catch(error => console.error('Error', error));
     };
 
+    useEffect(() => {
+        area_fetch()
+        // console.log('====================================');
+        // console.log('areas' ,areas);
+        // console.log('====================================');
+    }, [props])
+
     return (
         <div>
             {/* <form method="POST" > */}
@@ -173,10 +224,10 @@ const AddAddressModal = (props) => {
                         <Modal.Title>Add Delivery Address</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    
+
                         {<Infomsg type={errormessage.class} message={errormessage.message} ></Infomsg>}
                             <div className="form-row">
-                            <div className="col-md-12 form-group">
+                            {/* <div className="col-md-12 form-group">
                                     <PlacesAutocomplete
                                         value={address}
                                         onChange={(e)=>handleChangeAddress(e)}
@@ -201,7 +252,6 @@ const AddAddressModal = (props) => {
                                                 const className = suggestion.active
                                                 ? 'suggestion-item--active'
                                                 : 'suggestion-item';
-                                                // inline style for demonstration purpose
                                                 const style = suggestion.active
                                                 ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                                                 : { backgroundColor: '#ffffff', cursor: 'pointer' };
@@ -220,13 +270,53 @@ const AddAddressModal = (props) => {
                                         </div>
                                         )}
                                     </PlacesAutocomplete>
+                                </div> */}
+
+<div className="col-md-6 form-group">
+                                    <label className="form-label">Selected Location</label>
+                                    <select  onChange={handleChange} name="location_id" className="form-control" >
+                                        <option value="" >Select location</option>
+
+                                        {
+                                            props.locations.length ?
+                                            props.locations.map((lc)=>{
+                                            if(props.location_id==lc.id){
+                                                return <option key={lc.id}  value={lc.id}  >{lc.name}</option>
+                                            }else{
+                                                return ''
+                                            }
+                                            })
+
+                                            :''
+                                        }
+                                    </select>
                                 </div>
 
+                                <div className="col-md-6 form-group">
+                                    <label className="form-label">Selected Area</label>
+                                    <select className="form-control" name="area_id"  onChange={handleChange} >
+                                        <option value="" >Select Area</option>
+                                        {
+                                            areas.length ?
+                                            areas.map((lc)=><option key={lc.id} value={lc.id} >{lc.name}</option>)
+
+                                            :''
+                                        }
+                                    </select>
+                                </div>
+
+
+                                <div className="col-md-6 form-group"><label className="form-label">Flat</label><input onChange={handleChange} name="flat" type="text" className="form-control" required/></div>
+
+                                <div className="col-md-6 form-group"><label className="form-label">Landmark</label><input  onChange={handleChange}  name="landmark" defaultValue={formData.landmark} type="text" className="form-control" /></div>
+
+
+                                {/* <div className="col-md-4 form-group"><label className="form-label">City</label><input onChange={handleChange} placeholder="New Delhi" name="city" defaultValue={formData.city} type="text" className="form-control" /></div>
                                 <div className="col-md-4 form-group"><label className="form-label">State</label><input onChange={handleChange}  placeholder="Delhi" type="text" defaultValue={formData.state} name="state" className="form-control" /></div>
 
-                                <div className="col-md-4 form-group"><label className="form-label">City</label><input onChange={handleChange} placeholder="New Delhi" name="city" defaultValue={formData.city} type="text" className="form-control" /></div>
+                                <div className="col-md-4 form-group"><label className="form-label">Landmark</label><input  onChange={handleChange} placeholder="Metro Station" name="landmark" defaultValue={formData.landmark} type="text" className="form-control" /></div> */}
 
-                                <div className="col-md-4 form-group"><label className="form-label">Landmark</label><input  onChange={handleChange} placeholder="Metro Station" name="landmark" defaultValue={formData.landmark} type="text" className="form-control" /></div>
+                                
 
                                 <div className="mb-0 col-md-12 form-group">
                                     <label className="form-label">Nickname</label>

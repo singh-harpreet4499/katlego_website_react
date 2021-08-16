@@ -1,48 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router';
 import ProductDetails from '../components/product/ProductDetails';
 import { fetch_product_details } from '../components/server/api';
 import Footer from '../components/footer/Footer';
+import { useParams } from 'react-router-dom';
+import SpinLoader from '../components/loader/SpinLoader';
 
-class ProductInfo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            productdata:{}
-        }
-    }
-    
-    fetch_product_data = async () => {
-        console.log(this.props.match.params);
-        const { id,productName} = this.props.match.params;
+const ProductInfo = () => {
+    const [productdata,setProductData]= useState({})
+    const [canMove,setCanMove] = useState(0);
+    const [params,setParamData]= useState(null)
+    const paramss = useParams()
+    const fetch_product_data = async () => {
+        const { id } = paramss;
         await fetch_product_details({
             id:id
         }).then((rs)=>{
             if(rs.status){
-                this.setState({
-                    productdata:rs.data
-                })
+                setCanMove(1)
+                setProductData(rs.data)
+                setParamData(params)
             }
         })
     }
 
-    componentDidMount(){
-        this.fetch_product_data();
-    }
+    useEffect(() => {
+        if(params){
+            if(paramss.id != params.id){
+                fetch_product_data();
+            }
+        }else{
+            fetch_product_data();
+        }
+        // return () => {
+        // }
+    }, [params,paramss])
 
-
-
-    // const {name,imageUrl,description,mrp,discount_type,discount,selling_price,net_weight,unit,hifen_name}=this.props;
-
-    render() {
-        const {productdata}=this.state;
-        return (
-            <main>
-                <ProductDetails {...productdata} />
-            </main>
-        );
-    }
+    return (
+        !canMove ? <SpinLoader />  :
+                    <main>
+                        <ProductDetails {...productdata} />
+                    </main>
+    )
 
 }
-
 export default withRouter(ProductInfo);

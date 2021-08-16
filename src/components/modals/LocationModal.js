@@ -25,11 +25,25 @@ const LocationModal = (props) => {
     const [locationSelection,setLocationSelection] = useState(0);
     const [areas,setAreas] = useState([]);
     const dispatch = useDispatch();
+    const address_data = useSelector(state=>state.user.location)
     
   const [formData, updateFormData] = useState({
     location_id: 0,
     area_id: 0,
   });
+
+  const close_button = () => {
+    if(address_data && address_data != '' && address_data.length){
+        handleClose();
+        
+    }else{
+        setShow(true)
+        setErrormessage({
+            message:"Please select location!",
+            class:"danger"
+        })
+    }
+  }
 
   const handleChange = (e) => {
     updateFormData({
@@ -48,7 +62,7 @@ const LocationModal = (props) => {
 
   const handleSubmit =async (e) => {
     e.preventDefault()
-    const {location_id} = formData;
+    const {location_id,area_id} = formData;
 
     if(!location_id){
         setErrormessage({
@@ -64,6 +78,8 @@ const LocationModal = (props) => {
     
                 const obj = {
                     is_set:1,
+                    address_id:location_id,
+                    society_id:area_id,
                     is_current_location:0,
                     latitude:rs.data.lat,
                     longitude:rs.data.lon,
@@ -74,6 +90,7 @@ const LocationModal = (props) => {
                 localStorage.setItem('setUserLocation',JSON.stringify(obj))
                 dispatch(setUserLocation(obj))
                 handleClose()
+                window.location.reload();
     
             }
         })
@@ -181,7 +198,7 @@ const LocationModal = (props) => {
             Launch demo modal
             </Button> */}
 
-        <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal size="lg" show={show} onHide={close_button} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>Select Delivery Location</Modal.Title>
             </Modal.Header>
@@ -219,9 +236,8 @@ const LocationModal = (props) => {
                             className="btn btn-dark btn-block rounded btn-apple"
                             >Set Location </button>
                     </div>
-                    <div className="form-group" >
+                    {/* <div className="form-group" >
                     <label htmlFor="or" >- OR - </label>
-
                     </div>
 
                     <div className="form-group" >
@@ -237,12 +253,12 @@ const LocationModal = (props) => {
                             <Button onClick={fetch_current_location} variant="outline-secondary">Use Current Location</Button>
                             </InputGroup.Append>
                         </InputGroup>
-                    </div>
+                    </div> */}
                 </form>
 
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={close_button}>
                     Close
                 </Button>
                 {/* <Button variant="primary" onClick={handleClose}>

@@ -54,8 +54,6 @@ const Signup = (props) => {
 
     }else{
       setCanmove(1)
-    }
-    if(can_move){
       setCursorAllow(0)
 
       const response =await user_signup_otp(formData);
@@ -68,10 +66,14 @@ const Signup = (props) => {
       }else{
         setCursorAllow(1)
 
-      setErrormessage(response.message)
+        setErrormessage(response.message)
 
       }
+
     }
+    // if(can_move){
+      
+    // }
 
   
   };
@@ -150,7 +152,7 @@ const Signup = (props) => {
                     Create Account
                   </button>
                 </form>
-                <p className="text-muted text-center small py-2 m-0">or</p>
+                {/* <p className="text-muted text-center small py-2 m-0">or</p>
                 <button
                   className="btn btn-dark btn-block rounded btn-lg btn-apple"
                 >
@@ -168,7 +170,7 @@ const Signup = (props) => {
                 >
                   <i className="icofont-google-plus text-danger mr-2"></i> Sign
                   up with Google
-                </button>
+                </button> */}
                 <p className="text-center mt-3 mb-0">
                   <Link to="/login" className="text-dark">
                     Already have an account! Sign in

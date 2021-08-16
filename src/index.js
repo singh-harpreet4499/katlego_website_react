@@ -38,7 +38,7 @@ import ScrollToTop from './components/ScrollToTop';
 ReactDOM.render(
   <React.StrictMode>
      <Provider  store={store} >
-    <BrowserRouter basename={'/build'}>
+    <BrowserRouter basename={'/'}>
     <ScrollToTop>
     <App />
     </ScrollToTop>

@@ -117,9 +117,9 @@ const HomeCategoryItem2 = ({mrp,name,imageUrl,hifen_name,id,selling_price,discou
 const options1 = {
     nav: false,
     dots: false,
-    // autoplay:true,
+    autoplay:true,
     autoplayHoverPause:true,
-    autoplayTimeout:1400,
+    autoplayTimeout:3000,
     margin: 20,
     loop: true,
     responsive: {
@@ -173,7 +173,7 @@ const HomeSlider = (props) => {
             {
                 homeCategory.length ?
 
-                (<OwlCarousel className='owl-carousel mt-2 owl-simple owl-loaded owl-drag pro-sli' {...options1}>
+                (<OwlCarousel className='owl-carousel mt-2 owl-simple owl-loaded owl-drag pro-sli pro-new' {...options1}>
                     <div className="owl-stage-outer">
                         <div className="owl-stage" style= {{transform:'translate3d(0px, 0px, 0px)',width:'1199px'}}>
                             {

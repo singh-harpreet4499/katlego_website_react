@@ -41,8 +41,7 @@ function Newsletter(props){
                       type="submit"
                       id="newsletter-btn"
                     >
-                      <span>Subscribe</span
-                      ><i className="icon-long-arrow-right"></i>
+                      <span>Subscribe</span><i className="icon-long-arrow-right"></i>
                     </button>
                   </div>
                 </div>

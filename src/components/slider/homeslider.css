@@ -64,6 +64,12 @@
     color: #50008b !important;
     font-weight: 700;
 }
+.pro-new {
+    margin-top: -60px !important;
+}
+.owl-carousel.owl-carousel.mt-2.owl-simple.pro-sli.pro-new.owl-loaded.owl-drag {
+    margin-top: -60px !important;
+}
 /* .owl-item  {
     background: #fff !important;
     border-radius: 12px !important;

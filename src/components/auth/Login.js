@@ -7,6 +7,16 @@ import { connect, useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser } from "../../redux/user/user.action";
 import { updatecarts } from "../../redux/cart/cart.action";
 
+export function phonenumberValidate(inputtxt) {
+  var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  if(inputtxt.value.match(phoneno)) {
+    return true;
+  }
+  else {
+    alert("message");
+    return false;
+  }
+}
 
 const Login = (props) => {
     let history = useHistory();
@@ -81,13 +91,13 @@ const Login = (props) => {
                         </div>
                         <button type="submit" className="btn btn-success btn-lg rounded btn-block" style={{cursor:cursor_allow ? 'pointer':'not-allowed'}} disabled={cursor_allow?false:true}>Sign in</button>
                     </form>
-                    <p className="text-muted text-center small m-0 py-3">or</p>
+                    {/* <p className="text-muted text-center small m-0 py-3">or</p>
                     <a href="/" className="btn btn-dark btn-block rounded btn-lg btn-apple">
                         <i className="icofont-brand-apple mr-2"></i> Sign up with Apple
                     </a>
                     <a href="/" className="btn btn-light border btn-block rounded btn-lg btn-google">
                         <i className="icofont-google-plus text-danger mr-2"></i> Sign up with Google
-                    </a>
+                    </a> */}
                     <p className="text-center mt-3 mb-0"><Link to="/signup" className="text-dark">Don't have an account? Sign up</Link></p>
                 </div>
             </div>

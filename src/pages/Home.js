@@ -88,12 +88,13 @@ class Home extends React.Component {
                 <Heading title="Explore by categories" horizontalLine={false} />
                 <div className="container">
                     <div className="row justify-content-center">
-                        <Category2 defaultImage={1}/>
-                        <Category2 defaultImage={2}/>
-                        <Category2 defaultImage={3}/>
-                        <Category2 defaultImage={4}/>
-                        <Category2 defaultImage={5}/>
-                        <Category2 defaultImage={6}/>
+                        {
+                            categories.length ? categories.slice(0, 6).map(({id,...otherData}) => {
+                                return (
+                                    <Category2 key={id} id={id}  defaultImage={1}  {...otherData} />
+                                )
+                            }) : ''
+                        }
                     </div>
                 </div>
                 <Aboutus />

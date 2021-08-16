@@ -2,11 +2,12 @@ import defaulimg1 from '../../libs/images/video/poster-1.jpg'
 import defaulimg2 from '../../libs/images/kat.png'
 import defaulimg3 from '../../libs/images/deliv.png'
 import { useEffect, useState } from 'react'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const PromiseSection = (props) => {
 
     return (
-        <div className="tab-pane fade row"  aria-labelledby="nav-homepage-tabs-01-032020-tab">
+        <div className="row"  aria-labelledby="nav-homepage-tabs-01-032020-tab">
                     <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
 
                         <div className="home__tabs__image lazy loaded" data-bg="" data-ll-status="loaded" style={{backgroundImage:`url(${defaulimg2})`}}>
@@ -51,7 +52,7 @@ const AboutusSection = (props) => {
 const DeliverySection = (props) => {
 
     return (
-        <div className="tab-pane fade row"  aria-labelledby="nav-homepage-tabs-03-032020-tab">
+        <div className="row"  aria-labelledby="nav-homepage-tabs-03-032020-tab">
                     <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
 
                         <div className="home__tabs__image lazy loaded"  style={{backgroundImage:`url(${defaulimg3})`}}>
@@ -73,9 +74,28 @@ const Aboutus = (props) => {
 
     const [pageName,setPageName] = useState('aboutussection');
 
+    const [page,setPage] = useState(<AboutusSection />)
+
     const update_page_name =  (page_name='my_account') => {
-        localStorage.setItem('about_section',page_name)
+        // localStorage.setItem('about_section',page_name)
         setPageName(page_name)
+        switch (page_name) {
+            case 'aboutussection':
+                setPage(<AboutusSection />)
+                break;
+            case 'promisesection':
+                setPage(<PromiseSection />)
+                break;
+    
+            case 'deliverysection':
+                setPage(<DeliverySection />)
+                break;
+        
+            default:
+                setPage(<AboutusSection />)
+
+                break;
+        }
     }
     useEffect(() => {
 
@@ -85,24 +105,6 @@ const Aboutus = (props) => {
         }
 
     }, [])
-
-    var page = <AboutusSection />
-    switch (pageName) {
-        case 'aboutussection':
-            page=<AboutusSection />
-            break;
-        case 'promisesection':
-            page=<PromiseSection />
-            break;
-
-        case 'deliverysection':
-            page=<DeliverySection />
-            break;
-    
-        default:
-            break;
-    }
-
 
     return (
         <div className="container">
@@ -136,6 +138,23 @@ const Aboutus = (props) => {
 
                 {page}
             </div>
+
+                {/* <Tabs >
+                    <TabList>
+                        <Tab>About Us</Tab>
+                        <Tab>Katlego Promise</Tab>
+                        <Tab>Delivery</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <AboutusSection />
+                    </TabPanel>
+                    <TabPanel>
+                        <PromiseSection />
+                    </TabPanel>
+                    <TabPanel>
+                        <DeliverySection />
+                    </TabPanel>
+                </Tabs> */}
         </div>
     </div>
 

@@ -59,8 +59,6 @@ const Otp = (props) => {
 
     return (
 
-       
-
     <section className="osahan-main-body">
         <div className="container">
             <div className="row d-flex align-items-center justify-content-center vh-100">

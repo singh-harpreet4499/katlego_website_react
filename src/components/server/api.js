@@ -7,37 +7,40 @@ import { redirectUnauthUser, setRedirectFalse } from "../../redux/redirect/redir
 import store from '../../redux/store';
 const moment = require('moment');
 const axiosinstance = axios.create();
-const BASE_URL = "http://localhost:3030/api/";
-// const BASE_URL = "http://139.59.67.166:3030/api/";
+// const BASE_URL = "http://localhost:3030/api/";
+const BASE_URL = "http://139.59.67.166:3030/api/";
 
 // const get_session_token = () => {
 //   return localStorage.getItem("accessToken");
 // };
 
 
-// Function that will be called to refresh authorization
-const refreshAuthLogic = failedRequest =>hitServerApi('regenerateToken',{refreshToken:localStorage.getItem("refreshToken")}).then(async res => {
+// // Function that will be called to refresh authorization
+// const refreshAuthLogic = failedRequest =>hitServerApi('regenerateToken',{refreshToken:localStorage.getItem("refreshToken")}).then(async res => {
 
-  if (res.status) {
+//   if (res.status) {
    
-    axiosinstance.defaults.headers.common['authorization'] = res.data.token;
-    await set_session(res);
-    return Promise.resolve();
+//     axiosinstance.defaults.headers.common['authorization'] = res.data.token;
+//     await set_session(res);
+//   return Promise.resolve();
 
-  }else{
-    // store.dispatch(redirectUnauthUser())
-    // store.dispatch(setRedirectFalse())
-    // localStorage.clear();
-  return Promise.reject();
+//   }else{
+//     // store.dispatch(redirectUnauthUser())
+//     // store.dispatch(setRedirectFalse())
+//     localStorage.clear();
+//   return Promise.reject();
 
-  }
-});
+//   }
+// });
 
-createAuthRefreshInterceptor(axiosinstance, refreshAuthLogic);
+// createAuthRefreshInterceptor(axiosinstance, refreshAuthLogic);
 
 //request interceptor to add the auth token header to requests
 axiosinstance.interceptors.request.use(
   async (config) => {
+    const location_id = store.getState(state=>state);
+    
+    config.headers["location_id"] = location_id.user.location.address_id;
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     const token_expiry = localStorage.getItem("token_expiry");
@@ -194,6 +197,7 @@ export const get_session =async (response) => {
       if(user.status){
         data = user.data;
       }
+      return user
     })
     .catch((er)=>null)
 
@@ -208,6 +212,9 @@ export const get_session =async (response) => {
    refreshToken:refreshToken
  }
 
+ console.log('====================================');
+ console.log('dhfff',obj);
+ console.log('====================================');
  return obj
 }
 
@@ -349,6 +356,35 @@ export const you_may_like = async (data) => {
   const serverdata = await hitServerApi("you_may_like", data);
   return serverdata;
 };
+
+
+export const deliveryconfig = async (data) => {
+  const serverdata = await hitServerApi("deliveryconfig", data);
+  return serverdata;
+};
+
+
+export const generate_order = async (data) => {
+  const serverdata = await hitServerApi("generate_order", data);
+  return serverdata;
+};
+
+export const fetch_navbar_category_product = async (data) => {
+  const serverdata = await hitServerApi("fetch_navbar_category_product", data);
+  return serverdata;
+};
+
+export const search_product = async (data) => {
+  const serverdata = await hitServerApi("search_product", data);
+  return serverdata;
+};
+
+
+export const get_products_by_filters = async (data) => {
+  const serverdata = await hitServerApi("get_products_by_filters", data);
+  return serverdata;
+};
+
 
 export const showAlertMessage = (title='alert',message='',success=false,danger='false') => {
   const alert_config =  {

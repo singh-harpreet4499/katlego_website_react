@@ -1,7 +1,7 @@
 import Infomsg from "../components/app/Infomsg";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { add_cart, delete_address, fetch_addresses, get_cart_items, remove_cart_item, showAlertMessage } from "../components/server/api";
+import { add_cart, delete_address, fetch_addresses, fetch_locations, get_cart_items, remove_cart_item, showAlertMessage } from "../components/server/api";
 import { updatecarts } from "../redux/cart/cart.action";
 import { Link } from "react-router-dom"
 import StickyPayout from "../components/cart/StickyPayout";
@@ -13,39 +13,59 @@ import PlacesAutocomplete, {
   } from 'react-places-autocomplete';
 import { setUserAddressList } from "../redux/user/user.action";
 import DeliveryConfig from "../components/timeslot/DeliveryConfig";
+import PaymentOption from "../components/payment/PaymentOption";
+import { setOrderConf } from "../redux/order/order.action";
 
 const AddressItem = (props) => {
     const {address_type,location,city,state,id} = props;
     const dispatch = useDispatch();
+    const orderConfd = useSelector(state=>state.orderConf)
+
+
+    const select_shipping_location = (location_id) => {
+        console.log('====================================');
+        console.log('select_shipping_location',location_id);
+        console.log('====================================');
+        dispatch(setOrderConf({
+            ...orderConfd,
+            address_id:location_id
+        }))
+    }
     
 
     const delete_add = ()=>{
         delete_address({id:id}).then((dt)=>{
             showAlertMessage('Success','Address removed successfully',true,false)
-                 fetch_addresses().then((rs)=>{
+                 fetch_addresses({
+                     location_id:props.location_id
+                 }).then((rs)=>{
                     if(rs.status){
                        dispatch(setUserAddressList(rs.data))
                     }
                 })
         })
     }
+
+    useEffect(() => {
+       
+    }, [orderConfd])
     return (
-        <div className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" defaultChecked />
+        <div style={{cursor:"pointer"}} className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio"  >
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" defaultChecked={orderConfd ? (orderConfd.address_id == id ? true : false) : false} />
             <label className="custom-control-label w-100" htmlFor="customRadioInline1">
                 <div>
                     <div className="p-3 bg-white rounded shadow-sm w-100">
                         <div className="d-flex align-items-center mb-2">
                             <p className="mb-0 h6">{address_type.toUpperCase()}</p>
-                            <p className="mb-0 badge badge-success ml-auto"><i className="icofont-check-circled"></i> Default</p>
+                            <p className="mb-0 badge badge-success ml-auto">{props.is_default===1 ? <><i className="icofont-check-circled"></i> Default</> :'' }</p>
                         </div>
-                        <p className="small text-muted m-0">{location}</p>
-                        <p className="small text-muted m-0">{city} {state}</p>
+                        <p className="small text-muted m-0">{props.flat}</p>
+                        <p className="small text-muted m-0">{props.main_society + ' '+ props.main_location}</p>
                         <p className="pt-2 m-0 text-right"><span className="small"><span style={{cursor:"pointer"}} onClick={delete_add}  className="text-decoration-none text-info">Delete</span></span></p>
                     </div>
-                    <span className="btn btn-light border-top btn-lg btn-block">
+                    <button className="btn btn-light border-top btn-lg btn-block"  onClick={()=>select_shipping_location(id)}>
                         Deliver Here
-                    </span>
+                    </button>
                 </div>
             </label>
         </div>
@@ -84,7 +104,6 @@ const CartItem = (props) => {
             })
         }else{
            await add_cart(reqdata)
-           
 
             setCompData({
                 qty:new_qty
@@ -125,10 +144,10 @@ const CartItem = (props) => {
                         <div className="d-flex align-items-center">
                             <p className="total_price font-weight-bold m-0">₹{cart_amount}</p>
                             <form
-                            id="myform"
-                            onSubmit={handleSubmit}
-                            className="cart-items-number d-flex ml-auto"
-                            method="POST"
+                                id="myform"
+                                onSubmit={handleSubmit}
+                                className="cart-items-number d-flex ml-auto"
+                                method="POST"
                             >
                             <input
                                 type="button"
@@ -165,9 +184,30 @@ const CartItem = (props) => {
 
 
 const CartData = (props) => {
-        const dispatch = useDispatch()
-        const {items} = useSelector(state => state.cart)
-        const address_list = useSelector(state => state.user.address_list)
+    const dispatch = useDispatch()
+    const {items} = useSelector(state => state.cart)
+    const address_selected = useSelector(state=>state.user.location);
+    // var location_id = 0
+    // if(address_selected){
+    //     location_id = address_selected.address_id;
+    // }
+
+    const [locations,setLocations] = useState([]);
+
+    const setselectedLocation =async () => {
+        const locationapi = await fetch_locations({});
+        if (locationapi.status) {
+            setLocations(locationapi.data)
+        }
+    }
+
+    // debugger;
+    const address_list = useSelector(state => state.user.address_list)
+
+    // const 
+    // const address_list = useSelector(state => state.user.address_list)
+
+    // const select_address = 
 
     const fetch_carts_data =async () => {
         await get_cart_items().then((rs)=>{
@@ -181,7 +221,9 @@ const CartData = (props) => {
     }
 
     const fetch_address =async () => {
-        await fetch_addresses().then((rs)=>{
+        await fetch_addresses({
+            location_id:address_selected?address_selected.address_id:0,
+        }).then((rs)=>{
             if(rs.status){
                dispatch(setUserAddressList(rs.data))
             }
@@ -192,6 +234,7 @@ const CartData = (props) => {
     useEffect(() => {
         fetch_carts_data();
         fetch_address();
+        setselectedLocation();
     }, [])
     return (
         <div>
@@ -248,7 +291,7 @@ const CartData = (props) => {
                                             </h2>
                                         </div> */}
 
-                                        <AddAddressModal  /> 
+                                        <AddAddressModal  locations={locations}  location_id ={ address_selected ? address_selected.address_id : 0} /> 
 
 
 
@@ -258,7 +301,7 @@ const CartData = (props) => {
                                                     <div className="p-3 row">
                                                         {
                                                             address_list.length>0?
-                                                            address_list.map((data)=><AddressItem  {...data} />)
+                                                            address_list.map((data)=><AddressItem  style={{cursor:'pointer'}} {...data} location_id={address_selected?address_selected.address_id:0} />)
                                                             : ''
                                                         }
                                                     </div>
@@ -268,6 +311,7 @@ const CartData = (props) => {
                                     </div>
 
                                     <DeliveryConfig />
+                                    <PaymentOption />
                                     {/* end order address */}
 
                                 </div>

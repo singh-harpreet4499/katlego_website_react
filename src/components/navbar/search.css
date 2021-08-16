@@ -1,0 +1,39 @@
+/*  */
+
+  .autocomplete-items {
+    position: absolute;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0px;
+    right: 0;
+    overflow-x: hidden;
+}
+.autocomplete-items div {
+    padding: 5px;
+    cursor: pointer;
+    width: 95%;
+    color: #fff;
+    font-size: 15px;
+    text-align: left;
+    background: #fff;
+}
+
+.docname {
+    width: 100%!important;
+    border-bottom: 1px solid rgba(84,82,82,.09)!important;
+}
+.docname a .search-content p {
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.docname a .search-content p {
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.search-toggle:hover, .search-toggle:focus, .search-toggle.active {
+  color: #eb2627;
+}

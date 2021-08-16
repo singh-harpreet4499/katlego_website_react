@@ -69,9 +69,6 @@ export const NavCartItem =  (props) => {
 const NavCart = (props) => {
 
     const user = useSelector(state=>state.user.currentUser);
-   
-
-
     return (
         <div className="dropdown-menu dropdown-menu-right">
             <div className="dropdown-cart-products">

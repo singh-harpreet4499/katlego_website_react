@@ -1,13 +1,14 @@
 import logo from "../../libs/images/logo.png";
 import React from "react";
 import { geolocated } from "react-geolocated";
-import { check_if_service_location, fetch_locations } from "../server/api";
+import { check_if_service_location, fetch_locations, fetch_navbar_category_product } from "../server/api";
 import NavCart from "../cart/NavCart";
 import { connect } from "react-redux";
 import LocationModal from "../modals/LocationModal";
 import { setUserLocation } from "../../redux/user/user.action";
 import { Link } from "react-router-dom";
-
+import banner1 from '../../libs/images/menu/banner-1.jpg'
+import Search from "./Search";
 
 const MobileMenu = (props) => {
 
@@ -36,7 +37,10 @@ const MobileMenu = (props) => {
 								<nav className="mobile-nav">
 									<ul className="mobile-menu">
 										<li className="active" style={{backgroundColor:'#fff'}}>
-											<a href="/">Home</a>
+											{/* <a href="/">Home</a> */}
+											<Link to={{
+												pathname:'/'
+											}} >Home</Link>
 
 
 										</li>
@@ -81,6 +85,7 @@ const closeMobileMenue = (event) => {
 			is_location_available: 0,
 			city: "",
 			state: "",
+			navbar_category:[]
 
 			};
 		}
@@ -169,8 +174,19 @@ const closeMobileMenue = (event) => {
 			}
 		};
 
+		fetch_navbar_product = async () => {
+			fetch_navbar_category_product({}).then((rs)=>{
+				if(rs.status){
+					this.setState({
+						navbar_category:rs.data
+					})
+				}
+			})
+		}
+
 		componentDidMount() {
 			this.locationstatus();
+			this.fetch_navbar_product()
 			if(this.props.locationstate && this.props.locationstate.is_set){
 				this.setState({
 					location_modal:false
@@ -179,8 +195,8 @@ const closeMobileMenue = (event) => {
 		}
 
 		render() {
-			console.log("location state", this.state);
-			const { locations ,location_modal} =this.state;
+			// console.log("location state", this.state);
+			const { locations ,location_modal,navbar_category} =this.state;
 			var lc_modal = <LocationModal show={location_modal} locations={locations} />
 
 			return (
@@ -189,7 +205,8 @@ const closeMobileMenue = (event) => {
 				<MobileMenu />
 
 				<header className="header">
-					<div className="header-middle ">
+				{/* sticky-header fixed */}
+					<div className="header-middle">
 						<div className="container">
 							<div className="header-left">
 								<button onClick={openMobileMenue} className="mobile-menu-toggler">
@@ -204,34 +221,85 @@ const closeMobileMenue = (event) => {
 								<nav className="main-nav">
 								<ul className="menu sf-arrows">
 									<li>
-									<a href="/" className="sf-with-ul">
-										Menu
-									</a>
+									<Link to="/" className="sf-with-ul">
+										Home
+									</Link>
 									</li>
 
 									<li>
-									<a href="/" className="sf-with-ul">
-										Blogs
-									</a>
+										<a href="#" className="sf-with-ul">
+											Menu
+										</a>
+										<div className="megamenu megamenu-md">
+											<div className="row no-gutters">
+												<div className="col-md-8">
+													<div className="menu-col">
+														<div className="row">
+														{
+																navbar_category.length ?
+																navbar_category.map((data)=>{
+																	return (
+																		<div className="col-md-6">
+																			<div className="menu-title">{data.name.toUpperCase()}</div>
+																			<ul>
+																				{
+																					data.products.length ? 
+																					data.products.map(({id,name,hifen_name})=>{
+																						return (
+																							<li><Link
+																							to={{
+																								pathname: "/product-details/"+hifen_name+"/"+(id),
+																							}}>{name}</Link></li>
+																						)
+																					})
+																					: ''
+																				}
+				
+																			</ul>
+																		</div>
+																	)
+																})
+																 : ''
+
+														}
+															
+
+						
+														</div>
+													</div>
+												</div>
+												<div className="col-md-4">
+													<div class="banner banner-overlay">
+              											<a href="#" class="banner banner-menu">
+    														<img src={banner1} alt="Banner" />
+       														<div class="banner-content banner-content-top">
+																<div class="banner-title text-white">The <br />Best<br /><span><strong>Choice</strong></span></div>
+                            								</div>
+                             							</a>
+                            						</div>
+												</div>
+							
+											</div>
+										</div>
 									</li>
 
-									<li>
+									{/* <li>
 									<a href="/" className="sf-with-ul">
 										Recipes
 									</a>
-									</li>
+									</li> */}
 
 									<li>
-									<a href="/" className="sf-with-ul">
-										Career
-									</a>
+									<Link to="/about-us" className="sf-with-ul">
+										ABOUT US
+									</Link>
 									</li>
 
-									<li>
+									{/* <li>
 									<a href="/" className="sf-with-ul">
 										Contact Us
 									</a>
-									</li>
+									</li> */}
 
 								</ul>
 								</nav>
@@ -239,29 +307,30 @@ const closeMobileMenue = (event) => {
 
 							<div className="header-right">
 								<div className="header-search">
-									<a
-									href="/"
-									className="search-toggle"
+									<span
+									className="search-toggle active"
 									role="button"
 									title="Search"
+									style={{cursor:"pointer"}}
 									>
 									<i className="icon-search"></i>
-									</a>
-									<form action="#" method="get">
-									<div className="header-search-wrapper">
-										<label htmlFor="q" className="sr-only">
-										Search
-										</label>
-										<input
-										type="search"
-										className="form-control"
-										name="q"
-										id="q"
-										placeholder="Search in..."
-										required
-										/>
-									</div>
-									</form>
+									</span>
+									<Search />
+									{/* <form action="#" method="get">
+										<div className="header-search-wrapper show">
+											<label htmlFor="q" className="sr-only">
+											Search
+											</label>
+											<input
+											type="search"
+											className="form-control"
+											name="q"
+											id="q"
+											placeholder="Search in..."
+											required
+											/>
+										</div>
+									</form> */}
 								</div>
 								{
 									this.props.currentUser?(
@@ -308,8 +377,8 @@ const closeMobileMenue = (event) => {
 								</div>
 
 								<div className="header-dropdown">
-									<a href="/" className="del">
-										<i className="fa fa-map-marker mr-2"  onClick={()=>this.setState({location_modal:true})} ></i>{" "}
+									<a href="#" className="del">
+										<i className="fa fa-map-marker mr-2"  onClick={()=>this.setState({location_modal:!this.state.location_modal})} ></i>{" "}
 										{this.props.locationstate ? (this.props.locationstate.name) : ''}
 									</a>
 									<div className="header-menu">
@@ -318,7 +387,7 @@ const closeMobileMenue = (event) => {
 											? locations.map(({ id, name }) => {
 												return (
 												<li  key={id}>
-													<div style={{cursor:'pointer'}} id={id} onClick={()=>this.setState({location_modal:true})} >{name}</div>
+													<div style={{cursor:'pointer'}}  onClick={()=>this.setState({location_modal:!this.state.location_modal})} >{name}</div>
 												</li>
 												);
 											})

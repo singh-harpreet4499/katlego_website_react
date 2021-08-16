@@ -27,7 +27,7 @@ function Category(props) {
         <Link
         className="category-title text-truncate font-weight-normal"
             to={{
-                pathname: "/product-list/"+props.name+"/"+(props.id),
+                pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
                 state:{...props}
             }}>
        

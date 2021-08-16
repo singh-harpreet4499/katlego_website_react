@@ -16,8 +16,10 @@ import './header.css'
 const options = {
   nav: false,
   dots: false,
+  autoplay: true,
+  autoplayTimeout:3000,
   margin: 10,
-  loop: false,
+  loop: true,
   responsive: {
     0: {
       items: 3,
@@ -73,7 +75,6 @@ const Header = (props) => {
       </div>
     );
   }
-  
 }
 
 export default Header;
