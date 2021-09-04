@@ -47,13 +47,14 @@ const ProductDetails = (props) =>  {
             qty:new_qty
         }
         // console.log('reqdata',reqdata);
-        if(new_qty===0){
-            await remove_cart_item({
-                 id:cartdata?cartdata.id:0,
-             })
-         }else{
-             add_cart(reqdata)
-         }
+        // if(new_qty===0){
+        //     await remove_cart_item({
+        //          id:cartdata?cartdata.id:0,
+        //      })
+        //  }else{
+        //      add_cart(reqdata)
+        //  }
+        add_cart(reqdata)
          await get_cart_items().then((rs)=>{
              if(rs.status){
                  dispatch(updatecarts(rs))

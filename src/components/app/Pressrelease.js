@@ -41,10 +41,10 @@ const options1 = {
                 <div className="mt-2 mb-3"> </div>
                 <h2 className="title text-center story">Press Releases</h2>
                 <OwlCarousel className='owl-carousel mt-3 mb-3 owl-simple owl-loaded owl-drag' {...options1} >
-                    <div className="owl-item active" style={{width:'169.667px',marginRight:'30px'}} ><div className="brand">
+                    <div className="owl-item " style={{width:'169.667px',marginRight:'30px'}} ><div className="brand">
                         <img src={defaultimg1} alt="Brand Name" />
                     </div></div>
-                    <div className="owl-item active" style={{width:'169.667px',marginRight:'30px'}} ><div className="brand">
+                    <div className="owl-item " style={{width:'169.667px',marginRight:'30px'}} ><div className="brand">
                         <img src={defaultimg2} alt="Brand Name" />
                     </div></div>
                 </OwlCarousel>

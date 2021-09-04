@@ -6,8 +6,8 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 import './homeslider.css'
 
-import  defaultImage from '../../libs/images/demos/demo-2/slider/slide-8.jpg'
-import  defaultImage2 from '../../libs/images/demos/demo-2/slider/slide-9.jpg'
+import  defaultImage from '../../libs/images/demos/demo-2/slider/banner.png'
+import  defaultImage2 from '../../libs/images/demos/demo-2/slider/banner1.png'
 import { useEffect, useState } from 'react';
 
 import {fetch_showcase_products} from '../server/api'
@@ -145,6 +145,7 @@ const options1 = {
 const HomeSlider = (props) => {
 
     const [homeCategory , setHomeCategory] = useState([]);
+    const [topBanners,setTopBannners] = useState([])
 
 
     const load_shocase_category =async () => {
@@ -158,15 +159,30 @@ const HomeSlider = (props) => {
     }
     useEffect(() => {
         load_shocase_category()
-    }, [])
+        setTopBannners(props.banners)
+    }, [props])
 
+    const bannerconfig = {
+        dots:false,
+        items:1,
+        loop:true,
+        nav:true,
+        navText:["<i class='icon-angle-left adjust_icon' ></i>","<i class='icon-angle-right adjust_icon' ></i>"]
+    }
 
     return (
         <div>
             <div className="intro-slider-container">
-                <OwlCarousel className='owl-theme owl-carousel owl-simple owl-light owl-nav-inside' dots={false} items={1} loop nav>
-                <HomeSliderItem image={defaultImage} />
-                <HomeSliderItem image={defaultImage2} />
+                <OwlCarousel className='owl-theme owl-carousel owl-simple owl-light owl-nav-inside' {...bannerconfig}>
+                    {
+                        topBanners ? topBanners.map((banner)=>{
+                            return (
+                                <HomeSliderItem image={banner.imageUrl} />
+                            )
+                        }) : ''
+                    }
+                {/* <HomeSliderItem image={defaultImage} />
+                <HomeSliderItem image={defaultImage2} /> */}
                 </OwlCarousel>
             </div>
             <div className="container"  >

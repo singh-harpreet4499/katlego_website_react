@@ -18,11 +18,15 @@ const ProductList = (props) => {
 
     const [canMove,setCanMove] = useState(0);
 
+    const [sort_by,setSortBy] = useState('');
+
     const toggleFilterModal = () => showFilter(!filter_show)
 
+    const filter_results = () => {
+
+    }
+
     const fetch_products_list = async () => {
-        // console.log('urlparamsdata',urlparamsdata);
-        // debugger;
         await fetch_products_by_category({
             category_id:urlparamsdata.id
         }).then((rs)=>{
@@ -67,23 +71,23 @@ const ProductList = (props) => {
                                                     <h6 class="m-0">SORT BY</h6>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio1" name="location" class="custom-control-input" checked />
+                                                    <input type="radio" id="customRadio1" name="sort_by" class="custom-control-input" checked />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio1">Top Rated</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio2" name="location" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio2" name="sort_by" class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio2">Nearest Me</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio3" name="location" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio3" name="sort_by" class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio3">Cost High to Low</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio4" name="location" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio4" name="sort_by" class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio4">Cost Low to High</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio5" name="location" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio5" name="sort_by" class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio5">Most Popular</label>
                                                 </div>
                                                 <div class="p-3 bg-light border-bottom">

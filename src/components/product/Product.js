@@ -13,14 +13,6 @@ const Product =(props) => {
     const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers}=props
     const dispatch = useDispatch();
 
-    // const user = useSelector(state=>state.user.currentUser);
-    // const redirection = useSelector(state=>state.redirection.redirect);
-    // // const history = useHistory();
-    // // if(redirection){
-    // //     dispatch(setRedirectFalse())
-    // //     history.push(redirection)
-    // // }
-
     const [compData,setCompData] = useState({
         qty:0
     })
@@ -36,21 +28,21 @@ const Product =(props) => {
         if(logic==='plus'){
 
             new_qty = old_qty+1;
+            // debugger;
         }else if(logic==='minus'){
             new_qty = old_qty-1;
+            // debugger;
             if(new_qty<0){new_qty=0;}
+            // await remove_cart_item({
+            //     id:cartdata?cartdata.id:0,
+            // })
         }
         const reqdata = {
             product_id:id,
             qty:new_qty
         }
-        if(new_qty==0){
-           await remove_cart_item({
-                id:cartdata?cartdata.id:0,
-            })
-        }else{
-          await  add_cart(reqdata)
-        }
+        await  add_cart(reqdata)
+        // debugger;
         await get_cart_items().then((rs)=>{
             if(rs && rs.status){
                 dispatch(updatecarts(rs))
@@ -117,9 +109,9 @@ const Product =(props) => {
                     <div className="product-cat"></div>
                     <h3 className="product-title">
                     <Link
-                                            to={{
-                                                pathname: "/product-details/"+hifen_name+"/"+(id),
-                                            }}>{name ? name : ''}</Link>
+                        to={{
+                            pathname: "/product-details/"+hifen_name+"/"+(id),
+                        }}>{name ? name : ''}</Link>
                     </h3>
                     <div className="product-price">
                         {

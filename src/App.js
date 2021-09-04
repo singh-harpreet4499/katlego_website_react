@@ -20,13 +20,19 @@ import Loader2 from "react-loader-spinner";
 import SpinLoader from './components/loader/SpinLoader';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import AboutPage from './pages/AboutPage';
+import Terms from './components/app/Terms';
+import BlankTemplate from './pages/BlankTemplate';
+import PrivacyPolicy from './components/app/PrivacyPolicy';
+import ShippingPolicy from './components/app/ShippingPolicy';
+import PaymentMethods from './components/app/PaymentMethods';
+import WalletHistory from './pages/WalletHistory';
+import RechargeWallet from './pages/RechargeWallet';
 
 
 const App = (props) => {
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user.currentUser);
-  
-  
+
   const [canmove,setCanMove] = useState(0);
 
   const check_session = async () => {
@@ -63,6 +69,15 @@ const App = (props) => {
 
   const aboutUs = <AboutPage user_login={user} />;
 
+
+  const walletHistory = <BlankTemplate  component={<WalletHistory user_login={user} />} title={'Wallet'} />;
+  const rechargeWallet = <BlankTemplate  component={<RechargeWallet user_login={user} />} title={'Recharge Wallet'} />;
+
+  const termscond = <BlankTemplate  component={<Terms user_login={user} />} title={'Terms and Conditions'} />;
+  const privacypolicy = <BlankTemplate  component={<PrivacyPolicy user_login={user} />} title={'Privacy Policy'} />;
+  const shippingPolicy = <BlankTemplate  component={<ShippingPolicy user_login={user} />} title={'Shipping Policy'} />;
+  const paymentMethods = <BlankTemplate  component={<PaymentMethods user_login={user} />} title={'Payment Methods'} />;
+
   
   return (
     <div >
@@ -86,11 +101,18 @@ const App = (props) => {
 
         <Route path="/about-us" render={()=><Template  component={aboutUs} />}/>
 
-      
+        <Route path="/wallet-history" render={()=>!user ? <Redirect to={{pathname:'/login'}} /> :  <Template  component={walletHistory} />}/>
+        <Route path="/recharge-wallet" render={()=>!user ? <Redirect to={{pathname:'/login'}} /> :  <Template  component={rechargeWallet} />}/>
+
+
+        <Route path="/terms-and-conditions" render={()=><Template  component={termscond}  hide_newsletter={true} />}/>
+        <Route path="/privacy-policy" render={()=><Template  component={privacypolicy}  hide_newsletter={true} />}/>
+        <Route path="/shipping-policy" render={()=><Template  component={shippingPolicy}  hide_newsletter={true} />}/>
+        <Route path="/payment-methods" render={()=><Template  component={paymentMethods}  hide_newsletter={true} />}/>
+
       </Switch>
-      
       }
-     
+
     </div>
   );
 }

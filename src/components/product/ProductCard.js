@@ -143,13 +143,14 @@ const ProductCard = (props) => {
           product_id:id,
           qty:new_qty
       }
-      if(new_qty==0){
-         await remove_cart_item({
-              id:cartdata?cartdata.id:0,
-          })
-      }else{
-        await  add_cart(reqdata)
-      }
+      await  add_cart(reqdata)
+    //   if(new_qty==0){
+    //      await remove_cart_item({
+    //           id:cartdata?cartdata.id:0,
+    //       })
+    //   }else{
+    //     await  add_cart(reqdata)
+    //   }
       await get_cart_items().then((rs)=>{
           if(rs.status){
               dispatch(updatecarts(rs))

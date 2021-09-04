@@ -10,14 +10,16 @@ import store from './redux/store';
 
 import './libs/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css'
 import './libs/css/bootstrap.min.css'
+
+
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import './libs/css/plugins/jquery.countdown.css'
 import './libs/css/style.css'
 import './libs/css2/style.css'
 
-
 import './libs/css/plugins/owl-carousel/owl.carousel.css'
+
 import './libs/css/plugins/magnific-popup/magnific-popup.css';
 
 import './libs/css/demos/demo-2.css';
@@ -34,11 +36,12 @@ import './libs/css/demos/demo-26.css'
 import {BrowserRouter} from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 
+// basename={'/'}
 
 ReactDOM.render(
   <React.StrictMode>
      <Provider  store={store} >
-    <BrowserRouter basename={'/'}>
+    <BrowserRouter >
     <ScrollToTop>
     <App />
     </ScrollToTop>

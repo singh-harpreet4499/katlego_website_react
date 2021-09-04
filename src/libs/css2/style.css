@@ -1744,7 +1744,30 @@ height: 130px;}
 	background-color: #28a745;
 	border-color: #28a745;
 }
-
+.header-menu ul div {
+    padding: .3rem 1.5rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+/* .icon-angle-left:before {
+    content: '\f111';
+} */
+/* 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "molla";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+} */
 
 /*end header-box*/
 

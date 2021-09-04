@@ -41,10 +41,7 @@ const MobileMenu = (props) => {
 											<Link to={{
 												pathname:'/'
 											}} >Home</Link>
-
-
 										</li>
-										
 
 									</ul>
 								</nav>
@@ -85,7 +82,8 @@ const closeMobileMenue = (event) => {
 			is_location_available: 0,
 			city: "",
 			state: "",
-			navbar_category:[]
+			navbar_category:[],
+			nav:false
 
 			};
 		}
@@ -184,7 +182,21 @@ const closeMobileMenue = (event) => {
 			})
 		}
 
+		handleScroll= () => {
+			if (window.pageYOffset > 140) {
+				if(!this.state.nav){
+				  this.setState({ nav: true });
+				}
+			}else{
+				if(this.state.nav){
+				  this.setState({ nav: false });
+				}
+			}
+	   
+		}
+
 		componentDidMount() {
+			window.addEventListener("scroll", this.handleScroll)
 			this.locationstatus();
 			this.fetch_navbar_product()
 			if(this.props.locationstate && this.props.locationstate.is_set){
@@ -192,6 +204,9 @@ const closeMobileMenue = (event) => {
 					location_modal:false
 				})
 			}
+		}
+		componentWillUnmount() {
+			window.removeEventListener('scroll');
 		}
 
 		render() {
@@ -206,7 +221,7 @@ const closeMobileMenue = (event) => {
 
 				<header className="header">
 				{/* sticky-header fixed */}
-					<div className="header-middle">
+					<div className={this.state.nav ? "header-middle sticky-header fixed" : "header-middle"}>
 						<div className="container">
 							<div className="header-left">
 								<button onClick={openMobileMenue} className="mobile-menu-toggler">
@@ -350,7 +365,6 @@ const closeMobileMenue = (event) => {
 										{
 											this.props.cart.length ?
 											<span className="cart-count">{this.props.cart.length}</span>
-
 											: ''
 										}
 										</Link>
@@ -366,15 +380,18 @@ const closeMobileMenue = (event) => {
 
 								<div className="header-dropdown use-account">
 									<Link to={{pathname:'/my_account'}} className="use-mar"><i className="icon-user"></i>
-										<div className="header-menu">
-											<ul>
-												<li><a href="/">My Account</a></li>
-												<li><a href="/">My Wishlist</a></li>
-												<li><a href="/">Logout</a></li>
-											</ul>
-										</div>
+										
 									</Link>
+
 								</div>
+
+								<div className="use-account">
+									<Link to={{pathname:'/wallet-history'}} className="use-mar"><i className="icon-rupee"></i>
+										
+									</Link>
+
+								</div>
+								
 
 								<div className="header-dropdown">
 									<a href="#" className="del">
@@ -395,6 +412,8 @@ const closeMobileMenue = (event) => {
 										</ul>
 									</div>
 								</div>
+
+
 							</div>
 						</div>
 					</div>

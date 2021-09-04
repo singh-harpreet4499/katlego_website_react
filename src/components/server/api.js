@@ -386,6 +386,31 @@ export const get_products_by_filters = async (data) => {
 };
 
 
+export const wallet_plans = async (data) => {
+  const serverdata = await hitServerApi("wallet_plans", data);
+  return serverdata;
+};
+
+export const generate_order_req = async (data) => {
+  const serverdata = await hitServerApi("generate_order_req", data);
+  return serverdata;
+};
+
+
+export const recharge_user_wallet_web = async (data) => {
+  const serverdata = await hitServerApi("recharge_user_wallet_web", data);
+  return serverdata;
+};
+
+
+export const wallet_history_api = async (data) => {
+  const serverdata = await hitServerApi("wallet_history", data);
+  return serverdata;
+};
+
+
+
+
 export const showAlertMessage = (title='alert',message='',success=false,danger='false') => {
   const alert_config =  {
       show_alert:true,

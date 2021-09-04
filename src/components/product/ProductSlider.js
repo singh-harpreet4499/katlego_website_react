@@ -3,12 +3,16 @@ import OwlCarousel from "react-owl-carousel";
 import Product from "./Product";
 // import 'owl.carousel/dist/assets/owl.carousel.css';
 // import 'owl.carousel/dist/assets/owl.theme.default.css';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+
 
 const options = {
     margin:10,
     loop: false,
     dots:false,
     nav:true,
+    navText:["<i class='icon-angle-left adjust_icon' ></i>","<i class='icon-angle-right adjust_icon' ></i>"],
     responsive:{
         0: {
             items:2
@@ -20,30 +24,25 @@ const options = {
             items:3
         },
         992: {
-            items:4
+            items:3
         },
         1200: {
-            items:4
+            items:3
         },
         1600: {
             items:6,
-            nav: true
         }
     }
 }
+
 
 const ProductSlider =(props) => {
   const {products}=props;
   return (
     <div>
       <div className="container">
-        <div className="tab-content tab-content-carousel">
-          <div
-            className="tab-pane p-0 fade show active"
-            id="products-featured-tab"
-            role="tabpanel"
-            aria-labelledby="products-featured-link"
-          ></div>
+        {/* <div className="tab-content tab-content-carousel"> */}
+          
           {
             products.length ? 
             <OwlCarousel
@@ -59,7 +58,7 @@ const ProductSlider =(props) => {
           ''
           }
 
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );

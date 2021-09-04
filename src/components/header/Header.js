@@ -15,6 +15,7 @@ import './header.css'
 
 const options = {
   nav: false,
+  navText:["<i class='icon-angle-left adjust_icon' ></i>","<i class='icon-angle-right adjust_icon' ></i>"],
   dots: false,
   autoplay: true,
   autoplayTimeout:3000,

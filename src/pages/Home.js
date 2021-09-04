@@ -13,12 +13,14 @@ import {fetch_homepage_web} from '../components/server/api'
 import Aboutus from '../components/app/Aboutus';
 import Ourrecipe from '../components/app/Ourecipe';
 import SpinLoader from '../components/loader/SpinLoader';
+import Pressrelease from '../components/app/Pressrelease';
 
 class Home extends React.Component {
     
     constructor(props) {
         super(props);
         this.state={
+            bannners:[],
             categories:[],
             best_sellers:[],
             combos:[],
@@ -31,15 +33,16 @@ class Home extends React.Component {
         await fetch_homepage_web({}).then((response)=>{
             // console.log('happy',response);
             if(response.status){
-                
                 this.setState({
                     categories:response.categories,
                     best_sellers:response.best_sellers,
+                    bannners:response.banners,
                     combos:response.combos,
                     canMove:1
                 })
             }
         })
+    
     }
 
     
@@ -49,11 +52,11 @@ class Home extends React.Component {
     }
 
     render() {
-        const {best_sellers,categories,combos}=this.state
+        const {best_sellers,categories,combos,bannners}=this.state
         return (
             <div >
                 <Header canMove={this.state.canMove} categories={categories}/>
-                <HomeSlider />
+                <HomeSlider banners={bannners} />
                 <ExperienceRow />
                 <div className="container">
                     <Heading title="best sellers" horizontalLine={false} />
@@ -114,6 +117,7 @@ class Home extends React.Component {
                     :''
                 }
                 <Ourrecipe />
+                {/* <Pressrelease /> */}
             <FooterSupport />
     
             </div>

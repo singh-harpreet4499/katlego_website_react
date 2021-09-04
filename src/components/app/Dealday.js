@@ -30,8 +30,7 @@ function Dealday(){
                       ><span className="countdown-section"
                         ><span className="countdown-amount">10</span
                         ><span className="countdown-period">secs</span></span
-                      ></span
-                    >
+                      ></span>
                   </div>
                   <a href="/" className="btn btn-primary">
                     <span>Buy Now</span><i className="icon-long-arrow-right"></i>

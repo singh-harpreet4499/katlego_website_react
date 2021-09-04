@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logoImage from '../../libs/images/demos/demo-2/logo.png'
 import paymentImage from '../../libs/images/payments.png';
 function Footer(props) {
@@ -50,19 +51,25 @@ function Footer(props) {
 
               <ul className="widget-list">
                 <li>
-                  <a href="/">About Katlego</a>
+                  <Link to={{
+                    pathname:'/about-us'
+                  }}>About Katlego</Link>
                 </li>
                 <li>
-                  <a href="my_account.html">My Account</a>
+                  <Link to={{
+                    pathname:'/my_account'
+                  }}>My Account</Link>
                 </li>
-                <li>
+                {/* <li>
                   <a href="faq.html">FAQ</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="/">Contact us</a>
                 </li>
                 <li>
-                  <a href="signin.html">Log in</a>
+                  <Link to={{
+                    pathname:'/login'
+                  }}>Sign in</Link>
                 </li>
               </ul>
             </div>
@@ -74,16 +81,27 @@ function Footer(props) {
 
               <ul className="widget-list">
                 <li>
-                  <a href="/">Payment Methods</a>
+                  <Link to={{
+                    pathname:'/payment-methods'
+                  }}>Payment Methods</Link>
                 </li>
-                <li>
+                {/* <li>
                   <a href="/">Money-back guarantee!</a>
+                </li> */}
+                <li>
+                  <Link to={{
+                    pathname:'/terms-and-conditions'
+                  }}>Terms and conditions</Link>
                 </li>
                 <li>
-                  <a href="terms&conditions.html">Terms and conditions</a>
+                  <Link to={{
+                    pathname:'privacy-policy'
+                  }}>Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="privacy.html">Privacy Policy</a>
+                  <Link to={{
+                    pathname:'shipping-policy'
+                  }}>Shipping Policy</Link>
                 </li>
               </ul>
             </div>
@@ -95,19 +113,22 @@ function Footer(props) {
 
               <ul className="widget-list">
                 <li>
-                  <a href="/">Sign In</a>
+                  <Link to="/login">Sign In</Link>
                 </li>
                 <li>
-                  <a href="cart.html">View Cart</a>
+                  <Link to={{
+                    pathname:'/checkout'
+
+                  }}>View Cart</Link>
                 </li>
                 <li>
                   <a href="/">My Wishlist</a>
                 </li>
+                {/* <li>
+                  <a href="/">Track My Order</a>
+                </li> */}
                 <li>
-                  <a href="status_onprocess.html">Track My Order</a>
-                </li>
-                <li>
-                  <a href="help_support.html">Help</a>
+                  <a href="/">Help</a>
                 </li>
               </ul>
             </div>
