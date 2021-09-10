@@ -16,6 +16,15 @@ import DeliveryConfig from "../components/timeslot/DeliveryConfig";
 import PaymentOption from "../components/payment/PaymentOption";
 import { setOrderConf } from "../redux/order/order.action";
 
+
+// .border-custom-radio .custom-control-input:checked~.custom-control-label:before {
+//     border: 2px solid red!important;
+// }
+
+// .border-custom-radio .custom-control-input:checked~.custom-control-label:before {
+//     border: 2px solid #28a744!important;
+// }
+
 const AddressItem = (props) => {
     const {address_type,location,city,state,id} = props;
     const dispatch = useDispatch();

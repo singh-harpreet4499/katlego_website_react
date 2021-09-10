@@ -7,6 +7,7 @@ import { updatecarts } from '../../redux/cart/cart.action';
 import './product.css'
 import { setRedirectFalse } from '../../redux/redirect/redirect.action';
 import ProductLabel from './ProductLabel';
+import LazyImage from '../image/LazyImage';
 
 
 const Product =(props) => {
@@ -91,7 +92,7 @@ const Product =(props) => {
                             to={{
                                 pathname: "/product-details/"+hifen_name+"/"+(id),
                             }}>
-                        <img
+                        <LazyImage
                             src={imageUrl?imageUrl:defaultImage}
                             alt="Product"
                             className="product-image"
@@ -115,20 +116,26 @@ const Product =(props) => {
                     </h3>
                     <div className="product-price">
                         {
-                            mrp>selling_price ? (
+                            !selling_price ? ''
+                            :(mrp>selling_price ? (
                                 <>
                                 <span className="new-price">₹{selling_price}</span>
                                 <span className="old-price">Was ₹{mrp}</span>
                                 </>
                             )
                             : 
-                            (<span className="new-price">₹{selling_price}</span>)
+                            (<span className="new-price">₹{selling_price}</span>))
                         }
                     </div>
                 </div>
                 <div className="product-action">
                     {
-                        parseInt(compData.qty) ?
+                        !selling_price ?  
+                        <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn-product btn-cart hsbutonhover" disabled={true}>
+                            Out Of Stock
+                        </button>
+                        :
+                        (parseInt(compData.qty) ?
                         <div className="m-auto">
                             <form
                             id="myform"
@@ -165,7 +172,7 @@ const Product =(props) => {
                         :
                         <button name="plus" value="1" onClick={handleChange} className="btn-product btn-cart hsbutonhover">
                             add to cart
-                        </button>
+                        </button>)
                     }
                 </div>
             </div>

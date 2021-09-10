@@ -18,8 +18,12 @@ const ProductDetails = (props) =>  {
 
     const user = useSelector(state=>state.user.currentUser);
     const cart = useSelector(state=>state.cart);
-    const {name,imageUrl,description,mrp,discount,selling_price,net_wt,unit,cartdata,id,is_cart,no_of_pieces}=props;
+    const {name,imageUrl,description,mrp,discount,selling_price,net_wt,unit,cartdata,id,is_cart,no_of_pieces,rating}=props;
 
+    // console.log('====================================');
+    // console.log('product detail',props);
+    // console.log('====================================');
+    // debugger;
 
     const fetchOtherData = () => {
         you_may_like({
@@ -120,9 +124,14 @@ const ProductDetails = (props) =>  {
                             </div>
                             <div className="pd-f d-flex align-items-center mb-3">
                                 {
-                                     parseInt(compData.qty) ?''
+                                    !selling_price ? 
+                                    <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn-product btn-cart hsbutonhover" disabled={true}>
+                                        Out Of Stock
+                                    </button>
+                                    :
+                                     (parseInt(compData.qty) ?''
                                      :
-                                     <button type="button"  name="plus" onClick={handleChange} className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</button>
+                                     <button type="button"  name="plus" onClick={handleChange} className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</button>)
                                 }
 
                             </div>
@@ -149,15 +158,24 @@ const ProductDetails = (props) =>  {
 
                                     <a href="review.html">
                                         <div className="rating-wrap d-flex align-items-center mt-1">
-                                            <ul className="rating-stars list-unstyled">
-                                                <li>
-                                                    <i className="icofont-star text-warning"></i>
-                                                    <i className="icofont-star text-warning"></i>
-                                                    <i className="icofont-star text-warning"></i>
-                                                    <i className="icofont-star text-warning"></i>
-                                                </li>
-                                            </ul>
-                                            <p className="label-rating text-muted ml-2 small"> (245 Reviews)</p>
+                                            {
+                                                rating ? (
+                                                    <>
+                                                    <ul className="rating-stars list-unstyled">
+                                                        <li>
+                                                            <i className={`icofont-star ${parseFloat(rating.average)>=1 ? 'text-warning' : ''}`}></i>
+                                                            <i className={`icofont-star ${parseFloat(rating.average)>=2 ? 'text-warning' : ''}`}></i>
+                                                            <i className={`icofont-star ${parseFloat(rating.average)>=3 ? 'text-warning' : ''}`}></i>
+                                                            <i className={`icofont-star ${parseFloat(rating.average)>=4 ? 'text-warning' : ''}`}></i>
+                                                            <i className={`icofont-star ${parseFloat(rating.average)>=5 ? 'text-warning' : ''}`}></i>
+
+                                                        </li>
+                                                    </ul>
+                                                    <p className="label-rating text-muted ml-2 small"> ({rating.total_reviews?rating.total_reviews:0} Reviews)</p>
+                                                    </>
+                                                ) : ''
+                                            }
+                                            
                                         </div>
                                     </a>
                                 </div>
@@ -176,13 +194,18 @@ const ProductDetails = (props) =>  {
                                                     <input type="radio" name="options" id="option1" checked /> {net_wt} {unit}
                                                 </label>
                                             </div>
-                                            <div className="ml-auto" >
-                                                <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
-                                                    <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
-                                                    <input type='text'  name='qty' onClick={handleChange} value={compData.qty} className='qty form-control' />
-                                                    <input type='button' name="plus" onClick={handleChange} value='+' className='qtyplus btn btn-success btn-sm'/>
-                                                </form>
-                                            </div>
+                                            {
+                                                !selling_price ? ''   : (
+                                                    <div className="ml-auto" >
+                                                        <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
+                                                            <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
+                                                            <input type='text'  name='qty' onClick={handleChange} value={compData.qty} className='qty form-control' />
+                                                            <input type='button' name="plus" onClick={handleChange} value='+' className='qtyplus btn btn-success btn-sm'/>
+                                                        </form>
+                                                    </div>
+                                                )
+                                            }
+                                          
                                         </div>
                                     </div>
                                     <div className="pt-3">
@@ -194,13 +217,17 @@ const ProductDetails = (props) =>  {
 
                                                 <div className="col-md-6 col-6">
                                                     <div className="rat-pri">
-                                                        { mrp>selling_price ? (
+                                                    
+                                                        { 
+                                                        !selling_price ? ''
+                                                        :
+                                                        (mrp>selling_price ? (
                                                                 <>
                                                                  <h6 className="kg-pri">₹{selling_price}</h6><strike className="pri"> MRP₹{mrp}</strike>
                                                                 </>
                                                             )
                                                             : 
-                                                            (<h6 className="kg-pri">₹{selling_price}</h6>)
+                                                            (<h6 className="kg-pri">₹{selling_price}</h6>))
                                                         }
                                                     </div>
                                                 </div>

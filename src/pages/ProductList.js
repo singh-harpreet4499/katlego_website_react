@@ -11,20 +11,32 @@ const ProductList = (props) => {
     const urlparamsdata = useParams()
 
     const [compData,setCompData] = useState({
-        products:[]
+        products:[],
     })
+
+    const [filtered,setFiltered] = useState([]);
+
+    const [formData, updateFormData] = useState({
+        sort_by: "",
+        min_amount:0,
+        max_amount:0
+      });
 
     const [filter_show,showFilter] = useState(0)
 
     const [canMove,setCanMove] = useState(0);
 
-    const [sort_by,setSortBy] = useState('');
 
     const toggleFilterModal = () => showFilter(!filter_show)
 
-    const filter_results = () => {
-
-    }
+    
+    const handleChange = (e) => {
+        // alert(e.target.value.trim())
+        updateFormData({
+        ...formData,
+        [e.target.name]: e.target.value.trim()
+        });
+    };
 
     const fetch_products_list = async () => {
         await fetch_products_by_category({
@@ -39,13 +51,65 @@ const ProductList = (props) => {
         })
     }
 
+    const apply_filter = () => {
+        toggleFilterModal();
+
+        const {sort_by} = formData;
+        var min_amount = parseFloat(formData.min_amount)
+        var max_amount = parseFloat(formData.max_amount)
+        if(compData.products.length){
+            var dataprod = compData.products;
+            if(sort_by==='cost_low_to_high'){
+                const a = dataprod.sort((a,b)=>{
+                    return a.selling_price - b.selling_price;
+
+                })
+                setFiltered(a)
+            }else if(sort_by==='cost_high_to_low'){
+                const b = dataprod.sort((a,b)=>{
+                    return b.selling_price - a.selling_price;
+                })
+                setFiltered(b)
+            }else if(sort_by === 'top_rated'){
+                const c = dataprod.sort((a,b)=>{
+                    return b.rating.average - a.rating.average;
+                })
+                setFiltered(c)
+            }else if(sort_by === 'most_popular'){
+                const c = dataprod.sort((a,b)=>{
+                    return b.rating.average - a.rating.average;
+                })
+                setFiltered(c)
+            }
+
+
+            if(min_amount !=0 && max_amount == 0) {
+                const f = dataprod.sort((a,b)=>{
+                    return a.selling_price >= parseFloat(min_amount)
+                })
+                setFiltered(f)
+            }
+            else if(max_amount != 0){
+                const d = dataprod.sort((a,b)=>{
+                    return a.selling_price >= parseFloat(min_amount) &&  b.selling_price <= parseFloat(max_amount);
+                })
+                setFiltered(d)
+            }else if(min_amount != 0){
+                const e = dataprod.sort((a,b)=>{
+                    return a.selling_price >= parseFloat(min_amount) &&  b.selling_price <= parseFloat(max_amount);
+                })
+                setFiltered(e)
+            }
+        }
+    }
+
     useEffect(() => {
         if(!compData.products.length){
             fetch_products_list();
             console.log(compData.products);
         }
-        
-    },[])
+
+    },[filtered])
 
     if(canMove===0){
         return (
@@ -71,38 +135,38 @@ const ProductList = (props) => {
                                                     <h6 class="m-0">SORT BY</h6>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio1" name="sort_by" class="custom-control-input" checked />
+                                                    <input type="radio" id="customRadio1" name="sort_by" value="top_rated"  onChange={handleChange} class="custom-control-input"  />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio1">Top Rated</label>
                                                 </div>
-                                                <div class="custom-control border-bottom px-0  custom-radio">
+                                                {/* <div class="custom-control border-bottom px-0  custom-radio">
                                                     <input type="radio" id="customRadio2" name="sort_by" class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio2">Nearest Me</label>
-                                                </div>
+                                                </div> */}
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio3" name="sort_by" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio3" name="sort_by" value="cost_high_to_low"  onChange={handleChange} class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio3">Cost High to Low</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio4" name="sort_by" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio4" name="sort_by" value="cost_low_to_high"  onChange={handleChange} class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio4">Cost Low to High</label>
                                                 </div>
                                                 <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio5" name="sort_by" class="custom-control-input" />
+                                                    <input type="radio" id="customRadio5" name="sort_by" value="most_popular"  onChange={handleChange} class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio5">Most Popular</label>
                                                 </div>
                                                 <div class="p-3 bg-light border-bottom">
                                                     <h6 class="m-0">ADDITIONAL FILTERS</h6>
                                                 </div>
                                                 <div class="px-3 pt-3">
-                                                    <input type="range" class="custom-range" min="0" max="100" name="" />
+                                                    {/* <input type="range" class="custom-range" min="0" max="100" name="" /> */}
                                                     <div class="form-row">
                                                         <div class="form-group col-6">
                                                         <label>Min</label>
-                                                        <input class="form-control" placeholder="₹0" type="number" />
+                                                        <input class="form-control" name="min_amount" onChange={handleChange} placeholder="₹0" min="0" type="number" />
                                                     </div>
                                                     <div class="form-group text-right col-6">
                                                         <label>Max</label>
-                                                        <input class="form-control" placeholder="₹1,0000" type="number" />
+                                                        <input class="form-control" name="max_amount" onChange={handleChange} placeholder="₹1,0000" min="0" type="number" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -113,7 +177,7 @@ const ProductList = (props) => {
                                             <button type="button" class="btn border-top btn-lg btn-block" onClick={toggleFilterModal}  data-dismiss="modal">Close</button>
                                         </div>
                                         <div class="col-6 m-0 p-0">
-                                            <button type="button" class="btn btn-success btn-lg btn-block sche">Apply</button>
+                                            <button type="button" onClick={apply_filter} class="btn btn-success btn-lg btn-block sche">Apply</button>
                                         </div>
                                     </div>
                                 </div>
@@ -146,11 +210,16 @@ const ProductList = (props) => {
                                 </div>
                                 <div className="row">
                                 {
-                                    compData.products.length ?
+                                    filtered.length ? 
+                                    filtered.map(({id,...otherData})=>{
+                                        return <ProductCard column_not_cut={false} key={id} id={id} {...otherData} />
+                                    })
+                                    :
+                                    (compData.products.length ?
                                     compData.products.map(({id,...otherData})=>{
                                         return <ProductCard column_not_cut={false} key={id} id={id} {...otherData} />
                                     })
-                                    :''
+                                    :'')
                                 }
                                 </div>
 

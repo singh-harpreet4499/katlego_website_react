@@ -6,6 +6,7 @@ import {add_cart, remove_cart_item,get_cart_items} from '../server/api'
 import { updatecarts } from '../../redux/cart/cart.action';
 import discounticon from '../../libs/images/discounticon.png'
 import './productcard.css';
+import LazyImage from '../image/LazyImage';
 // const ProductCard = async (props) => {
 //   const [formData, updateFormData] = useState({
 //     qty: 1,
@@ -186,7 +187,11 @@ const ProductCard = (props) => {
       <div className="col-6 col-md-4 mb-3">
           <div className="list-card bac-grey h-100 rounded overflow-hidden position-relative shadow-sm">
               <div className="list-card-image">
-                  <a href="#" className="text-dark">
+                  <Link className="text-dark"
+                       to={{
+                        pathname: "/product-details/"+hifen_name+"/"+(id),
+                    }}
+                  >
                       <div className="member-plan position-absolute">
                           <div className="pro-dis ">
                           {/* discounticon */}
@@ -200,8 +205,7 @@ const ProductCard = (props) => {
                                             to={{
                                                 pathname: "/product-details/"+hifen_name+"/"+(id),
                                             }}>
-                          <img src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" />
-                         
+                          <LazyImage src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" />
                           <h6 className="text-success curr">{name}</h6>
                           </Link>
                           <ul className="anti hidden-xs hidden-sm">
@@ -221,13 +225,14 @@ const ProductCard = (props) => {
                               <div className="row">
                                   <div className="col-md-4 pri-lin">
                                   {
-                                      mrp>selling_price ? (
+                                      !selling_price ? '' :
+                                      (mrp>selling_price ? (
                                           <>
                                          <h6 className="price m-0 text-success chi-pri">₹{selling_price}/{unit}</h6><strike className="pri"> MRP₹{mrp}/{unit}</strike>
                                           </>
                                       )
                                       : 
-                                      (<h6 className="price m-0 text-success chi-pri">₹{selling_price}/{unit}</h6>)
+                                      (<h6 className="price m-0 text-success chi-pri">₹{selling_price}/{unit}</h6>))
                                   }
                                       
                                   </div>
@@ -236,7 +241,12 @@ const ProductCard = (props) => {
                                   </div>
                                   <div className="col-md-4">
                                   {
-                                    parseInt(compData.qty) ?
+                                      !selling_price ? 
+                                      <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn cart-btn" disabled={true}>
+                                            Out Of Stock
+                                        </button>
+                                      :
+                                    (parseInt(compData.qty) ?
                                     <div className="m-auto">
                                         <form
                                         id="myform"
@@ -273,14 +283,14 @@ const ProductCard = (props) => {
                                     :
                                     <button name="plus" value="1" onClick={handleChange} className="btn cart-btn">
                                         add to cart
-                                    </button>
+                                    </button>)
                                   }
                                  
                                   </div>
                               </div>
                           </div>
                       </div>
-                  </a>
+                  </Link>
               </div>
           </div>
       </div>

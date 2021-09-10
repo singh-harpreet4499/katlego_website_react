@@ -23,6 +23,7 @@ class Home extends React.Component {
             bannners:[],
             categories:[],
             best_sellers:[],
+            hotselling:[],
             combos:[],
             canMove:0
         }
@@ -38,6 +39,7 @@ class Home extends React.Component {
                     best_sellers:response.best_sellers,
                     bannners:response.banners,
                     combos:response.combos,
+                    hotselling:response.hotselling,
                     canMove:1
                 })
             }
@@ -52,7 +54,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {best_sellers,categories,combos,bannners}=this.state
+        const {best_sellers,categories,combos,bannners,hotselling}=this.state
         return (
             <div >
                 <Header canMove={this.state.canMove} categories={categories}/>
@@ -83,10 +85,20 @@ class Home extends React.Component {
     
                 <Adds />
                 <Dealday />
-                <Heading  title="Combos product" />
                 {
-                    this.state.canMove ?  <ProductSlider products={combos} /> : <SpinLoader />
+                    combos.length ? 
+                    (
+                        <>
+                        <Heading  title="Combos product" />
+                        {
+                            this.state.canMove ?  <ProductSlider products={combos} /> : <SpinLoader />
+                        }
+                        </>
+                    )
+                    :''
+
                 }
+               
 
                 <Heading title="Explore by categories" horizontalLine={false} />
                 <div className="container">
@@ -104,13 +116,13 @@ class Home extends React.Component {
 
 
                 {
-                    combos.length?
+                    hotselling.length?
                     <div
                     >
                         <Heading title="OUR HOT-SELLING PRODUCTS" />
                         <div className="container">
                             <div className="row">
-                        {combos.map(({id,...otherdata})=><Product id={id} key={id}  {...otherdata} />)}
+                        {hotselling.map(({id,...otherdata})=><Product id={id} key={id}  {...otherdata} />)}
                         </div>
                         </div>
                     </div>

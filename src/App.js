@@ -27,6 +27,7 @@ import ShippingPolicy from './components/app/ShippingPolicy';
 import PaymentMethods from './components/app/PaymentMethods';
 import WalletHistory from './pages/WalletHistory';
 import RechargeWallet from './pages/RechargeWallet';
+import GeneralEnquiry from './components/app/GeneralEnquiry';
 
 
 const App = (props) => {
@@ -77,6 +78,7 @@ const App = (props) => {
   const privacypolicy = <BlankTemplate  component={<PrivacyPolicy user_login={user} />} title={'Privacy Policy'} />;
   const shippingPolicy = <BlankTemplate  component={<ShippingPolicy user_login={user} />} title={'Shipping Policy'} />;
   const paymentMethods = <BlankTemplate  component={<PaymentMethods user_login={user} />} title={'Payment Methods'} />;
+  const generalEnquiry = <BlankTemplate  component={<GeneralEnquiry user_login={user} />} title={'General Enquiry'} />;
 
   
   return (
@@ -109,6 +111,7 @@ const App = (props) => {
         <Route path="/privacy-policy" render={()=><Template  component={privacypolicy}  hide_newsletter={true} />}/>
         <Route path="/shipping-policy" render={()=><Template  component={shippingPolicy}  hide_newsletter={true} />}/>
         <Route path="/payment-methods" render={()=><Template  component={paymentMethods}  hide_newsletter={true} />}/>
+        <Route path="/general-enquiry" render={()=><Template  component={generalEnquiry}  hide_newsletter={true} />}/>
 
       </Switch>
       }

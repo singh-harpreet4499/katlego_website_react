@@ -1769,10 +1769,24 @@ height: 130px;}
     -moz-osx-font-smoothing: grayscale;
 } */
 
+
+.menu.sf-arrows .sf-with-ul::after {
+    font-family: 'molla';
+    content: '\f110';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    display: none !important;
+    font-size: 1rem;
+    line-height: 1;
+    margin-top: -.5rem;
+}
 /*end header-box*/
 
 
-
+body {
+	zoom: 95%;
+}
 
 
 

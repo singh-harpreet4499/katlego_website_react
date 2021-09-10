@@ -327,6 +327,13 @@ export const edit_user_profile = async (data={}) => {
 };
 
 
+export const get_settings = async (data={}) => {
+  const serverdata = await hitServerApi("get_settings", data);
+  return serverdata;
+};
+
+
+
 export const change_password_by_old_password = async (data={}) => {
   const serverdata = await hitServerApi("change_password_by_old_password", data);
   return serverdata;
@@ -409,9 +416,13 @@ export const wallet_history_api = async (data) => {
 };
 
 
+export const add_support_data = async (data) => {
+  const serverdata = await hitServerApi("add_support_data", data);
+  return serverdata;
+};
 
 
-export const showAlertMessage = (title='alert',message='',success=false,danger='false') => {
+export const showAlertMessage = (title='alert',message='',success=false,danger=false) => {
   const alert_config =  {
       show_alert:true,
       title:title,

@@ -192,7 +192,6 @@ const closeMobileMenue = (event) => {
 				  this.setState({ nav: false });
 				}
 			}
-	   
 		}
 
 		componentDidMount() {
@@ -307,6 +306,12 @@ const closeMobileMenue = (event) => {
 									<li>
 									<Link to="/about-us" className="sf-with-ul">
 										ABOUT US
+									</Link>
+									</li>
+
+									<li>
+									<Link to="/general-enquiry" className="sf-with-ul">
+										CONTACT US
 									</Link>
 									</li>
 
