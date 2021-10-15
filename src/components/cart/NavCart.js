@@ -69,47 +69,61 @@ export const NavCartItem =  (props) => {
 const NavCart = (props) => {
 
     const user = useSelector(state=>state.user.currentUser);
-    return (
-        <div className="dropdown-menu dropdown-menu-right">
-            <div className="dropdown-cart-products">
-                   
+    const cart = useSelector(state=>state.cart.items);
 
-                    {
-                        props.cart.length ? 
-                        props.cart.map((dt)=><NavCartItem key={dt.id} {...dt} />)
-                        :
-                        ''
-                    }
+    if(cart.length ==0){
+        return (
+            <>
+            </>
+        )
 
+    }else{
+        return (
+
+
+            <div className="dropdown-menu dropdown-menu-right">
+                <div className="dropdown-cart-products">
+                       
+    
+                        {
+                            props.cart.length ? 
+                            props.cart.map((dt)=><NavCartItem key={dt.id} {...dt} />)
+                            :
+                            ''
+                        }
+    
+                    </div>
+    
+                        <div className="dropdown-cart-total">
+                            <span>Total</span>
+    
+                            <span className="cart-total-price">₹{props.total_amount}</span>
+                        </div>
+    
+                        <div className="dropdown-cart-action">
+                            <Link
+                                to={{
+                                    pathname:'/checkout'
+                                }}
+                                className="btn btn-primary"
+                            >
+                            View Cart
+                            </Link>
+                            <Link
+                                to={{
+                                    pathname:'/checkout'
+                                }}
+                                className="btn btn-outline-primary-2"
+                            >
+                                <span>Checkout</span>
+                                <i className="icon-long-arrow-right"></i>
+                            </Link>
+                        </div>
                 </div>
+        )
+    }
 
-                    <div className="dropdown-cart-total">
-                        <span>Total</span>
-
-                        <span className="cart-total-price">₹{props.total_amount}</span>
-                    </div>
-
-                    <div className="dropdown-cart-action">
-                        <Link
-                            to={{
-                                pathname:'/checkout'
-                            }}
-                            className="btn btn-primary"
-                        >
-                        View Cart
-                        </Link>
-                        <Link
-                            to={{
-                                pathname:'/checkout'
-                            }}
-                            className="btn btn-outline-primary-2"
-                        >
-                            <span>Checkout</span>
-                            <i className="icon-long-arrow-right"></i>
-                        </Link>
-                    </div>
-            </div>
-    )
+    
 }
 
 export default connect()(NavCart)

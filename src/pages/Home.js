@@ -14,6 +14,7 @@ import Aboutus from '../components/app/Aboutus';
 import Ourrecipe from '../components/app/Ourecipe';
 import SpinLoader from '../components/loader/SpinLoader';
 import Pressrelease from '../components/app/Pressrelease';
+import Testimonial from '../components/app/Testimonial';
 
 class Home extends React.Component {
     
@@ -32,7 +33,6 @@ class Home extends React.Component {
     loadEssentialdata = async () => {
         console.log('loadEssentialdata');
         await fetch_homepage_web({}).then((response)=>{
-            // console.log('happy',response);
             if(response.status){
                 this.setState({
                     categories:response.categories,
@@ -65,10 +65,10 @@ class Home extends React.Component {
     
                     <div className="tab-content">
                         <div
-                        className="tab-pane p-0 fade show active"
-                        id="top-all-tab"
-                        role="tabpanel"
-                        aria-labelledby="top-all-link"
+                            className="tab-pane p-0 fade show active"
+                            id="top-all-tab"
+                            role="tabpanel"
+                            aria-labelledby="top-all-link"
                         >
                             <div className="products">
                                 <div className="row justify-content-center">
@@ -129,7 +129,9 @@ class Home extends React.Component {
                     :''
                 }
                 <Ourrecipe />
-                {/* <Pressrelease /> */}
+                {/* <Heading title="Our Customers Say" /> */}
+                <Testimonial />
+                <Pressrelease />
             <FooterSupport />
     
             </div>

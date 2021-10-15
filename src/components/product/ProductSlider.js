@@ -50,7 +50,7 @@ const ProductSlider =(props) => {
             { ...options}
             >
               {
-                products.map(({id,...otherdata})=><Product id={id} key={id} column_not_cut={true} {...otherdata} />)
+                products.map(({id,...otherdata})=><Product id={id} key={id} column_not_cut={true} combo_product={true} {...otherdata} />)
               }
 
             </OwlCarousel>

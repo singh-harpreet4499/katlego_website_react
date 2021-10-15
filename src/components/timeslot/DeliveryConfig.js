@@ -16,6 +16,7 @@ const DeliveryConfig = (props) => {
     const [selectedTimeSlot,setTimeSlotSeleted] = useState('')
 
     const delivery_config_data =async () => {
+
         await deliveryconfig({}).then((rs)=>{
             if(rs.status){
                 setDeliveryConfig(rs.data)
@@ -63,22 +64,17 @@ const DeliveryConfig = (props) => {
         for (var i=0; i < delivery_config.length; i++) {
             if (delivery_config[i].type == 'schedule') {
                 setTimeSlotObj(delivery_config[i].time_slots[dayname])
-                dispatch(setOrderConf({ ...orderconfg,
-                    delivery_type:'schedule'
-                }))
             }
 
         }
     }
 
-    const search_obj = (nameKey, myArray) => {
-        // console.log(myArray);
-        for (var i=0; i < myArray.length; i++) {
-            if (myArray[i].name === nameKey) {
-                return myArray[i];
-            }
-        }
+    const set_delivery_type = (index) => {
+        dispatch(setOrderConf({ ...orderconfg,
+            delivery_type: index ===0 ? 'now' :'schedule'
+        }))
     }
+
     
     const active_class = 'active';
     
@@ -86,6 +82,8 @@ const DeliveryConfig = (props) => {
     useEffect(() => {
         delivery_config_data()
         date_wise_day_name()
+
+        
     }, [])
     return (
 
@@ -100,8 +98,8 @@ const DeliveryConfig = (props) => {
             </div>
 
             <div id="collapsethree" className="collapse show" aria-labelledby="headingthree" data-parent="#accordionExample">
-                <Tabs >
-                    <TabList>
+                <Tabs onSelect={index => set_delivery_type(index)}>
+                    <TabList >
                         <Tab>Delivery Now</Tab>
                         <Tab>Schedule Delivery</Tab>
                     </TabList>

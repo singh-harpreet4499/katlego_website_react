@@ -3,7 +3,7 @@ import image1 from '../libs/images/page-header-bg.jpg'
 import image2 from '../libs/images/video/bg-2.jpg'
 import image3 from '../libs/images/video/poster-2.jpg'
 import image4 from '../libs/images/about/about-2/signature.png'
-import image5 from '../libs/images/about/img-1.jpg'
+import image5 from '../libs/gif/about-us.gif'
 import { get_settings } from "../components/server/api"
 import { useState } from "react"
 import { useEffect } from "react"

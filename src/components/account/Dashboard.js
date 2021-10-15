@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { setCurrentUser } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
 import GifLoader from "../loader/GifLoader";
@@ -255,6 +256,24 @@ const Dashboard = (props) => {
                                                     <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
                                                 </li>
                                             </div>
+
+                                            <Link to={{
+                                                pathname:'/wallet-history'
+                                            }} class="text-decoration-none text-dark">
+                                                <li class="border-bottom bg-white d-flex align-items-center p-3">
+                                                <i class="icofont-wallet osahan-icofont bg-success"></i>My Wallet Transaction
+                                                <span class="badge badge-success p-1 badge-pill ml-auto"><i class="icofont-simple-right"></i></span>
+                                                </li>
+                                            </Link>
+
+                                            <Link style={{cursor:"pointer"}} to={{
+                                                pathname:'/order-history'
+                                            }}  className="text-decoration-none text-dark">
+                                                <li className="border-bottom bg-white d-flex align-items-center p-3">
+                                                    <i className="icofont-history osahan-icofont bg-success"></i>My Orders
+                                                    <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
+                                                </li>
+                                            </Link>
 
                                             <div style={{cursor:"pointer"}} onClick={()=>update_page_name('change_password')} className="text-decoration-none text-dark">
                                                 <li className="border-bottom bg-white d-flex align-items-center p-3">

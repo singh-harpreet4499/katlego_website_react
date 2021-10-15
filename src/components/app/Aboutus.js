@@ -3,37 +3,42 @@ import defaulimg2 from '../../libs/images/kat.png'
 import defaulimg3 from '../../libs/images/deliv.png'
 import { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { useSelector } from 'react-redux';
+import parse from 'html-react-parser'
+import ReadMoreReact from 'read-more-react';
 
 const PromiseSection = (props) => {
 
+    const app_data = useSelector(state=>state.app_data)
+
     return (
-        <div className="row"  aria-labelledby="nav-homepage-tabs-01-032020-tab">
-                    <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
+            <div className="row"  aria-labelledby="nav-homepage-tabs-01-032020-tab">
+                <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
 
-                        <div className="home__tabs__image lazy loaded" data-bg="" data-ll-status="loaded" style={{backgroundImage:`url(${defaulimg2})`}}>
-                        </div>
-                    </div>
-
-                    <div className="home__tabs__body col-12 col-md-6 col-lg-6 text-center text-md-left">
-                        <div className="home__tabs__title">Katlego Promise</div>
-                        <div className="home__tabs__description py-3">
-                            <p className="abo-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old..</p>
-                        </div>
+                    <div className="home__tabs__image lazy loaded" data-bg="" data-ll-status="loaded" style={{backgroundImage:`url(${defaulimg2})`}}>
                     </div>
                 </div>
+
+                <div className="home__tabs__body col-12 col-md-6 col-lg-6 text-center text-md-left">
+                    <div className="home__tabs__title">Katlego Promise</div>
+                    <div className="home__tabs__description py-3">
+                        <p className="abo-para">{parse(app_data.promise)}</p>
+                    </div>
+                </div>
+            </div>
     )
 }
 
 const AboutusSection = (props) => {
-
+    const app_data = useSelector(state=>state.app_data)
     return (
-<div className="tab-pane fade row active show" aria-labelledby="nav-homepage-tabs-02-032020-tab">
+                <div className="tab-pane fade row active show" aria-labelledby="nav-homepage-tabs-02-032020-tab">
                     <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
                         <div className="video-poster">
                             <img src={defaulimg1} alt="poster" />
 
                             <div className="video-poster-content">
-                                <a href="https://www.youtube.com/watch?v=vBPgmASQ1A0" className="btn-video btn-iframe"><i className="icon-play"></i></a>
+                                <a href="https://www.youtube.com/watch?v=W0UYKgfQi9k" className="btn-video btn-iframe"><i className="icon-play"></i></a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +46,7 @@ const AboutusSection = (props) => {
                     <div className="home__tabs__body col-12 col-md-6 col-lg-6 text-center text-md-left">
                         <div className="home__tabs__title">About Us</div>
                         <div className="home__tabs__description py-3">
-                            <p className="abo-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <p className="abo-para">{parse(app_data.about_us)}</p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +55,7 @@ const AboutusSection = (props) => {
 
 
 const DeliverySection = (props) => {
-
+    const app_data = useSelector(state=>state.app_data)
     return (
         <div className="row"  aria-labelledby="nav-homepage-tabs-03-032020-tab">
                     <div className="tab-pane-carousel col-12 col-md-6 col-lg-6 px-0">
@@ -62,7 +67,7 @@ const DeliverySection = (props) => {
                     <div className="home__tabs__body col-12 col-md-6 col-lg-6 text-center text-md-left">
                         <div className="home__tabs__title">Delivery</div>
                         <div className="home__tabs__description py-3">
-                            <p className="abo-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+                            <p className="abo-para">{parse(app_data.delivery_policy)}</p>
                         </div>
 
                     </div>

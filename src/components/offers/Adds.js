@@ -1,4 +1,4 @@
-import defaultImage from '../../libs/images/demos/demo-2/banners/bg-1.png'
+import defaultImage from '../../libs/gif/delivery-boy.gif'
 function Adds(props) {
     return (
         <div>

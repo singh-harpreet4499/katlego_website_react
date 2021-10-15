@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import alertReducer from "./alert/alert.reducer";
+import appDataSetReducer from "./appdata/app.reducer";
 import cartReducer from "./cart/cart.reducer";
 import orderConfReducer from "./order/order.reducer";
 import redirectReducer from "./redirect/redirect.reducer";
@@ -10,6 +11,7 @@ export default combineReducers({
     cart:cartReducer,
     redirection:redirectReducer,
     alert:alertReducer,
-    orderConf:orderConfReducer
+    orderConf:orderConfReducer,
+    app_data:appDataSetReducer
 
 })

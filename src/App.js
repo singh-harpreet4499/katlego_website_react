@@ -8,7 +8,7 @@ import Login from './components/auth/Login';
 import ProductInfo from './pages/ProductInfo';
 import ProductList from './pages/ProductList';
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { get_cart_items, get_session } from './components/server/api';
+import { get_cart_items, get_session, get_settings } from './components/server/api';
 import { setCurrentUser, setUserLocation } from "./redux/user/user.action";
 import { useEffect, useState } from 'react';
 import { updatecarts } from './redux/cart/cart.action';
@@ -28,6 +28,11 @@ import PaymentMethods from './components/app/PaymentMethods';
 import WalletHistory from './pages/WalletHistory';
 import RechargeWallet from './pages/RechargeWallet';
 import GeneralEnquiry from './components/app/GeneralEnquiry';
+import { setAppData } from './redux/appdata/app.action';
+import RecipeList from './pages/RecipeList';
+import OrderHistory from './pages/OrderHistory';
+import Career from './pages/Career';
+import Collabrate from './pages/Collabrate';
 
 
 const App = (props) => {
@@ -51,6 +56,11 @@ const App = (props) => {
           }
       })
     }
+    await get_settings().then((ress)=>{
+      if(ress.status){
+        dispatch(setAppData(ress.data))
+      }
+    })
     setCanMove(1)
   }
 
@@ -69,6 +79,9 @@ const App = (props) => {
   const orderSuccess = <OrderSuccessPage user_login={user} />;
 
   const aboutUs = <AboutPage user_login={user} />;
+  const orderHistory = <OrderHistory user_login={user} />;
+  const careerpage = <Career user_login={user} />;
+  const collabratePage = <Collabrate user_login={user} />;
 
 
   const walletHistory = <BlankTemplate  component={<WalletHistory user_login={user} />} title={'Wallet'} />;
@@ -80,10 +93,10 @@ const App = (props) => {
   const paymentMethods = <BlankTemplate  component={<PaymentMethods user_login={user} />} title={'Payment Methods'} />;
   const generalEnquiry = <BlankTemplate  component={<GeneralEnquiry user_login={user} />} title={'General Enquiry'} />;
 
-  
+  const recipePage = <RecipeList user_login={user} />
   return (
     <div >
-      {!canmove ? <SpinLoader /> :
+      {!canmove ? <GifLoader  /> :
       <Switch>
 
         <Route exact path="/" render={()=><div>{<Template component={homecomponent} />}</div>} />
@@ -112,6 +125,10 @@ const App = (props) => {
         <Route path="/shipping-policy" render={()=><Template  component={shippingPolicy}  hide_newsletter={true} />}/>
         <Route path="/payment-methods" render={()=><Template  component={paymentMethods}  hide_newsletter={true} />}/>
         <Route path="/general-enquiry" render={()=><Template  component={generalEnquiry}  hide_newsletter={true} />}/>
+        <Route path="/recipe-list" render={()=><Template  component={recipePage}  />}/>
+        <Route path="/order-history" render={()=><Template  component={orderHistory}  />}/>
+        <Route path="/career" render={()=><Template  component={careerpage}  />}/>
+        <Route path="/collabrate-with-us" render={()=><Template  component={collabratePage}  />}/>
 
       </Switch>
       }

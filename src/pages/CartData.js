@@ -32,9 +32,7 @@ const AddressItem = (props) => {
 
 
     const select_shipping_location = (location_id) => {
-        console.log('====================================');
-        console.log('select_shipping_location',location_id);
-        console.log('====================================');
+
         dispatch(setOrderConf({
             ...orderConfd,
             address_id:location_id
@@ -55,18 +53,22 @@ const AddressItem = (props) => {
         })
     }
 
+
     useEffect(() => {
        
     }, [orderConfd])
+
+
     return (
-        <div style={{cursor:"pointer"}} className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio"  >
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" defaultChecked={orderConfd ? (orderConfd.address_id == id ? true : false) : false} />
-            <label className="custom-control-label w-100" htmlFor="customRadioInline1">
-                <div>
-                    <div className="p-3 bg-white rounded shadow-sm w-100">
+        <div style={{cursor:"pointer"}} className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio"  onClick={()=>select_shipping_location(id)} >
+            <input type="radio" id={'customRadioInline1'+id} name={'customRadioInline1'+id} className="custom-control-input"  />
+            <label className="custom-control-label w-100" htmlFor={'customRadioInline1'+id}>
+                {/* <div> */}
+                    <div className="p-3 bg-white rounded shadow-sm w-100" >
                         <div className="d-flex align-items-center mb-2">
                             <p className="mb-0 h6">{address_type.toUpperCase()}</p>
-                            <p className="mb-0 badge badge-success ml-auto">{props.is_default===1 ? <><i className="icofont-check-circled"></i> Default</> :'' }</p>
+                            {/* <p className="mb-0 badge badge-success ml-auto">{props.is_default===1 ? <><i className="icofont-check-circled"></i> Default</> :'' }</p> */}
+                            <p className="mb-0 badge badge-success ml-auto">{orderConfd.address_id===id ? <><i className="icofont-check-circled"></i> Selected</> :'' }</p>
                         </div>
                         <p className="small text-muted m-0">{props.flat}</p>
                         <p className="small text-muted m-0">{props.main_society + ' '+ props.main_location}</p>
@@ -75,7 +77,7 @@ const AddressItem = (props) => {
                     <button className="btn btn-light border-top btn-lg btn-block"  onClick={()=>select_shipping_location(id)}>
                         Deliver Here
                     </button>
-                </div>
+                {/* </div> */}
             </label>
         </div>
     );
@@ -200,6 +202,7 @@ const CartData = (props) => {
     // if(address_selected){
     //     location_id = address_selected.address_id;
     // }
+    const orderconfg = useSelector(state=>state.orderConf)
 
     const [locations,setLocations] = useState([]);
 
@@ -238,6 +241,16 @@ const CartData = (props) => {
             }
         })
     }
+
+    useEffect(() => {
+        dispatch(setOrderConf({
+            ...orderconfg,
+            payment_mode:'cod',
+            delivery_type:'now'
+        }))
+    }, [])
+
+    
 
 
     useEffect(() => {

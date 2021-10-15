@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     payment_mode:null,
     schedule_date:null,
     schedule_time:null,
-    delivery_type:"now"
+    delivery_type:null
 }
 
 const orderConfReducer = (state = INITIAL_STATE,action) => {

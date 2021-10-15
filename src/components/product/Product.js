@@ -8,10 +8,11 @@ import './product.css'
 import { setRedirectFalse } from '../../redux/redirect/redirect.action';
 import ProductLabel from './ProductLabel';
 import LazyImage from '../image/LazyImage';
+import HoverImage from "react-hover-image";
 
 
 const Product =(props) => {
-    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers}=props
+    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers,hoverimageUrl,combo_product}=props
     const dispatch = useDispatch();
 
     const [compData,setCompData] = useState({
@@ -92,11 +93,25 @@ const Product =(props) => {
                             to={{
                                 pathname: "/product-details/"+hifen_name+"/"+(id),
                             }}>
-                        <LazyImage
-                            src={imageUrl?imageUrl:defaultImage}
-                            alt="Product"
-                            className="product-image"
-                        />
+                                {
+                                    combo_product ? 
+                                    <img
+                                        src={imageUrl?imageUrl:defaultImage}
+                                        alt="Product"
+                                        className="product-image"
+                                    />
+                                    :
+                                    <HoverImage
+                                        src={imageUrl?imageUrl:defaultImage}
+                                        
+                                        hoverSrc={hoverimageUrl}
+                                        alt="Product"
+                                        className="product-image"
+                                    />
+
+
+                                }
+                        
                     </Link>
 
                     <div className="product-action-vertical">

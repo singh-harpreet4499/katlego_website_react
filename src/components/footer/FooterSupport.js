@@ -12,7 +12,7 @@ function FooterSupport(props) {
                 <i className="icon-truck"></i>
               </span>
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">Free Shipping</h3>
+                <h3 className="icon-box-title free-ship">Express Delivery</h3>
               </div>
             </div>
           </div>
@@ -22,7 +22,7 @@ function FooterSupport(props) {
                 <img src={chickenImage} alt="" />
               </span>
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">Halal</h3>
+                <h3 className="icon-box-title free-ship">Best Quality</h3>
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@ function FooterSupport(props) {
               </span>
 
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">FSSC</h3>
+                <h3 className="icon-box-title free-ship">Food Saftey Standards</h3>
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@ function FooterSupport(props) {
                 </span>
                 <div className="icon-box-content">
                   <h3 className="icon-box-title">Free Shipping</h3>
-                  <p>orders ₹50 or more</p>
+                  <p>orders ₹800 or more</p>
                 </div>
               </div>
             </div>
@@ -63,8 +63,8 @@ function FooterSupport(props) {
                 </span>
 
                 <div className="icon-box-content">
-                  <h3 className="icon-box-title">Save Money</h3>
-                  <p>At lowest Price</p>
+                  <h3 className="icon-box-title">Welcome Discounts</h3>
+                  {/* <p>At lowest Price</p> */}
                 </div>
               </div>
             </div>
@@ -76,8 +76,8 @@ function FooterSupport(props) {
                 </span>
 
                 <div className="icon-box-content">
-                  <h3 className="icon-box-title">Get 20% Off 1 Item</h3>
-                  <p>When you sign up</p>
+                  <h3 className="icon-box-title">Customer Satisfaction Guarantee</h3>
+                  {/* <p>When you sign up</p> */}
                 </div>
               </div>
             </div>

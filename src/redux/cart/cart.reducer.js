@@ -2,6 +2,9 @@ import {UserActionTypes} from './cart.types'
 const INITIAL_STATE = {
     items:[],
     total_amount:0,
+    delivery_charges:0,
+    store_charges:0,
+    subtotal:0,
 }
 
 const cartReducer = (state = INITIAL_STATE,action) => {
@@ -10,7 +13,10 @@ const cartReducer = (state = INITIAL_STATE,action) => {
             return {
                 ...state,
                 items:action.items,
-                total_amount:action.total_amount
+                total_amount:action.total_amount,
+                delivery_charges:action.delivery_charges,
+                store_charges:action.store_charges,
+                subtotal:action.subtotal,
             }
             break;
 

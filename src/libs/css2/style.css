@@ -1783,13 +1783,58 @@ height: 130px;}
 }
 /*end header-box*/
 
-
+/* 
 body {
 	zoom: 95%;
-}
+} */
+
+body {
+	font: normal 300 1.4rem/1.86 "Poppins", sans-serif;
+	color: #666666;
+	background-color: #fff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden; }
+	
+	/* .category-image img{
+		width: 35% !important;
+		padding-top: 0px;
+		padding-bottom: 35px;
+	  } */
+
+	  .order-img img{
+		width: 10%;
+	  }
+	  .chicken-detail{
+		font-size: 16px;
+		color: #000;
+		font-weight: 500;
+		margin-left: 20px;
+	  }
+	  
+	  p.wallet_text {
+		color: #fff;
+		font-size: 1.4rem;
+	}
 
 
-
-
-
-
+	.about-content ul li i {
+		width: 22px;
+		height: 22px;
+		line-height: 22px;
+		border-radius: 50%;
+		font-size: 15px;
+		text-align: center;
+		color: #eb2627;
+		background-color: #f2f4fd;
+		margin-right: 8px;
+		-webkit-transition: .5s all ease;
+		transition: .5s all ease;
+	}
+	
+	.about-content ul li {
+		list-style-type: none;
+		display: block;
+		font-weight: 500;
+		margin-bottom: 15px;
+	}

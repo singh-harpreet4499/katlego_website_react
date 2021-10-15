@@ -49,28 +49,29 @@ const Search = (props) => {
                 // id="q"
                 placeholder="Search in..."
                 required
+                autocomplete="off" 
             />
             
             <div id="myInputautocomplete-list" class="autocomplete-items">
-        {
-            searchdata ? searchdata.length ? searchdata.map((data)=>{
-                return (
-                    <div class="docname ch">
-                        <Link
-                         to={{
-                            pathname: "/product-details/"+data.hifen_name+"/"+(data.id),
-                        }}
-                        >
-                            <div class="search-content" onClick={()=>clear_search(data.name)}>
-                                <p>{data.name}</p>
-                            </div>
-                        </Link>
-                    </div> 
-                    
-                )
-            }) : ''  : ''
-        }
-        </div>
+                {
+                    searchdata ? searchdata.length ? searchdata.map((data)=>{
+                        return (
+                            <div class="docname ch">
+                                <Link
+                                to={{
+                                    pathname: "/product-details/"+data.hifen_name+"/"+(data.id),
+                                }}
+                                >
+                                    <div class="search-content" onClick={()=>clear_search(data.name)}>
+                                        <p>{data.name}</p>
+                                    </div>
+                                </Link>
+                            </div> 
+                            
+                        )
+                    }) : ''  : ''
+                }
+            </div>
         </div>
         {/* <br /> */}
 

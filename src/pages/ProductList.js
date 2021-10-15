@@ -13,6 +13,7 @@ const ProductList = (props) => {
     const [compData,setCompData] = useState({
         products:[],
     })
+    const [categoryid,setCategoryId] = useState(0)
 
     const [filtered,setFiltered] = useState([]);
 
@@ -29,6 +30,7 @@ const ProductList = (props) => {
 
     const toggleFilterModal = () => showFilter(!filter_show)
 
+
     
     const handleChange = (e) => {
         // alert(e.target.value.trim())
@@ -39,6 +41,7 @@ const ProductList = (props) => {
     };
 
     const fetch_products_list = async () => {
+        setCategoryId(urlparamsdata.id)
         await fetch_products_by_category({
             category_id:urlparamsdata.id
         }).then((rs)=>{
@@ -106,10 +109,12 @@ const ProductList = (props) => {
     useEffect(() => {
         if(!compData.products.length){
             fetch_products_list();
-            console.log(compData.products);
+            // console.log(compData.products);
+        }else if(categoryid != urlparamsdata.id){
+            fetch_products_list();
         }
 
-    },[filtered])
+    },[filtered,urlparamsdata])
 
     if(canMove===0){
         return (

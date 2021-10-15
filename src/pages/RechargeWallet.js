@@ -70,7 +70,7 @@ const RechargeWallet = (props) => {
         const { amount, id: order_id, currency } = result;
 
         const options = {
-            key: "rzp_test_bdzPhpa75cpbAB", // Enter the Key ID generated from the Dashboard
+            key: "rzp_test_RwSgFPpvHSua0O", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: currency,
             name: user_login?user_login.name:'',
@@ -128,7 +128,6 @@ const RechargeWallet = (props) => {
 
                 <div className="row">
 
-                    {/* Recharge Panel */}
                     <div class="col-md-7 col-lg-8">
                         <div class="card">
                             <div class="card-body">

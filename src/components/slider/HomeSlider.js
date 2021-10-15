@@ -38,9 +38,9 @@ const HomeCategoryItem = ({mrp,name,imageUrl,hifen_name,id,selling_price,discoun
                     <ul className="anti">
                         <div className="row">
                             <div className="col-md-12">
-                                {/* <li className="ch-lis">
+                                <li className="ch-lis">
                                 100% Antibiotics Free
-                                        </li> */}
+                                        </li>
                                 <li className="ch-lis">
                                 Net Wt: {net_wt} {unit}
                                 </li>
@@ -55,14 +55,14 @@ const HomeCategoryItem = ({mrp,name,imageUrl,hifen_name,id,selling_price,discoun
                             </div>
                             <div className="pri-bo">
                                 {
-                                    mrp>selling_price ? (
+                                    parseFloat(mrp)>parseFloat(selling_price) ? (
                                         <>
                                         
                                         <h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6><strike className="pri"> MRP₹{mrp}/{unit}</strike>
                                         </>
                                     )
                                     : 
-                                    (<><h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6><strike className="pri"> MRP₹{mrp}/{unit}</strike></>)
+                                    (<><h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6></>)
                                 }
                             </div>
                         </div>

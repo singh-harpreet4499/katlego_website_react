@@ -1,7 +1,7 @@
 import logo from "../../libs/images/logo.png";
 import React from "react";
 import { geolocated } from "react-geolocated";
-import { check_if_service_location, fetch_locations, fetch_navbar_category_product } from "../server/api";
+import { check_if_service_location, fetch_locations, fetch_navbar_categories, fetch_navbar_category_product } from "../server/api";
 import NavCart from "../cart/NavCart";
 import { connect } from "react-redux";
 import LocationModal from "../modals/LocationModal";
@@ -12,6 +12,8 @@ import Search from "./Search";
 
 const MobileMenu = (props) => {
 
+	const {navbar_category} = props;
+
 	return (
 		<div>
 			<div className="mobile-menu-overlay"></div>
@@ -20,11 +22,12 @@ const MobileMenu = (props) => {
 					<div className="mobile-menu-wrapper">
 						<span onClick={closeMobileMenue} className="mobile-menu-close"><i className="icon-close"></i></span>
 
-						<form action="/" method="get" className="mobile-search">
+						{/* <form action="/" method="get" className="mobile-search">
 							<label htmlFor="mobile-search" className="sr-only">Search</label>
 							<input type="search" className="form-control" name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
 							<button className="btn btn-primary" type="submit"><i className="icon-search"></i></button>
-						</form>
+						</form> */}
+						
 
 						<ul className="nav nav-pills-mobile nav-border-anim" role="tablist">
 							<li className="nav-item">
@@ -36,11 +39,73 @@ const MobileMenu = (props) => {
 							<div className="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
 								<nav className="mobile-nav">
 									<ul className="mobile-menu">
+										<li>
+
+											<Search />
+
+										</li>
 										<li className="active" style={{backgroundColor:'#fff'}}>
-											{/* <a href="/">Home</a> */}
 											<Link to={{
 												pathname:'/'
 											}} >Home</Link>
+										</li>
+
+										{
+													props.nav_categories.length ?
+													props.nav_categories.map((dt,index)=>{
+														if(index < 10){
+															return (
+																<li>
+																	<Link
+																	className="sf-with-ul"
+																		to={{
+																			pathname: "/product-list/"+dt.name.replace(/\s+/g, '-')+"/"+(dt.id),
+																			state:{...dt}
+																		}}>
+																			{dt.name}
+																	</Link>
+																</li>
+	
+															)
+														}else{
+															return ''
+														}
+														
+													})
+
+													:
+													<>
+														<li>
+														<Link to="/about-us" className="sf-with-ul">
+															ABOUT US
+														</Link>
+														</li>
+
+														<li>
+														<Link to="/general-enquiry" className="sf-with-ul">
+															CONTACT US
+														</Link>
+														</li>
+													</>
+												}
+
+										
+										<li>
+											<Link to={{
+												pathname:'recipe-list'
+											}} >RECIPES</Link>
+										</li>
+										<li>
+
+										<Link to="/about-us" className="sf-with-ul">
+											ABOUT US
+										</Link>
+										</li>
+
+										<li>
+										<Link to="/general-enquiry" className="sf-with-ul">
+											CONTACT US
+										</Link>
 										</li>
 
 									</ul>
@@ -50,10 +115,10 @@ const MobileMenu = (props) => {
 						</div>
 
 						<div className="social-icons">
-							<a href="/" className="social-icon" target="_blank" title="Facebook"><i className="icon-facebook-f"></i></a>
-							<a href="/" className="social-icon" target="_blank" title="Twitter"><i className="icon-twitter"></i></a>
-							<a href="/" className="social-icon" target="_blank" title="Instagram"><i className="icon-instagram"></i></a>
-							<a href="/" className="social-icon" target="_blank" title="Youtube"><i className="icon-youtube"></i></a>
+							<a href="https://www.facebook.com/katlegofoodsindia" className="social-icon" target="_blank" title="Facebook"><i className="icon-facebook-f"></i></a>
+							{/* <a href="/" className="social-icon" target="_blank" title="Twitter"><i className="icon-twitter"></i></a> */}
+							<a href="https://www.instagram.com/katlego_foods/" className="social-icon" target="_blank" title="Instagram"><i className="icon-instagram"></i></a>
+							<a href="https://www.youtube.com/watch?v=W0UYKgfQi9k" className="social-icon" target="_blank" title="Youtube"><i className="icon-youtube"></i></a>
 						</div>
 					</div>
 				</div>
@@ -68,24 +133,46 @@ const closeMobileMenue = (event) => {
 	document.body.classList.add('loaded');
 	document.body.classList.remove('mmenu-active');
 }
+
+function nFormatter(num, digits) {
+	const lookup = [
+	  { value: 1, symbol: "" },
+	  { value: 1e3, symbol: "k" },
+	  { value: 1e6, symbol: "M" },
+	  { value: 1e9, symbol: "G" },
+	  { value: 1e12, symbol: "T" },
+	  { value: 1e15, symbol: "P" },
+	  { value: 1e18, symbol: "E" }
+	];
+	const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+	var item = lookup.slice().reverse().find(function(item) {
+	  return num >= item.value;
+	});
+	return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+  }
 	class Navbar extends React.Component {
 		constructor(props) {
 			super(props);
 			this.state = {
 				location_modal:false,
-			pincode: "",
-			latitude: "",
-			longitude: "",
-			formatted_address: "",
-			locations: [],
-			all_data_fetch: 0,
-			is_location_available: 0,
-			city: "",
-			state: "",
-			navbar_category:[],
-			nav:false
-
+				pincode: "",
+				latitude: "",
+				longitude: "",
+				formatted_address: "",
+				locations: [],
+				all_data_fetch: 0,
+				is_location_available: 0,
+				city: "",
+				state: "",
+				navbar_category:[],
+				nav:false,
+				nav_categories:[],
+				searchbar:false,
 			};
+		}
+
+		toggleSearchBar = () => {
+			this.setState({searchbar:!this.state.searchbar})
 		}
 
 	
@@ -180,6 +267,15 @@ const closeMobileMenue = (event) => {
 					})
 				}
 			})
+			fetch_navbar_categories({})
+			.then((rs)=>{
+				if(rs.status){
+					// alert(JSON.stringify(rs))
+					this.setState({
+						nav_categories:rs.data
+					})
+				}
+			})
 		}
 
 		handleScroll= () => {
@@ -216,7 +312,7 @@ const closeMobileMenue = (event) => {
 			return (
 			<div>
 				{lc_modal}
-				<MobileMenu />
+				<MobileMenu navbar_category={navbar_category} nav_categories={this.state.nav_categories} />
 
 				<header className="header">
 				{/* sticky-header fixed */}
@@ -229,128 +325,186 @@ const closeMobileMenue = (event) => {
 								</button>
 
 								<Link to={{pathname:'/'}} className="logo">
-								<img src={logo} alt="Katlego" width="130" />
+								<img src={logo} alt="Katlego" width="160" />
 								</Link>
 
 								<nav className="main-nav">
-								<ul className="menu sf-arrows">
-									<li>
-									<Link to="/" className="sf-with-ul">
-										Home
-									</Link>
-									</li>
+									{
+										this.state.nav ? 
+											<ul className="menu sf-arrows">
+												{/* <li>
+													<Link to="/" className="sf-with-ul">
+														Home
+													</Link>
+												</li> */}
 
-									<li>
-										<a href="#" className="sf-with-ul">
-											Menu
-										</a>
-										<div className="megamenu megamenu-md">
-											<div className="row no-gutters">
-												<div className="col-md-8">
-													<div className="menu-col">
-														<div className="row">
-														{
-																navbar_category.length ?
-																navbar_category.map((data)=>{
-																	return (
-																		<div className="col-md-6">
-																			<div className="menu-title">{data.name.toUpperCase()}</div>
-																			<ul>
-																				{
-																					data.products.length ? 
-																					data.products.map(({id,name,hifen_name})=>{
-																						return (
-																							<li><Link
-																							to={{
-																								pathname: "/product-details/"+hifen_name+"/"+(id),
-																							}}>{name}</Link></li>
-																						)
-																					})
-																					: ''
-																				}
-				
-																			</ul>
-																		</div>
-																	)
-																})
-																 : ''
-
+												{
+													this.state.nav_categories.length ?
+													this.state.nav_categories.map((dt,index)=>{
+														if(index < 5){
+															return (
+																<li>
+																	<Link
+																	className="sf-with-ul"
+																		to={{
+																			pathname: "/product-list/"+dt.name.replace(/\s+/g, '-')+"/"+(dt.id),
+																			state:{...dt}
+																		}}>
+																			{dt.name}
+																	</Link>
+																</li>
+	
+															)
+														}else{
+															return ''
 														}
-															
+														
+													})
 
+													:
+													<>
+														<li>
+															<Link to={{
+																pathname:'/recipe-list'
+															}} >RECIPES</Link>
+														</li>
+														<li>
+														<Link to="/about-us" className="sf-with-ul">
+															ABOUT US
+														</Link>
+														</li>
+
+														<li>
+														<Link to="/general-enquiry" className="sf-with-ul">
+															CONTACT US
+														</Link>
+														</li>
+													</>
+												}
+												
+												
+												
+
+
+											</ul>
+
+										:
+										(
+										<ul className="menu sf-arrows">
+											<li>
+												<Link to="/" className="sf-with-ul">
+													Home
+												</Link>
+											</li>
+
+											<li>
+												<a href="#" className="sf-with-ul">
+													Menu
+												</a>
+												<div className="megamenu megamenu-md">
+													<div className="row no-gutters">
+														<div className="col-md-8">
+															<div className="menu-col">
+																<div className="row">
+																{
+																		navbar_category.length ?
+																		navbar_category.map((data)=>{
+																			return (
+																				<div className="col-md-6">
+																					<div className="menu-title">{data.name.toUpperCase()}</div>
+																					<ul>
+																						{
+																							data.products.length ? 
+																							data.products.map(({id,name,hifen_name})=>{
+																								return (
+																									<li><Link
+																									to={{
+																										pathname: "/product-details/"+hifen_name+"/"+(id),
+																									}}>{name}</Link></li>
+																								)
+																							})
+																							: ''
+																						}
 						
+																					</ul>
+																				</div>
+																			)
+																		})
+																		: ''
+
+																}
+																	
+
+								
+																</div>
+															</div>
 														</div>
+														<div className="col-md-4">
+															<div class="banner banner-overlay">
+																<a href="#" class="banner banner-menu">
+																	<img src={banner1} alt="Banner" />
+																	<div class="banner-content banner-content-top">
+																		<div class="banner-title text-white">The <br />Best<br /><span><strong>Choice</strong></span></div>
+																	</div>
+																</a>
+															</div>
+														</div>
+									
 													</div>
 												</div>
-												<div className="col-md-4">
-													<div class="banner banner-overlay">
-              											<a href="#" class="banner banner-menu">
-    														<img src={banner1} alt="Banner" />
-       														<div class="banner-content banner-content-top">
-																<div class="banner-title text-white">The <br />Best<br /><span><strong>Choice</strong></span></div>
-                            								</div>
-                             							</a>
-                            						</div>
-												</div>
-							
-											</div>
-										</div>
-									</li>
+											</li>
 
-									{/* <li>
-									<a href="/" className="sf-with-ul">
-										Recipes
-									</a>
-									</li> */}
+											<li>
+											<Link to="/recipe-list" className="sf-with-ul">
+												RECIPES
+											</Link>
+											</li>
 
-									<li>
-									<Link to="/about-us" className="sf-with-ul">
-										ABOUT US
-									</Link>
-									</li>
+											<li>
+											<Link to="/about-us" className="sf-with-ul">
+												ABOUT
+											</Link>
+											</li>
 
-									<li>
-									<Link to="/general-enquiry" className="sf-with-ul">
-										CONTACT US
-									</Link>
-									</li>
+											<li>
+											<Link to="/general-enquiry" className="sf-with-ul">
+												CONTACT
 
-									{/* <li>
-									<a href="/" className="sf-with-ul">
-										Contact Us
-									</a>
-									</li> */}
+											</Link>
+												<ul > 
+													<li><Link to="/general-enquiry">General Enquiry</Link></li>
+													<li><Link to="/career">Career</Link></li>
+													<li><Link to="/collabrate-with-us">Collaborate With Us</Link></li>
+												</ul>
+											</li>
 
-								</ul>
+
+										</ul>
+										)
+									}
+									
 								</nav>
 							</div>
 
 							<div className="header-right">
 								<div className="header-search">
 									<span
-									className="search-toggle active"
+									onClick={this.toggleSearchBar}
+									className={this.state.searchbar ? "search-toggle active" : "search-toggle"}
 									role="button"
 									title="Search"
 									style={{cursor:"pointer"}}
 									>
 									<i className="icon-search"></i>
 									</span>
-									<Search />
-									{/* <form action="#" method="get">
-										<div className="header-search-wrapper show">
-											<label htmlFor="q" className="sr-only">
-											Search
-											</label>
-											<input
-											type="search"
-											className="form-control"
-											name="q"
-											id="q"
-											placeholder="Search in..."
-											required
-											/>
-										</div>
-									</form> */}
+
+									{
+										this.state.searchbar ? 
+										<Search  />
+										: ''
+									}
+									{/* <Search  /> */}
+								
 								</div>
 								{
 									this.props.currentUser?(
@@ -374,10 +528,19 @@ const closeMobileMenue = (event) => {
 										}
 										</Link>
 
-										<NavCart
-										total_amount={this.props.total_amount}
-										cart={this.props.cart}
-										/>
+										{
+											this.props.cart.length ? 
+											<>
+												<NavCart
+												total_amount={this.props.total_amount}
+												cart={this.props.cart}
+												/>
+											</>
+
+											:''
+										}
+
+										
 								</div>
 									) : ''
 								}
@@ -391,7 +554,8 @@ const closeMobileMenue = (event) => {
 								</div>
 
 								<div className="use-account">
-									<Link to={{pathname:'/wallet-history'}} className="use-mar"><i className="icon-rupee"></i>
+									<Link to={{pathname:'/wallet-history'}} className="use-mar">
+									{this.props.currentUser ? <p className="wallet_text" ><i className="icon-rupee"></i>{nFormatter(this.props.currentUser.wallet)}</p> : ''}
 										
 									</Link>
 

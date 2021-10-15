@@ -30,7 +30,7 @@ const StickyPayout = (props) => {
                             <p className="font-weight-bold small mb-2">Bill Details</p>
                             <p className="mb-1">
                             Item Total <span className="small text-muted">({cartdata.items.length} item)</span>
-                            <span className="float-right text-dark">₹{cartdata.total_amount}</span>
+                            <span className="float-right text-dark">₹{cartdata.subtotal}</span>
                             </p>
                             <p className="mb-1">
                             Store Charges{" "}
@@ -38,15 +38,7 @@ const StickyPayout = (props) => {
                             </p>
                             <p className="mb-3">
                             Delivery Fee{" "}
-                                <span
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Delivery partner fee - $3"
-                                    className="text-info ml-1"
-                                >
-                                    <i className="icofont-info-circle"></i>
-                                </span>
-                                <span className="float-right text-dark">₹0</span>
+                                <span className="float-right text-dark">₹{cartdata.delivery_charges}</span>
                             </p>
                             <h6 className="mb-0 text-success">
                                 Total Discount
@@ -61,7 +53,7 @@ const StickyPayout = (props) => {
                     </div>
                 </div>
                 <p className="text-success text-center">
-                    Your Total Savings on this order ₹0
+                    {/* Your Total Savings on this order ₹0 */}
                 </p>
             </div>
         </div>

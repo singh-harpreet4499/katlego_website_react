@@ -16,6 +16,7 @@ const ProductInfo = () => {
         await fetch_product_details({
             id:id
         }).then((rs)=>{
+            console.log('product details',rs);
             if(rs.status){
                 setCanMove(1)
                 setProductData(rs.data)
@@ -25,6 +26,8 @@ const ProductInfo = () => {
     }
 
     useEffect(() => {
+        // setProductData({})
+
         if(params){
             if(paramss.id != params.id){
                 fetch_product_data();

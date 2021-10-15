@@ -17,13 +17,15 @@
     import 'swiper/components/effect-flip/effect-flip.scss';
     import './splash.css'
 
+    import image1 from '../../libs/images/1.jpg'
+
     SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 
     const SliderElement = (props) => {
         var {title,description} = props
         return (
-            
+    
             <div className="osahan-slider-item text-center">
                     <div
                     className="
@@ -38,9 +40,6 @@
                     <h4 className="my-4 text-white">{title}</h4>
                     <p className="text-center text-white-50 mb-5 px-4">
                         {description}
-                        {/* Cheaper prices than your local
-                        <br />
-                        supermarket, great cashback offers to top it off. */}
                     </p>
                     </div>
                 </div>

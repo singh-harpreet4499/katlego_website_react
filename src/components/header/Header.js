@@ -14,6 +14,7 @@ import './header.css'
 // import { useEffect, useState } from "react";
 
 const options = {
+  autoplayHoverPause:true,
   nav: false,
   navText:["<i class='icon-angle-left adjust_icon' ></i>","<i class='icon-angle-right adjust_icon' ></i>"],
   dots: false,

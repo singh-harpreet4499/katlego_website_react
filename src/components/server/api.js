@@ -270,6 +270,12 @@ export const fetch_product_details = async (data) => {
 };
 
 
+export const get_testimonials = async (data) => {
+  const serverdata = await hitServerApi("get_testimonials", data);
+  return serverdata;
+};
+
+
 export const fetch_products_by_category = async (data) => {
   const serverdata = await hitServerApi("fetch_products_by_category", data);
   return serverdata;
@@ -420,6 +426,35 @@ export const add_support_data = async (data) => {
   const serverdata = await hitServerApi("add_support_data", data);
   return serverdata;
 };
+
+
+export const add_career_data = async (data) => {
+  const serverdata = await hitServerApi("add_career_data", data);
+  return serverdata;
+};
+
+export const fetch_navbar_categories = async (data) => {
+  const serverdata = await hitServerApi("fetch_navbar_categories", data);
+  return serverdata;
+};
+
+export const get_recipes = async (data) => {
+  const serverdata = await hitServerApi("get_recipes", data);
+  return serverdata;
+};
+
+
+export const my_order_history = async (data) => {
+  const serverdata = await hitServerApi("my_order_history", data);
+  return serverdata;
+};
+
+
+export const fetch_press_release = async (data) => {
+  const serverdata = await hitServerApi("fetch_press_release", data);
+  return serverdata;
+};
+
 
 
 export const showAlertMessage = (title='alert',message='',success=false,danger=false) => {

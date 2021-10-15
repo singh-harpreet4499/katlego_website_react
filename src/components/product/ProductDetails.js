@@ -45,6 +45,8 @@ const ProductDetails = (props) =>  {
         }else if(logic==='minus'){
             new_qty = old_qty-1;
             if(new_qty<0){new_qty=0;}
+        }else if(logic==='buynow'){
+            new_qty=1
         }
         const reqdata = {
             product_id:id,
@@ -58,7 +60,14 @@ const ProductDetails = (props) =>  {
         //  }else{
         //      add_cart(reqdata)
         //  }
-        add_cart(reqdata)
+        add_cart(reqdata).then((rs)=>{
+            if(rs.status){
+                if(logic=='buynow'){
+                    window.location.href = "/checkout"
+                }
+            }
+        })
+       
          await get_cart_items().then((rs)=>{
              if(rs.status){
                  dispatch(updatecarts(rs))
@@ -119,7 +128,7 @@ const ProductDetails = (props) =>  {
                         <div className="col-lg-6">
                             <div className="recommend-slider mb-3">
                                 <div className="osahan-slider-item">
-                                    <img src={imageUrl} className="img-fluid mx-auto shadow-sm rounded" alt="Responsive" />
+                                    <img src={imageUrl} style={{width:'800px',height:'504px'}} className="img-fluid mx-auto shadow-sm rounded" alt="Responsive" />
                                 </div>
                             </div>
                             <div className="pd-f d-flex align-items-center mb-3">
@@ -129,9 +138,23 @@ const ProductDetails = (props) =>  {
                                         Out Of Stock
                                     </button>
                                     :
-                                     (parseInt(compData.qty) ?''
+                                     (parseInt(compData.qty) ?
+                                     <div className="ml-auto" >
+                                        <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
+                                            <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
+                                            <input type='text'  name='qty' onClick={handleChange} value={compData.qty} className='qty form-control' />
+                                            <input type='button' name="plus" onClick={handleChange} value='+' className='qtyplus btn btn-success btn-sm'/>
+                                        </form>
+                                    </div>
                                      :
-                                     <button type="button"  name="plus" onClick={handleChange} className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</button>)
+                                    //  <div class="pd-f d-flex align-items-center mb-3">
+                                    <>
+                                    <button name="plus" onClick={handleChange} class="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg gre"><i class="icofont-plus m-0 mr-2"></i> ADD TO CART</button>
+                                    <button name="buynow" onClick={handleChange} class="btn btn-success p-3 rounded btn-block d-flex align-items-center justify-content-center btn-lg m-0 sche"><i class="icofont-cart m-0 mr-2"></i> BUY NOW</button>
+                                    </>
+                                   
+                                    //  <button type="button"  name="plus" onClick={handleChange} className="btn btn-warning p-3 rounded btn-block d-flex align-items-center justify-content-center mr-3 btn-lg"><i className="icofont-plus m-0 mr-2"></i> ADD TO CART</button>
+                                     )
                                 }
 
                             </div>
@@ -156,7 +179,7 @@ const ProductDetails = (props) =>  {
                                         </div>
                                     </div>
 
-                                    <a href="review.html">
+                                    <a href="#">
                                         <div className="rating-wrap d-flex align-items-center mt-1">
                                             {
                                                 rating ? (
