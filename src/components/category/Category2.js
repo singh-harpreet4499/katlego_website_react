@@ -7,7 +7,7 @@ import defaultImage5 from "../../libs/images/banners/3cols/banner-5.jpg";
 import defaultImage6 from "../../libs/images/banners/3cols/banner-6.jpg";
 
 function Category2(props) {
-  const {id,name,imageUrl}=props;
+  const {id,name,imageUrl,imagewithbgUrl}=props;
   const arr = [defaultImage1,defaultImage2,defaultImage3,defaultImage4,defaultImage5,defaultImage6];
   var defaultImage = defaultImage1;
   switch (props.defaultImage) {
@@ -51,7 +51,7 @@ function Category2(props) {
       }}>
       <div className="banner">
         <a href="/">
-          <img src={arr[Math.floor(Math.random()*arr.length)]} alt="Banner" />
+          <img src={imagewithbgUrl?imagewithbgUrl:arr[Math.floor(Math.random()*arr.length)]} alt="Banner" />
         </a>
         <div className="banner-content">
           {/* <h4 className="banner-subtitle"></h4> */}
