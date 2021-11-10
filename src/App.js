@@ -33,6 +33,12 @@ import RecipeList from './pages/RecipeList';
 import OrderHistory from './pages/OrderHistory';
 import Career from './pages/Career';
 import Collabrate from './pages/Collabrate';
+import Forgot from './components/auth/Forgot';
+import ForgotOtp from './components/auth/ForgotOtp';
+import ChangePassword from './components/auth/ChangePassword';
+import { setSettingsData } from './redux/global/global.action';
+import OrderDetail from './pages/OrderDetail';
+import Wishlist from './pages/Wishlist';
 
 
 const App = (props) => {
@@ -59,6 +65,7 @@ const App = (props) => {
     await get_settings().then((ress)=>{
       if(ress.status){
         dispatch(setAppData(ress.data))
+        dispatch(setSettingsData(ress.data))
       }
     })
     setCanMove(1)
@@ -80,8 +87,10 @@ const App = (props) => {
 
   const aboutUs = <AboutPage user_login={user} />;
   const orderHistory = <OrderHistory user_login={user} />;
+  const orderDetail = <OrderDetail user_login={user} />;
   const careerpage = <Career user_login={user} />;
   const collabratePage = <Collabrate user_login={user} />;
+  const wishlistpage = <BlankTemplate  component={<Wishlist user_login={user} />} title={'Wishlist'} />;
 
 
   const walletHistory = <BlankTemplate  component={<WalletHistory user_login={user} />} title={'Wallet'} />;
@@ -95,7 +104,7 @@ const App = (props) => {
 
   const recipePage = <RecipeList user_login={user} />
   return (
-    <div >
+    <div  >
       {!canmove ? <GifLoader  /> :
       <Switch>
 
@@ -103,10 +112,14 @@ const App = (props) => {
         <Route exact path="/signup" render={()=>!user ? <div><Auth /></div> : <Template component={homecomponent} /> } />
         <Route exact path="/otp" render={()=>!user ? <div><Otp /></div> : <Template component={homecomponent} /> } />
         <Route exact path="/login" render={()=> !user ? <div><Auth component={<Login />} /></div>  : <Template component={homecomponent} />   } />
+        <Route exact path="/forgot" render={()=> !user ? <div><Auth component={<Forgot />} /></div>  : <Template component={homecomponent} />   } />
+        <Route exact path="/forgototp" render={()=> !user ? <div><ForgotOtp /></div>  : <Template component={homecomponent} />   } />
+        <Route exact path="/forgot-password" render={()=> !user ? <div><Auth component={<ChangePassword />} /></div>  : <Template component={homecomponent} />   } />
 
         <Route path="/product-details/:productName/:id" render={()=><Template component={productinfocomponent} />}/>
 
         <Route path="/product-list/:categoryName/:id" render={()=><Template component={productlistcomponent} />}/>
+        <Route path="/wish-list/:id" render={()=><Template component={productlistcomponent} />}/>
 
         <Route path="/checkout" render={()=><Template hide_newsletter={true} component={cartcomponent} />}/>
 
@@ -127,8 +140,12 @@ const App = (props) => {
         <Route path="/general-enquiry" render={()=><Template  component={generalEnquiry}  hide_newsletter={true} />}/>
         <Route path="/recipe-list" render={()=><Template  component={recipePage}  />}/>
         <Route path="/order-history" render={()=><Template  component={orderHistory}  />}/>
+        <Route path="/order-details/:id" render={()=><Template  component={orderDetail}  />}/>
         <Route path="/career" render={()=><Template  component={careerpage}  />}/>
         <Route path="/collabrate-with-us" render={()=><Template  component={collabratePage}  />}/>
+
+        <Route path="/wishlist" render={()=><Template  component={wishlistpage}  hide_newsletter={true} />}/>
+
 
       </Switch>
       }

@@ -11,26 +11,35 @@ const options = {
     margin:10,
     loop: false,
     dots:false,
-    nav:true,
+  
     navText:["<i class='icon-angle-left adjust_icon' ></i>","<i class='icon-angle-right adjust_icon' ></i>"],
     responsive:{
         0: {
-            items:2
+            items:2,
+            nav : false
         },
         480: {
-            items:2
+            items:2,
+            nav : false
         },
         768: {
-            items:3
+            items:3,
+            nav:true,
         },
         992: {
-            items:3
+            items:3,
+            nav:true,
+
         },
         1200: {
-            items:3
+            items:3,
+            nav:true,
+
         },
         1600: {
             items:6,
+            nav:true,
+
         }
     }
 }

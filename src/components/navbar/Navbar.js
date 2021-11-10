@@ -96,6 +96,7 @@ const MobileMenu = (props) => {
 											}} >RECIPES</Link>
 										</li>
 										<li>
+										<li><Link to={{pathname:'/wishlist'}}>Wishlists</Link></li>
 
 										<Link to="/about-us" className="sf-with-ul">
 											ABOUT US
@@ -397,7 +398,7 @@ function nFormatter(num, digits) {
 												</Link>
 											</li>
 
-											<li>
+											<li className="down_arrow">
 												<a href="#" className="sf-with-ul">
 													Menu
 												</a>
@@ -462,14 +463,13 @@ function nFormatter(num, digits) {
 
 											<li>
 											<Link to="/about-us" className="sf-with-ul">
-												ABOUT
+												ABOUT US
 											</Link>
 											</li>
 
-											<li>
+											<li className="down_arrow">
 											<Link to="/general-enquiry" className="sf-with-ul">
-												CONTACT
-
+												CONTACT US
 											</Link>
 												<ul > 
 													<li><Link to="/general-enquiry">General Enquiry</Link></li>
@@ -548,8 +548,15 @@ function nFormatter(num, digits) {
 
 								<div className="header-dropdown use-account">
 									<Link to={{pathname:'/my_account'}} className="use-mar"><i className="icon-user"></i>
-										
+									
 									</Link>
+									<div class="header-menu">
+										<ul > 
+											<li><Link to={{pathname:'/my_account'}}>My Account</Link></li>
+											<li><Link to={{pathname:'/wishlist'}}>Wishlists</Link></li>
+											{/* <li><Link to="/collabrate-with-us">Collaborate With Us</Link></li> */}
+										</ul>
+									</div>
 
 								</div>
 

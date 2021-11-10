@@ -7,6 +7,7 @@ import { setRedirectFalse } from '../redux/redirect/redirect.action';
 import { useHistory } from 'react-router-dom';
 import CustomAlert from '../components/alert/CustomAlert';
 import ScrollToTop from "react-scroll-to-top";
+import InstagramEmbed from 'react-instagram-embed';
 
 const Template = (props) => {
     const dispatch = useDispatch();
@@ -30,9 +31,12 @@ const Template = (props) => {
          }
     },[redirection])
 
+   
+
 
     return (
         <div>
+            
            
             <Navbar />
             <CustomAlert success={alert_config.success} showModel={alert_config.show_alert} title={alert_config.title} message={alert_config.message} />
@@ -59,3 +63,6 @@ const Template = (props) => {
 }
 
 export default Template
+
+
+

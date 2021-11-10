@@ -27,24 +27,24 @@ const ExperienceRow = () => (
 
                             <div className="rate-list">
                                 <div className="rate-item">
-                                    <p className="t t-rate-number">+2500</p>
+                                    <p className="t t-rate-number">150+</p>
                                     &nbsp;
                                     <p className="t t-rate-desc">
-                                    suburbs that
+                                    Quality
                                     <br />
-                                    we deliver to
+                                    Checks
                                     </p>
                                 </div>
                             </div>
 
                             <div className="rate-list">
                                 <div className="rate-item">
-                                    <p className="t t-rate-number">+1.2 &nbsp; million</p>
+                                    <p className="t t-rate-number">150+</p>
 
                                     <p className="t t-rate-desc">
-                                    meals sold
+                                    Quality
                                     <br />
-                                    per month
+                                    Checks
                                     </p>
                                 </div>
                             </div>

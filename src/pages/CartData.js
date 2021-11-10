@@ -50,12 +50,22 @@ const AddressItem = (props) => {
                        dispatch(setUserAddressList(rs.data))
                     }
                 })
+                // if(orderConfd.address_id==id){
+                //     dispatch(setOrderConf({
+                //         ...orderConfd,
+                //         address_id:0
+                //     }))
+                // }
+                
         })
     }
 
 
     useEffect(() => {
-       
+        // dispatch(setOrderConf({
+        //     ...orderConfd,
+        //     address_id:id
+        // }))
     }, [orderConfd])
 
 
@@ -84,7 +94,7 @@ const AddressItem = (props) => {
 }
 
 const CartItem = (props) => {
-    const {name,id,cart_id,qty,cart_amount,discount,imageUrl,mrp,selling_price,net_wt,unit,hifen_name} = props;
+    const {name,id,cart_id,qty,cart_amount,discount,imageUrl,mrp,selling_price,net_wt,unit,hifen_name,stock} = props;
     const dispatch = useDispatch()
 
     const [compData,setCompData] = useState({
@@ -114,11 +124,17 @@ const CartItem = (props) => {
                 id:cart_id,
             })
         }else{
-           await add_cart(reqdata)
 
-            setCompData({
-                qty:new_qty
-            })
+            if(new_qty > stock){
+                alert('Out of stock!')
+            }else{
+                await add_cart(reqdata)
+
+                setCompData({
+                    qty:new_qty
+                })
+            }
+           
         }
         await get_cart_items().then((rs)=>{
             if(rs.status){
@@ -135,9 +151,19 @@ const CartItem = (props) => {
         updateCartQty(e.target.name)
     };
 
-    // useEffect(() => {
+    useEffect(() => {
+        if(stock == 0){
+             remove_cart_item({
+                id:cart_id,
+            })
+             get_cart_items().then((rs)=>{
+                if(rs.status){
+                    dispatch(updatecarts(rs))
+                }
+            })
+        }
        
-    // }, [props])
+    }, [props])
 
     return (
         <div className="osahan-cart">
@@ -202,6 +228,8 @@ const CartData = (props) => {
     // if(address_selected){
     //     location_id = address_selected.address_id;
     // }
+    const user = useSelector(state=>state.user.currentUser);
+
     const orderconfg = useSelector(state=>state.orderConf)
 
     const [locations,setLocations] = useState([]);
@@ -245,8 +273,8 @@ const CartData = (props) => {
     useEffect(() => {
         dispatch(setOrderConf({
             ...orderconfg,
-            payment_mode:'cod',
-            delivery_type:'now'
+            payment_mode: user.cod == 1 ? 'cod' : 'wallet',
+            delivery_type:'now',
         }))
     }, [])
 
@@ -333,7 +361,7 @@ const CartData = (props) => {
                                     </div>
 
                                     <DeliveryConfig />
-                                    <PaymentOption />
+                                    <PaymentOption user={user} />
                                     {/* end order address */}
 
                                 </div>

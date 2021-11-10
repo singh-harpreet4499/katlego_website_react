@@ -5,7 +5,15 @@ import { useParams } from 'react-router-dom';
 import { updatecarts } from '../../redux/cart/cart.action';
 import { add_cart, get_cart_items, remove_cart_item, you_may_like } from '../server/api';
 import ProductCard from './ProductCard';
+import ShowMoreText from "react-show-more-text";
 
+// img/recommend/thumb.png
+// import thumb1 from '../../libs/img/recommend/thumb.png'
+// import thumb2 from '../../libs/img/recommend/thumb-1.png'
+// import thumb3 from '../../libs/img/recommend/thumb-2.png'
+// import thumb4 from '../../libs/img/recommend/thumb-3.png'
+// import thumb5 from '../../libs/img/recommend/thumb-4.png'
+import defaultImage from '../../libs/images/demos/demo-2/products/product-5-1.jpg';
 
 const ProductDetails = (props) =>  {
     const dispatch = useDispatch();
@@ -13,12 +21,15 @@ const ProductDetails = (props) =>  {
     const [compData,setCompData] = useState({
         qty:0
     })
+    const {name,imageUrl,description,mrp,discount,selling_price,net_wt,unit,cartdata,id,is_cart,no_of_pieces,rating,gallery,imagePath,stock}=props;
+
+
+    const [main_image,setMainImage] = useState(imageUrl)
     const [paramset,setParamsData] = useState(null)
     const [you_maylike,setYouMayLike] = useState([])
 
     const user = useSelector(state=>state.user.currentUser);
     const cart = useSelector(state=>state.cart);
-    const {name,imageUrl,description,mrp,discount,selling_price,net_wt,unit,cartdata,id,is_cart,no_of_pieces,rating}=props;
 
     // console.log('====================================');
     // console.log('product detail',props);
@@ -60,22 +71,27 @@ const ProductDetails = (props) =>  {
         //  }else{
         //      add_cart(reqdata)
         //  }
-        add_cart(reqdata).then((rs)=>{
-            if(rs.status){
-                if(logic=='buynow'){
-                    window.location.href = "/checkout"
+        if(new_qty > stock){
+            alert('Out of stock!')
+        }else{
+            add_cart(reqdata).then((rs)=>{
+                if(rs.status){
+                    if(logic=='buynow'){
+                        window.location.href = "/checkout"
+                    }
                 }
-            }
-        })
+            })
+           
+             await get_cart_items().then((rs)=>{
+                 if(rs.status){
+                     dispatch(updatecarts(rs))
+                 }
+             })
+             setCompData({
+                qty:new_qty
+            })
+        }
        
-         await get_cart_items().then((rs)=>{
-             if(rs.status){
-                 dispatch(updatecarts(rs))
-             }
-         })
-         setCompData({
-            qty:new_qty
-        })
     }
 
     const set_page_params = (params) => {
@@ -83,6 +99,7 @@ const ProductDetails = (props) =>  {
     }
 
     useEffect(() => {
+        setMainImage(imageUrl)
         if(props.is_cart){
             setCompData({
                 qty:props.cartdata.qty
@@ -116,6 +133,11 @@ const ProductDetails = (props) =>  {
     const handleSubmit =async (e) => {
         e.preventDefault()
     };
+
+    const set_main_img = (img) => {
+        setMainImage(img)
+
+    }
     
 
         return (
@@ -125,15 +147,38 @@ const ProductDetails = (props) =>  {
                 <div className="container">
                     <div className="row">
 
+                        {/* <div class="col-md-1">  */}
+
+                        {
+                            gallery ?
+
+                            <ul class="thumb-bann">
+                                <li class="thumb-sli active"><div style={{cursor:'pointer'}}  onClick={()=>set_main_img(imageUrl)}><img src={imageUrl} width="80" height="80"  /></div></li>
+                            {
+                                gallery &&
+                                (gallery.split('|').map((dt)=>{
+                                    return <li class="thumb-sli active"><div style={{cursor:'pointer'}}  onClick={()=>set_main_img(imagePath+dt)}><img src={imagePath+dt} width="80" height="80"  /></div></li>
+                                }))
+
+                            }        
+                            </ul>
+
+                            :''
+                        }
+
+                        
+                            
+                        {/* </div> */}
+
                         <div className="col-lg-6">
                             <div className="recommend-slider mb-3">
                                 <div className="osahan-slider-item">
-                                    <img src={imageUrl} style={{width:'800px',height:'504px'}} className="img-fluid mx-auto shadow-sm rounded" alt="Responsive" />
+                                    <img src={main_image} style={{width:'800px',height:'504px'}} className="img-fluid mx-auto shadow-sm rounded" alt="Responsive" />
                                 </div>
                             </div>
                             <div className="pd-f d-flex align-items-center mb-3">
                                 {
-                                    !selling_price ? 
+                                    !selling_price || stock == 0 ? 
                                     <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn-product btn-cart hsbutonhover" disabled={true}>
                                         Out Of Stock
                                     </button>
@@ -161,7 +206,7 @@ const ProductDetails = (props) =>  {
                         </div>
 
                         {/* product details start */}
-                        <div className="col-lg-6">
+                        <div className="col-lg-5">
                             <div className="p-4 bg-white rounded shadow-sm">
                                 <div className="pt-0">
                                     <div className="row">
@@ -218,7 +263,7 @@ const ProductDetails = (props) =>  {
                                                 </label>
                                             </div>
                                             {
-                                                !selling_price ? ''   : (
+                                                !selling_price || stock == 0 ? ''   : (
                                                     <div className="ml-auto" >
                                                         <form id='myform' onSubmit={handleSubmit} className="cart-items-number d-flex" method='POST' >
                                                             <input type='button' name="minus" onClick={handleChange} value='-' className='qtyminus btn btn-success btn-sm' />
@@ -258,7 +303,23 @@ const ProductDetails = (props) =>  {
                                         </div>
 
                                         <p className="font-weight-bold mt-1">Product Details</p>
-                                        <p className="text-muted small mb-0">{ReactHtmlParser(description)}</p>
+                                        {/* <p className="text-muted small mb-0"> */}
+                                        <ShowMoreText
+                                            lines={8}
+                                            more="Read more"
+                                            less="Show less"
+                                            className="text-muted small mb-0"
+                                            anchorClass="my-anchor-css-class"
+                                            // onClick={this.executeOnClick}
+                                            // expanded={false}
+                                            // width={280}
+                                            // truncatedEndingComponent={"... "}
+                                        >
+                                            {
+                                        description ?  ReactHtmlParser(description) : '' }
+                                            </ShowMoreText>
+                                            
+                                        {/* </p> */}
                                     </div>
                                 </div>
                             </div>

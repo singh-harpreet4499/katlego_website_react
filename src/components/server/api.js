@@ -9,6 +9,8 @@ const moment = require('moment');
 const axiosinstance = axios.create();
 // const BASE_URL = "http://localhost:3030/api/";
 const BASE_URL = "http://139.59.67.166:3030/api/";
+// const BASE_URL = "https://katlego.in:3030/api/";
+
 
 // const get_session_token = () => {
 //   return localStorage.getItem("accessToken");
@@ -222,6 +224,12 @@ export const user_signup_otp = async (data) => {
   const serverdata = await hitServerApi("user_signup_otp", data);
   return serverdata;
 };
+export const resend_otp = async (data) => {
+  const serverdata = await hitServerApi("resend_otp", data);
+  return serverdata;
+};
+
+
 
 export const user_signup_verify = async (data) => {
   const serverdata = await hitServerApi("user_signup_verify", data);
@@ -230,6 +238,23 @@ export const user_signup_verify = async (data) => {
 
 export const user_login = async (data) => {
   const serverdata = await hitServerApi("user_login", data);
+  return serverdata;
+};
+
+
+export const forgot_otp = async (data) => {
+  const serverdata = await hitServerApi("forgot_otp", data);
+  return serverdata;
+};
+
+
+export const forgot_verify_otp = async (data) => {
+  const serverdata = await hitServerApi("forgot_verify_otp", data);
+  return serverdata;
+};
+
+export const forgot_change_password = async (data) => {
+  const serverdata = await hitServerApi("forgot_change_password", data);
   return serverdata;
 };
 
@@ -338,10 +363,25 @@ export const get_settings = async (data={}) => {
   return serverdata;
 };
 
+export const add_to_wishlist = async (data={}) => {
+  const serverdata = await hitServerApi("add_to_wishlist", data);
+  return serverdata;
+};
+export const fetch_wishlists = async (data={}) => {
+  const serverdata = await hitServerApi("fetch_wishlists", data);
+  return serverdata;
+};
+
 
 
 export const change_password_by_old_password = async (data={}) => {
   const serverdata = await hitServerApi("change_password_by_old_password", data);
+  return serverdata;
+};
+
+
+export const order_details = async (data={}) => {
+  const serverdata = await hitServerApi("order_details", data);
   return serverdata;
 };
 
@@ -427,6 +467,11 @@ export const add_support_data = async (data) => {
   return serverdata;
 };
 
+export const add_collaborate_data = async (data) => {
+  const serverdata = await hitServerApi("add_collaborate_data", data);
+  return serverdata;
+};
+
 
 export const add_career_data = async (data) => {
   const serverdata = await hitServerApi("add_career_data", data);
@@ -455,6 +500,16 @@ export const fetch_press_release = async (data) => {
   return serverdata;
 };
 
+
+export const remove_to_wishlist = async (data) => {
+  const serverdata = await hitServerApi("remove_to_wishlist", data);
+  return serverdata;
+};
+
+export const cancel_order_user = async (data) => {
+  const serverdata = await hitServerApi("cancel_order_user", data);
+  return serverdata;
+};
 
 
 export const showAlertMessage = (title='alert',message='',success=false,danger=false) => {

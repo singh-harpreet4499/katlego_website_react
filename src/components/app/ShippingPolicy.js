@@ -2,20 +2,22 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { get_settings } from "../server/api"
 import parse from 'html-react-parser'
+import { useSelector } from "react-redux"
 const ShippingPolicy = (props) => {
     const [content,setContent] = useState(null)
-
+    const settings = useSelector(state=>state.global.settings);
     const get_data =async () => {
-        await get_settings({}).then((rs)=>{
-            if(rs.status){
-                setContent(rs.data.shipping_policy)
-            }
-        })
+        // await get_settings({}).then((rs)=>{
+        //     if(rs.status){
+        //         setContent(rs.data.shipping_policy)
+        //     }
+        // })
+        setContent(settings.shipping_policy)
     }
 
     useEffect(() => {
         get_data()
-    }, [])
+    }, [settings])
 
     return (
             <div className="page-content pb-0">

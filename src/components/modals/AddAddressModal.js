@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Modal,InputGroup,FormControl } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserAddressList } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
 import { add_address, check_if_service_location, fetch_addresses, fetch_areas, showAlertMessage } from "../server/api";
@@ -9,6 +9,7 @@ import PlacesAutocomplete,{
     geocodeByPlaceId,
     getLatLng,
   } from 'react-places-autocomplete';
+import { setOrderConf } from "../../redux/order/order.action";
 
 
 export const getPostcodeByLatLng = async (lat, lng) => {
@@ -36,7 +37,7 @@ const AddAddressModal = (props) => {
     const [address_type,setAddressType] = useState('');
     const [address,setAddress] = useState('');
     const [areas,setAreas] = useState([])
-
+    const orderConfd = useSelector(state=>state.orderConf)
     const [address_type_class1,setAddressTypeClass1] = useState('btn btn-outline-secondary');
     const [address_type_class2,setAddressTypeClass2] = useState('btn btn-outline-secondary');
     const [address_type_class3,setAddressTypeClass3] = useState('btn btn-outline-secondary');
@@ -137,6 +138,11 @@ const AddAddressModal = (props) => {
                        dispatch(setUserAddressList(rs.data))
                     }
                 })
+
+                dispatch(setOrderConf({
+                    ...orderConfd,
+                    address_id:response.data.id
+                }))
             }else{
                 showAlertMessage('',response.message,false,true)
             }

@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 
 const HomeSliderItem = (props) => (
     <div  className="intro-slide" style={{
+        backgroundColor:'#fff',
         backgroundImage:'url('+props.image+')'
     }}>
     </div>

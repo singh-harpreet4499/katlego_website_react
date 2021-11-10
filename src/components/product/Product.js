@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Redirect,useHistory } from 'react-router-dom';
 import defaultImage from '../../libs/images/demos/demo-2/products/product-5-1.jpg';
 import { connect, useSelector, useDispatch } from 'react-redux'
-import {add_cart, remove_cart_item,get_cart_items} from '../server/api'
+import {add_cart, remove_cart_item,get_cart_items, add_to_wishlist} from '../server/api'
 import { updatecarts } from '../../redux/cart/cart.action';
 import './product.css'
 import { setRedirectFalse } from '../../redux/redirect/redirect.action';
@@ -12,12 +12,30 @@ import HoverImage from "react-hover-image";
 
 
 const Product =(props) => {
-    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers,hoverimageUrl,combo_product}=props
+    const user = useSelector(state=>state.user.currentUser);
+
+    const {name,imageUrl,mrp,discount,selling_price,hifen_name,id,is_cart,cartdata,mark_as_new,mark_as_bestoffers,hoverimageUrl,combo_product,stock}=props
     const dispatch = useDispatch();
 
     const [compData,setCompData] = useState({
         qty:0
     })
+
+    const add_wishlist = async (product_id) => {
+        alert('added to wishlist')
+        await add_to_wishlist({
+            product_id:product_id
+        })
+        // .then((rs)=>{
+        //     debugger;
+        //     alert(JSON.parse(rs))
+        // })
+        // .catch((err)=>{
+        //     console.log(err);
+        //     debugger
+        // })
+        // debugger;
+    }
 
     const handleSubmit =async (e) => {
         e.preventDefault()
@@ -43,17 +61,23 @@ const Product =(props) => {
             product_id:id,
             qty:new_qty
         }
-        await  add_cart(reqdata)
-        // debugger;
-        await get_cart_items().then((rs)=>{
-            if(rs && rs.status){
-                dispatch(updatecarts(rs))
-            }
-        })
-
-        setCompData({
-            qty:new_qty
-        })
+        
+        if(new_qty > stock){
+            alert('Out of stock!')
+        }else{
+            await  add_cart(reqdata)
+            // debugger;
+            await get_cart_items().then((rs)=>{
+                if(rs && rs.status){
+                    dispatch(updatecarts(rs))
+                }
+            })
+    
+            setCompData({
+                qty:new_qty
+            })
+        }
+        
     }
 
 
@@ -113,12 +137,18 @@ const Product =(props) => {
                                 }
                         
                     </Link>
+                    {
+                        user ? 
+                        <div className="product-action-vertical">
+                        <div style={{cursor:'pointer'}} onClick={()=>add_wishlist(id)}  className="btn-product-icon btn-wishlist">
+                            <span>add to wishlist</span>
+                        </div>
+                        </div>
 
-                    <div className="product-action-vertical">
-                    <div  className="btn-product-icon btn-wishlist">
-                        <span>add to wishlist</span>
-                    </div>
-                    </div>
+                        :''
+                    }
+
+                   
                 </figure>
 
                 <div className="product-body">
@@ -145,7 +175,7 @@ const Product =(props) => {
                 </div>
                 <div className="product-action">
                     {
-                        !selling_price ?  
+                        (!selling_price || stock == 0) ?  
                         <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn-product btn-cart hsbutonhover" disabled={true}>
                             Out Of Stock
                         </button>

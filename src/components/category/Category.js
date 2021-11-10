@@ -10,7 +10,7 @@ function Category(props) {
                 pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
                 state:{...props}
             }}>
-          <img src={props.imageUrl}  alt={props.name}/>
+          <img  src={props.imageUrl}  alt={props.name}/>
         </Link>
       </div>
 

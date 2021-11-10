@@ -9,22 +9,25 @@ import { useState } from "react"
 import { useEffect } from "react"
 // const parse = require('html-react-parser');
 import parse from 'html-react-parser'
+import { useSelector } from "react-redux"
 
 const AboutPage = (props) => {
 
     const [content,setContent] = useState('')
+    const settings = useSelector(state=>state.global.settings);
 
     const get_data =async () => {
-        await get_settings({}).then((rs)=>{
-            if(rs.status){
-                setContent(rs.data.about_us)
-            }
-        })
+        // await get_settings({}).then((rs)=>{
+        //     if(rs.status){
+        //         setContent(rs.data.about_us)
+        //     }
+        // })
+        setContent(settings.about_us)
     }
 
     useEffect(() => {
         get_data()
-    }, [])
+    }, [settings])
 
     return (
         <main className="main">
@@ -104,7 +107,9 @@ const AboutPage = (props) => {
 
                             <div className="col-lg-5 offset-lg-1">
                                 <div className="about-images">
-                                    <img src={image5} alt="" className="about-img-front" />
+                                    <img src={image5} alt="" style={{
+                                        maxWidth:'120%'
+                                    }} />
                                 </div>
                             </div>
                         </div>

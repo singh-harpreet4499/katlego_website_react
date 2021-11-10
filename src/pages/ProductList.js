@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
-import { fetch_products_by_category } from "../components/server/api";
+import { fetch_products_by_category, fetch_wishlists } from "../components/server/api";
 
 import SpinLoader from '../components/loader/SpinLoader';
 import FooterSupport from "../components/footer/FooterSupport";
@@ -45,6 +45,17 @@ const ProductList = (props) => {
         await fetch_products_by_category({
             category_id:urlparamsdata.id
         }).then((rs)=>{
+            if(rs.status){
+                setCompData({
+                    products:rs.data
+                })
+            }
+            setCanMove(1);
+        })
+    }
+
+    const fetchwishlists = async () => {
+        await fetch_wishlists().then((rs)=>{
             if(rs.status){
                 setCompData({
                     products:rs.data
@@ -107,12 +118,18 @@ const ProductList = (props) => {
     }
 
     useEffect(() => {
-        if(!compData.products.length){
-            fetch_products_list();
-            // console.log(compData.products);
-        }else if(categoryid != urlparamsdata.id){
-            fetch_products_list();
+        if(urlparamsdata.id === 'products'){
+            fetchwishlists()
+
+        }else{
+            if(!compData.products.length){
+                fetch_products_list();
+                // console.log(compData.products);
+            }else if(categoryid != urlparamsdata.id){
+                fetch_products_list();
+            }
         }
+      
 
     },[filtered,urlparamsdata])
 
@@ -143,10 +160,6 @@ const ProductList = (props) => {
                                                     <input type="radio" id="customRadio1" name="sort_by" value="top_rated"  onChange={handleChange} class="custom-control-input"  />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio1">Top Rated</label>
                                                 </div>
-                                                {/* <div class="custom-control border-bottom px-0  custom-radio">
-                                                    <input type="radio" id="customRadio2" name="sort_by" class="custom-control-input" />
-                                                    <label class="custom-control-label py-3 w-100 px-3" for="customRadio2">Nearest Me</label>
-                                                </div> */}
                                                 <div class="custom-control border-bottom px-0  custom-radio">
                                                     <input type="radio" id="customRadio3" name="sort_by" value="cost_high_to_low"  onChange={handleChange} class="custom-control-input" />
                                                     <label class="custom-control-label py-3 w-100 px-3" for="customRadio3">Cost High to Low</label>
@@ -163,7 +176,6 @@ const ProductList = (props) => {
                                                     <h6 class="m-0">ADDITIONAL FILTERS</h6>
                                                 </div>
                                                 <div class="px-3 pt-3">
-                                                    {/* <input type="range" class="custom-range" min="0" max="100" name="" /> */}
                                                     <div class="form-row">
                                                         <div class="form-group col-6">
                                                         <label>Min</label>
@@ -197,7 +209,7 @@ const ProductList = (props) => {
                         <div className="col-lg-12">
                             <div className="osahan-listing">
                                 <div className="d-flex align-items-center mb-3">
-                                    <h4>{urlparamsdata.categoryName}</h4>
+                                    <h4>{urlparamsdata.id=='products' ? 'Wishlists' : urlparamsdata.categoryName}</h4>
                                     <div className="m-0 text-center ml-auto">
                                         <div
                                         onClick={toggleFilterModal}
@@ -205,12 +217,7 @@ const ProductList = (props) => {
                                             className="btn text-muted bg-white mr-2"
                                             ><i className="icofont-filter mr-1"></i> Filter {'&'} Sort
                                         </div>
-                                        {/* <div
-                                            data-toggle="modal"
-                                            data-target="#exampleModal"
-                                            className="btn text-muted bg-white"
-                                            ><i className="icofont-signal mr-1"></i> Sort
-                                        </div> */}
+                                  
                                     </div>
                                 </div>
                                 <div className="row">

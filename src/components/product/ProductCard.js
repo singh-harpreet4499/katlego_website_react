@@ -7,6 +7,7 @@ import { updatecarts } from '../../redux/cart/cart.action';
 import discounticon from '../../libs/images/discounticon.png'
 import './productcard.css';
 import LazyImage from '../image/LazyImage';
+import HoverImage from 'react-hover-image/build';
 // const ProductCard = async (props) => {
 //   const [formData, updateFormData] = useState({
 //     qty: 1,
@@ -117,7 +118,7 @@ import LazyImage from '../image/LazyImage';
 
 const ProductCard = (props) => {
 
-  const {name,imageUrl,mrp,discount,selling_price,unit,hifen_name,net_wt,gross_wt,id,is_cart,cartdata,no_of_pieces}=props
+  const {name,imageUrl,mrp,discount,selling_price,unit,hifen_name,net_wt,gross_wt,id,is_cart,cartdata,no_of_pieces,hoverimageUrl,stock}=props
   const dispatch = useDispatch();
 
   const user = useSelector(state=>state.user.currentUser);
@@ -144,23 +145,22 @@ const ProductCard = (props) => {
           product_id:id,
           qty:new_qty
       }
-      await  add_cart(reqdata)
-    //   if(new_qty==0){
-    //      await remove_cart_item({
-    //           id:cartdata?cartdata.id:0,
-    //       })
-    //   }else{
-    //     await  add_cart(reqdata)
-    //   }
-      await get_cart_items().then((rs)=>{
-          if(rs.status){
-              dispatch(updatecarts(rs))
-          }
-      })
-
-      setCompData({
-          qty:new_qty
-      })
+        if(new_qty > stock){
+            alert('Out of stock!')
+        }else{
+            await  add_cart(reqdata)
+    
+            await get_cart_items().then((rs)=>{
+                if(rs.status){
+                    dispatch(updatecarts(rs))
+                }
+            })
+    
+            setCompData({
+                qty:new_qty
+            })
+        }
+      
   }
 
 
@@ -205,7 +205,13 @@ const ProductCard = (props) => {
                                             to={{
                                                 pathname: "/product-details/"+hifen_name+"/"+(id),
                                             }}>
-                          <LazyImage src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" />
+                          {/* <LazyImage src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" /> */}
+                          <HoverImage
+                                src={imageUrl?imageUrl:defaultImage}
+                                className="img-fluid item-img w-100 mb-2" 
+                                hoverSrc={hoverimageUrl}
+                                alt={name}
+                            />
                           <h6 className="text-success curr">{name}</h6>
                           </Link>
                           <ul className="anti hidden-xs hidden-sm">
@@ -241,7 +247,7 @@ const ProductCard = (props) => {
                                   </div>
                                   <div className="col-md-4">
                                   {
-                                      !selling_price ? 
+                                      !selling_price || stock == 0 ? 
                                       <button style={{cursor:'not-allowed'}} name="plus" value="1" onClick={()=>alert('Sorry! This Product is Out of stock')} className="btn cart-btn" disabled={true}>
                                             Out Of Stock
                                         </button>

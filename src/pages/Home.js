@@ -15,6 +15,7 @@ import Ourrecipe from '../components/app/Ourecipe';
 import SpinLoader from '../components/loader/SpinLoader';
 import Pressrelease from '../components/app/Pressrelease';
 import Testimonial from '../components/app/Testimonial';
+import InstagramEmbed from 'react-instagram-embed';
 
 class Home extends React.Component {
     
@@ -55,9 +56,11 @@ class Home extends React.Component {
 
     render() {
         const {best_sellers,categories,combos,bannners,hotselling}=this.state
+      
         return (
             <div >
-                <Header canMove={this.state.canMove} categories={categories}/>
+                
+                <Header canMove={1} categories={categories}/>
                 <HomeSlider banners={bannners} />
                 <ExperienceRow />
                 <div className="container">
@@ -132,10 +135,14 @@ class Home extends React.Component {
                 {/* <Heading title="Our Customers Say" /> */}
                 <Testimonial />
                 <Pressrelease />
+
+                
+                
             <FooterSupport />
     
             </div>
         );
+        // debugger;
     }
     
     

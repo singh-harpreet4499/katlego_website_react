@@ -53,7 +53,7 @@ const Header = (props) => {
     return (<SpinLoader />)
   }else{
     return (
-      <div>
+      <>
         <div className="container banner-group-1">
           <div className="categories">
             {categories.length ? (
@@ -74,7 +74,7 @@ const Header = (props) => {
             )}
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

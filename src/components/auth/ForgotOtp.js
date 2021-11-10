@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router";
 import { setCurrentUser } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
-import { resend_otp, set_session, user_signup_verify } from "../server/api";
+import { forgot_verify_otp, resend_otp, set_session, user_signup_verify } from "../server/api";
 import OtpInput from 'react-otp-input';
 
 
-const Otp = (props) => {
+const ForgotOtp = (props) => {
     // console.log('otp props',props);
   var history = useHistory();
   const [errormessage,setErrormessage] = useState('');
@@ -19,11 +19,6 @@ const Otp = (props) => {
         device_type: "",
         device_token: "",
         model_name: "",
-        one: "",
-        two: "",
-        three: "",
-        four: "",
-        phone:""
       });
       const [requestdata,setRequestdata] = useState(initialFormData);
       const [cursor_allow,setCursorAllow] = useState(1);
@@ -63,15 +58,19 @@ const Otp = (props) => {
 
   const handleSubmit =async (e) => {
     e.preventDefault()
-    // var reqst = requestdata;
-    // reqst.otp=`${reqst.one}${reqst.two}${reqst.three}${reqst.four}`
-    const response =await user_signup_verify(requestdata);
+
+    const response =await forgot_verify_otp(requestdata);
     // alert(JSON.stringify(response))
     if(response.status){
         setCursorAllow(0);
-        set_session(response)
-        dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
-        history.push('/')
+        // alert(JSON.stringify(response))
+        // return;
+        // set_session(response)
+        // dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
+
+        history.push('/forgot-password',{
+            ...response.data
+          })
     }else{
         setRequestdata({
             ...requestdata,
@@ -134,7 +133,6 @@ const Otp = (props) => {
                                     
                                 {/* </div> */}
                                 <p><div style={{cursor:"pointer"}} onClick={resendotp} className="text-decoration-none text-success">Resend Code</div></p>
-                                {/* <p><a href="/" className="text-decoration-none text-dark">Call me instead</a></p> */}
                                 <button type="submit" className="btn btn-success btn-block btn-lg" style={{cursor:cursor_allow ? 'pointer':'not-allowed'}} disabled={cursor_allow?false:true}>Continue</button>
                             </form>
                         </div>
@@ -146,4 +144,4 @@ const Otp = (props) => {
     );
 }
 
-export default withRouter(Otp)
+export default withRouter(ForgotOtp)

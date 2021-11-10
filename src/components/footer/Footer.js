@@ -71,7 +71,7 @@ function Footer(props) {
                     pathname:'/general-enquiry'
                   }} >Contact Us</Link>
                 </li>
-                {
+                {/* {
                   !user ? 
                   <li>
                   <Link to={{
@@ -79,7 +79,7 @@ function Footer(props) {
                   }}>Sign in</Link>
                 </li>
                 :""
-                }
+                } */}
                 
               </ul>
             </div>
@@ -137,7 +137,7 @@ function Footer(props) {
                   }}>View Cart</Link>
                 </li>
                 <li>
-                  <a href="/">My Wishlist</a>
+                  <Link to="/wishlist">My Wishlist</Link>
                 </li>
                 {/* <li>
                   <a href="/">Track My Order</a>
