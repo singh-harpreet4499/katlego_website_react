@@ -102,7 +102,6 @@ const GeneralEnquiry = (props) => {
                 				<div class="col-sm-5">
                 					<div class="contact-info">
                 						<h3>The Office</h3>
-
                 						<ul class="contact-list">
                 							<li>
                 								<i class="icon-clock-o"></i>

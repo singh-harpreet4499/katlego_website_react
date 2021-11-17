@@ -56,14 +56,16 @@ const HomeCategoryItem = ({mrp,name,imageUrl,hifen_name,id,selling_price,discoun
                             </div>
                             <div className="pri-bo">
                                 {
-                                    parseFloat(mrp)>parseFloat(selling_price) ? (
+                                    ((parseFloat(mrp)>parseFloat(selling_price)) && parseFloat(selling_price) !== 0 ) ? (
                                         <>
                                         
                                         <h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6><strike className="pri"> MRP₹{mrp}/{unit}</strike>
                                         </>
                                     )
                                     : 
-                                    (<><h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6></>)
+                                    (<>
+                                    {/* <h6 className="price m-0  chi-pri">₹{selling_price}/{unit}</h6> */}
+                                    </>)
                                 }
                             </div>
                         </div>

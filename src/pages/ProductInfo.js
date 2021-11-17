@@ -18,10 +18,11 @@ const ProductInfo = () => {
         }).then((rs)=>{
             console.log('product details',rs);
             if(rs.status){
-                setCanMove(1)
+               
                 setProductData(rs.data)
                 setParamData(params)
             }
+            setCanMove(1)
         })
     }
 

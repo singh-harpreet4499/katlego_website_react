@@ -173,6 +173,34 @@ const MyAccount = (props) => {
     )
 }
 
+const AddressesList = (props) => {
+    return (
+        <div class="col-lg-8 p-4 bg-white rounded shadow-sm" id="address">
+            <div class="osahan-my_address">
+                <h4 class="mb-4 profile-title">My Addresses <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-decoration-none text-success ml-auto" style={{float: 'right', marginTop: '4px'}}> <i class="icofont-plus-circle mr-1"></i>Add New Delivery Address</a></h4>
+                <div class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio">
+                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked="" />
+                    <label class="custom-control-label w-100" for="customRadioInline1">
+                        <div>
+                            <div class="p-3 bg-white rounded shadow-sm w-100">
+                                <div class="d-flex align-items-center">
+                                    <p class="mb-0 h6">Home</p>
+                                    <p class="mb-0 badge badge-success ml-auto">Default</p>
+                                </div>
+                                <p class="small text-muted m-0">1001 Veterans Blvd</p>
+                                <p class="small text-muted m-0">Redwood City, CA 94063</p>
+                                <p class="pt-2 m-0 text-right"><span class="small"><a href="#" data-toggle="modal" data-target="#exampleModal" class="text-decoration-none text-success"><i class="icofont-edit"></i> Edit</a></span>
+                                    <span class="small ml-3"><a href="#" data-toggle="modal" data-target="#Delete" class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+</div>
+    )
+}
 
 const Dashboard = (props) => {
 
@@ -218,6 +246,10 @@ const Dashboard = (props) => {
         case 'change_password':
             page=<ChangePassword userdata={userdata} />
             break;
+
+        case 'my_address':
+            page=<AddressesList userdata={userdata} />
+            break;
     
         default:
             break;
@@ -257,6 +289,15 @@ const Dashboard = (props) => {
                                                 </li>
                                             </div>
 
+                                            <Link style={{cursor:"pointer"}} to={{
+                                                pathname:'/order-history'
+                                            }}  className="text-decoration-none text-dark">
+                                                <li className="border-bottom bg-white d-flex align-items-center p-3">
+                                                    <i className="icofont-history osahan-icofont bg-success"></i>My Orders
+                                                    <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
+                                                </li>
+                                            </Link>
+
                                             <Link to={{
                                                 pathname:'/wallet-history'
                                             }} class="text-decoration-none text-dark">
@@ -266,14 +307,14 @@ const Dashboard = (props) => {
                                                 </li>
                                             </Link>
 
-                                            <Link style={{cursor:"pointer"}} to={{
-                                                pathname:'/order-history'
-                                            }}  className="text-decoration-none text-dark">
+                                            <div style={{cursor:"pointer"}} onClick={()=>update_page_name('my_address')} className="text-decoration-none text-dark">
                                                 <li className="border-bottom bg-white d-flex align-items-center p-3">
-                                                    <i className="icofont-history osahan-icofont bg-success"></i>My Orders
+                                                    <i className="icofont-user osahan-icofont bg-danger"></i>My Addresses
                                                     <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
                                                 </li>
-                                            </Link>
+                                            </div>
+
+                                          
 
                                             <div style={{cursor:"pointer"}} onClick={()=>update_page_name('change_password')} className="text-decoration-none text-dark">
                                                 <li className="border-bottom bg-white d-flex align-items-center p-3">
