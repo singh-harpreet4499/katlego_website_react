@@ -26,6 +26,7 @@ class Home extends React.Component {
             categories:[],
             best_sellers:[],
             hotselling:[],
+            deal_of_the_day:[],
             combos:[],
             canMove:0
         }
@@ -41,6 +42,7 @@ class Home extends React.Component {
                     bannners:response.banners,
                     combos:response.combos,
                     hotselling:response.hotselling,
+                    deal_of_the_day:response.deal_of_the_day,
                     canMove:1
                 })
             }
@@ -87,7 +89,7 @@ class Home extends React.Component {
                 </div>
     
                 <Adds />
-                <Dealday />
+                <Dealday deal_of_the_day={this.state.deal_of_the_day} />
                 {
                     combos.length ? 
                     (

@@ -221,7 +221,15 @@ const AddAddressModal = (props) => {
                 <div className="card-header bg-white border-0 p-0" id="headingtwo">
                     <h2 className="mb-0">
                         <button className="btn d-flex align-items-center bg-white btn-block text-left btn-lg h5 px-3 py-4 m-0" type="button" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo">
-                        <span className="c-number">2</span> Order Address <span onClick={toggleModal} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span>
+                            {
+                                props.hasOwnProperty('my_account') ?
+                                <span onClick={toggleModal} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span>
+
+                                :
+                                <><span className="c-number">2</span> Order Address <span onClick={toggleModal} className="text-decoration-none text-success ml-auto" style={{cursor:"pointer"}}> <i className="icofont-plus-circle mr-1"></i>Add New Delivery Address</span></>
+
+                            }
+                        
                         </button>
                     </h2>
                 </div>

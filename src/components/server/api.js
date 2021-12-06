@@ -265,6 +265,12 @@ export const fetch_homepage_web = async (data) => {
     return serverdata;
   };
 
+
+  export const fetch_faqs = async (data) => {
+    const serverdata = await hitServerApi("fetch_faqs", data);
+    return serverdata;
+  };
+
   
 export const fetch_homepage_web_auth = async (data) => {
   const serverdata = await hitServerApi("fetch_homepage_web_auth", data);

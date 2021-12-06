@@ -50,13 +50,7 @@ const AddressItem = (props) => {
                        dispatch(setUserAddressList(rs.data))
                     }
                 })
-                // if(orderConfd.address_id==id){
-                //     dispatch(setOrderConf({
-                //         ...orderConfd,
-                //         address_id:0
-                //     }))
-                // }
-                
+              
         })
     }
 

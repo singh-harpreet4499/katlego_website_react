@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { setCurrentUser } from "../../redux/user/user.action";
+import { setOrderConf } from "../../redux/order/order.action";
+import { setCurrentUser, setUserAddressList } from "../../redux/user/user.action";
 import Infomsg from "../app/Infomsg";
 import GifLoader from "../loader/GifLoader";
-import { edit_user_profile, get_session, logout_user, user_profile, change_password_by_old_password } from "../server/api";
+import AddAddressModal from "../modals/AddAddressModal";
+import { edit_user_profile, get_session, logout_user, user_profile, change_password_by_old_password, delete_address, showAlertMessage, fetch_addresses, fetch_locations, fetch_faqs } from "../server/api";
 
+import Faq from "react-faq-component";
 
 const ChangePassword = (props) => {
     const userdata = props.userdata
@@ -173,34 +176,236 @@ const MyAccount = (props) => {
     )
 }
 
+
+
+const AddressItem = (props) => {
+    const {address_type,location,city,state,id} = props;
+    const dispatch = useDispatch();
+    const orderConfd = useSelector(state=>state.orderConf)
+
+
+    const select_shipping_location = (location_id) => {
+
+        dispatch(setOrderConf({
+            ...orderConfd,
+            address_id:location_id
+        }))
+    }
+    
+
+    const delete_add = ()=>{
+        delete_address({id:id}).then((dt)=>{
+            showAlertMessage('Success','Address removed successfully',true,false)
+                 fetch_addresses({
+                     location_id:props.location_id
+                 }).then((rs)=>{
+                    if(rs.status){
+                       dispatch(setUserAddressList(rs.data))
+                    }
+                })
+              
+        })
+    }
+
+
+    useEffect(() => {
+        // dispatch(setOrderConf({
+        //     ...orderConfd,
+        //     address_id:id
+        // }))
+    }, [orderConfd])
+
+
+    return (
+        <>
+            <div class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked="" />
+                <label class="custom-control-label w-100" for="customRadioInline1">
+                    <div>
+                        <div class="p-3 bg-white rounded shadow-sm w-100">
+                            <div class="d-flex align-items-center">
+                                <p className="mb-0 h6">{address_type.toUpperCase()}</p>
+                                <p className="mb-0 badge badge-success ml-auto">{orderConfd.address_id===id ? <><i className="icofont-check-circled"></i> Default</> :'' }</p>
+                            </div>
+                            <p className="small text-muted m-0">{props.flat}</p>
+                            <p className="small text-muted m-0">{props.main_society + ' '+ props.main_location}</p>
+                            <p className="pt-2 m-0 text-right"><span className="small"><span style={{cursor:"pointer"}} onClick={delete_add}  className="text-decoration-none text-info">Delete</span></span></p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+       
+        </>
+    );
+}
+
+
 const AddressesList = (props) => {
+    const address_list = useSelector(state => state.user.address_list)
+    const address_selected = useSelector(state=>state.user.location);
+    const dispatch = useDispatch()
+    const [locations,setLocations] = useState([]);
+
+    const setselectedLocation =async () => {
+        const locationapi = await fetch_locations({});
+        if (locationapi.status) {
+            setLocations(locationapi.data)
+        }
+    }
+
+    // console.log("sfsdd",address_list);
+    useEffect(() => {
+        setselectedLocation()
+        fetch_address()
+    }, [])
+
+    
+    const fetch_address =async () => {
+        await fetch_addresses({
+            location_id:address_selected?address_selected.address_id:0,
+        }).then((rs)=>{
+            if(rs.status){
+               dispatch(setUserAddressList(rs.data))
+            }
+        })
+    }
     return (
         <div class="col-lg-8 p-4 bg-white rounded shadow-sm" id="address">
             <div class="osahan-my_address">
-                <h4 class="mb-4 profile-title">My Addresses <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-decoration-none text-success ml-auto" style={{float: 'right', marginTop: '4px'}}> <i class="icofont-plus-circle mr-1"></i>Add New Delivery Address</a></h4>
-                <div class="custom-control custom-radio px-0 mb-3 position-relative border-custom-radio">
-                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked="" />
-                    <label class="custom-control-label w-100" for="customRadioInline1">
-                        <div>
-                            <div class="p-3 bg-white rounded shadow-sm w-100">
-                                <div class="d-flex align-items-center">
-                                    <p class="mb-0 h6">Home</p>
-                                    <p class="mb-0 badge badge-success ml-auto">Default</p>
-                                </div>
-                                <p class="small text-muted m-0">1001 Veterans Blvd</p>
-                                <p class="small text-muted m-0">Redwood City, CA 94063</p>
-                                <p class="pt-2 m-0 text-right"><span class="small"><a href="#" data-toggle="modal" data-target="#exampleModal" class="text-decoration-none text-success"><i class="icofont-edit"></i> Edit</a></span>
-                                    <span class="small ml-3"><a href="#" data-toggle="modal" data-target="#Delete" class="text-decoration-none text-danger"><i class="icofont-trash"></i> Delete</a></span>
-                                </p>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-
+                <h4 class="mb-4 profile-title">My Addresses 
+                </h4>
+                <AddAddressModal my_account={true} locations={locations}  location_id ={ address_selected ? address_selected.address_id : 0} /> 
+               
+                {
+                    address_list.length>0?
+                    address_list.map((data)=><AddressItem  style={{cursor:'pointer'}} {...data} location_id={address_selected?address_selected.address_id:0} />)
+                    : ''
+                }
             </div>
-</div>
+        </div>
     )
 }
+
+
+const HelpSupport = (props) => {
+    const [faqs,setFaqs] = useState([])
+
+    const get_faqs =async () => {
+        await fetch_faqs({}).then((rs)=>{
+            if(rs.status){
+                setFaqs(rs.data)
+            }
+        })
+       
+    }
+
+    const data = {
+        title: "",
+        rows: faqs
+    };
+
+    const styles = {
+        fontSize: '13px',
+        color: '#212529',
+        // bgColor: 'white',
+        // titleTextColor: "blue",
+        // rowTitleColor: "blue",
+        // rowContentColor: 'grey',
+        // arrowColor: "red",
+    };
+    
+    const config = {
+        // animate: true,
+        // arrowIcon: "V",
+        // tabFocus: true
+    };
+    
+
+    useEffect(() => {
+        get_faqs()
+
+    }, [])
+  
+    return (
+        <div class="col-lg-8 p-4 bg-white rounded shadow-sm" id="help">
+<h4 class="mb-4 profile-title">Help &amp; Support</h4>
+<div class="help_support">
+{/* {
+                faqs.map((dt)=>{
+                    return (
+                        <button class="p-3 btn-light border d-flex align-items-center btn w-100 mb-1" type="button">
+                        {dt.question}
+                        <i class="text-success icofont-rounded-right ml-auto"></i>
+                        </button>
+                    )
+                })
+            } */}
+
+<Faq
+className="p-3 btn-light border d-flex align-items-center btn w-100 mb-1"
+                data={data}
+                styles={styles}
+                config={config}
+            />
+</div>
+</div>
+//         <div  className="help_support">
+//             {
+//                 faqs.map((dt)=>{
+//                     return (
+// <button class="p-3 btn-light border d-flex align-items-center btn w-100 mb-1" type="button">
+// {dt.question}
+// <i class="text-success icofont-rounded-right ml-auto"></i>
+// </button>
+//                     )
+//                 })
+//             }
+            
+        // <Faq
+        //         data={data}
+        //         styles={styles}
+        //         config={config}
+        //     />
+//         </div>
+    )
+}
+
+
+
+const TermPrivacy = (props) => {
+   
+    
+    return (
+       <>
+        <div class="col-lg-8 p-4 bg-white rounded shadow-sm" id="help">
+            <h4 class="mb-4 profile-title">Terms {'&'} Privacy</h4>
+            <div class="help_support">
+            <Link class="p-3 btn-light border d-flex align-items-center btn w-100 mb-1" 
+            style={{cursor:'pointer !important'}}
+            to={{
+                pathname:'/terms-and-conditions'
+            }}>Terms {'&'} Conditions<i class="text-success icofont-rounded-right ml-auto"></i>
+            </Link>
+            <Link class="p-3 btn-light border d-flex align-items-center btn w-100 mb-1"
+            style={{cursor:'pointer !important'}}
+            to={{
+                pathname:'/privacy-policy'
+            }}>Privacy Policy<i class="text-success icofont-rounded-right ml-auto"></i>
+            </Link>
+            <Link class="p-3 btn-light border d-flex align-items-center btn w-100 mb-1" 
+            style={{cursor:'pointer !important'}}
+            to={{
+                pathname:'/shipping-policy'
+            }}>Shipping Policy<i class="text-success icofont-rounded-right ml-auto"></i>
+            </Link>
+            
+            </div>
+        </div>
+       </>
+    )
+}
+
+
 
 const Dashboard = (props) => {
 
@@ -249,6 +454,14 @@ const Dashboard = (props) => {
 
         case 'my_address':
             page=<AddressesList userdata={userdata} />
+            break;
+
+            case 'help_and_support':
+            page=<HelpSupport userdata={userdata} />
+            break;
+
+            case 'terms_privacy':
+            page=<TermPrivacy userdata={userdata} />
             break;
     
         default:
@@ -309,7 +522,21 @@ const Dashboard = (props) => {
 
                                             <div style={{cursor:"pointer"}} onClick={()=>update_page_name('my_address')} className="text-decoration-none text-dark">
                                                 <li className="border-bottom bg-white d-flex align-items-center p-3">
-                                                    <i className="icofont-user osahan-icofont bg-danger"></i>My Addresses
+                                                <i class="icofont-address-book osahan-icofont bg-dark"></i>My Addresses
+                                                    <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
+                                                </li>
+                                            </div>
+
+                                            <div style={{cursor:"pointer"}} onClick={()=>update_page_name('terms_privacy')} className="text-decoration-none text-dark">
+                                                <li className="border-bottom bg-white d-flex align-items-center p-3">
+                                                <i class="icofont-info-circle osahan-icofont bg-primary"></i>Terms, Privacy {'&'} Policy
+                                                    <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
+                                                </li>
+                                            </div>
+
+                                            <div style={{cursor:"pointer"}} onClick={()=>update_page_name('help_and_support')} className="text-decoration-none text-dark">
+                                                <li className="border-bottom bg-white d-flex align-items-center p-3">
+                                                <i class="icofont-phone osahan-icofont bg-warning"></i>Help {'&'} Support
                                                     <span className="badge badge-success p-1 badge-pill ml-auto"><i className="icofont-simple-right"></i></span>
                                                 </li>
                                             </div>
