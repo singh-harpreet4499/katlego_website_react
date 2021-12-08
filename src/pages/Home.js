@@ -62,6 +62,7 @@ class Home extends React.Component {
         <Header canMove={1} categories={categories} />
         <HomeSlider banners={bannners} />
         <ExperienceRow />
+
         <div className="container">
           <Heading title="best sellers" horizontalLine={false} />
 
