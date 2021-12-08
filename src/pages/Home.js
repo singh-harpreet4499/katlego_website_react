@@ -113,7 +113,7 @@ class Home extends React.Component {
                                 return (
                                     <Category2 key={id} id={id}  defaultImage={1}  {...otherData} />
                                 )
-                            }) : ''
+                            }) : ""
                         }
                     </div>
                 </div>
