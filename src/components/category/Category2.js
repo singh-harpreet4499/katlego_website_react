@@ -7,8 +7,15 @@ import defaultImage5 from "../../libs/images/banners/3cols/banner-5.jpg";
 import defaultImage6 from "../../libs/images/banners/3cols/banner-6.jpg";
 
 function Category2(props) {
-  const {id,name,imageUrl,imagewithbgUrl}=props;
-  const arr = [defaultImage1,defaultImage2,defaultImage3,defaultImage4,defaultImage5,defaultImage6];
+  const { id, name, imageUrl, imagewithbgUrl } = props;
+  const arr = [
+    defaultImage1,
+    defaultImage2,
+    defaultImage3,
+    defaultImage4,
+    defaultImage5,
+    defaultImage6,
+  ];
   var defaultImage = defaultImage1;
   switch (props.defaultImage) {
     case 1:
@@ -42,33 +49,44 @@ function Category2(props) {
   }
 
   return (
-    
-    <div className="col-md-6 col-lg-4">
+    <div className="col-md-6 col-lg-4 col-6">
       <Link
-      to={{
-          pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
-          state:{...props}
-      }}>
-      <div className="banner">
-        <a href="/">
-          <img src={imagewithbgUrl?imagewithbgUrl:arr[Math.floor(Math.random()*arr.length)]} alt="Banner" />
-        </a>
-        <div className="banner-content">
-          {/* <h4 className="banner-subtitle"></h4> */}
-          <h3 className="banner-title">
-           {name}
-          </h3>
-          {/* <a href="/" className="banner-link"> */}
-          <Link
-          className="banner-link"
-            to={{
-                pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
-                state:{...props}
-            }}>
-            Explore Now
-          </Link>
+        to={{
+          pathname:
+            "/product-list/" + props.name.replace(/\s+/g, "-") + "/" + props.id,
+          state: { ...props },
+        }}
+      >
+        <div className="banner">
+          <a href="/">
+            <img
+              src={
+                imagewithbgUrl
+                  ? imagewithbgUrl
+                  : arr[Math.floor(Math.random() * arr.length)]
+              }
+              alt="Banner"
+            />
+          </a>
+          <div className="banner-content">
+            {/* <h4 className="banner-subtitle"></h4> */}
+            <h3 className="banner-title raw">{name}</h3>
+            {/* <a href="/" className="banner-link"> */}
+            <Link
+              className="banner-link exp"
+              to={{
+                pathname:
+                  "/product-list/" +
+                  props.name.replace(/\s+/g, "-") +
+                  "/" +
+                  props.id,
+                state: { ...props },
+              }}
+            >
+              Explore Now
+            </Link>
+          </div>
         </div>
-      </div>
       </Link>
     </div>
   );
