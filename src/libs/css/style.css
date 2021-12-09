@@ -14,7 +14,7 @@
 /*--------------------- 4.4.  Icon boxes -------------------- */
 /*--------------------- 4.5.  Cards -------------------- */
 /*--------------------- 4.6.  Tabs -------------------- */
-/*--------------------- 4.7.  Buttons -------------------- */
+/*--------------------- 4.7.  button, input, optgroup, select, textarea s -------------------- */
 /*--------------------- 4.8.  Products -------------------- */
 /*--------------------- 4.9.  Banners -------------------- */
 /*--------------------- 4.10. Banners Video -------------------- */
@@ -58,13 +58,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 /* font-family: 'Poppins', sans-serif; */
 /*--------------------- 1.General Styles ---------- */
+
+
+
 html {
   font-size: 62.5%;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   font-size-adjust: 100%;
-}
-.footer-middle {
 }
 
 body {
@@ -8833,7 +8834,7 @@ a:focus {
   margin-bottom: 0;
 }
 
-/* Scroll Top Button */
+/* Scroll Top button, input, optgroup, select, textarea  */
 #scroll-top {
   width: 5rem;
   height: 5rem;
@@ -9780,8 +9781,8 @@ a:focus {
     padding-right: 1rem;
   }
 }
-/*--------------------- 4.7.Buttons -------------------- */
-/* Buttons */
+/*--------------------- 4.7.button, input, optgroup, select, textarea s -------------------- */
+/* button, input, optgroup, select, textarea s */
 .btn-wrap {
   display: inline-block;
   margin-bottom: 2rem;
@@ -12755,6 +12756,8 @@ a:focus {
   margin-bottom: 2rem;
   transition: all 0.3s;
   box-shadow: none;
+  margin-right: -19px;
+  margin-top: -15px;
 }
 
 select.form-control:not([size]):not([multiple]) {
@@ -13696,7 +13699,11 @@ small.form-text {
   display: none;
 }
 
-button:focus {
+button,
+input,
+optgroup,
+select,
+textarea :focus {
   outline: none;
 }
 
@@ -14127,8 +14134,16 @@ button:focus {
 .fullscreen-container {
   position: relative;
 }
-.quickView-container button.mfp-close,
-.fullscreen-container button.mfp-close {
+.quickView-container button,
+input,
+optgroup,
+select,
+textarea .mfp-close,
+.fullscreen-container button,
+input,
+optgroup,
+select,
+textarea .mfp-close {
   color: #666;
   font-size: 1.8rem;
   top: 1.5rem;
@@ -22687,6 +22702,8 @@ button:focus {
 #newsletter-btn {
   background-color: #28a745;
   color: #fff;
+  padding-bottom: 14px;
+  padding-top: 13px;
 }
 #newsletter-btn:hover {
   background-color: #eb2627;

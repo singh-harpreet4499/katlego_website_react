@@ -39,7 +39,7 @@ const Template = (props) => {
         message={alert_config.message}
       />
 
-      <div className="container page-wrapper">
+      <div className=" page-wrapper">
         {props.component}
         {props.hide_newsletter === true ? "" : <Newsletter />}
         {/* <button id="scroll-top" title="Back to Top" class="show"><i class="icon-arrow-up"></i></button> */}
