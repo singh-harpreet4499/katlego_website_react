@@ -59,8 +59,6 @@
 /* font-family: 'Poppins', sans-serif; */
 /*--------------------- 1.General Styles ---------- */
 
-
-
 html {
   font-size: 62.5%;
   -webkit-text-size-adjust: 100%;
@@ -17293,6 +17291,7 @@ textarea .mfp-close {
 
 .contact-info {
   margin-bottom: 3rem;
+  padding-left: 10px;
 }
 .contact-info h3 {
   margin-top: 0.5rem;
