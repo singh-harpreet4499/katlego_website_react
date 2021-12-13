@@ -64,6 +64,7 @@ const MobileMenu = (props) => {
                   </li>
                   <li className="active " style={{ backgroundColor: "#fff" }}>
                     <Link
+                      onClick={closeMobileMenue}
                       to={{
                         pathname: "/",
                       }}
@@ -78,6 +79,7 @@ const MobileMenu = (props) => {
                         return (
                           <li>
                             <Link
+                              onClick={closeMobileMenue}
                               className="sf-with-ul"
                               to={{
                                 pathname:
@@ -99,13 +101,21 @@ const MobileMenu = (props) => {
                   ) : (
                     <>
                       <li>
-                        <Link to="/about-us" className="sf-with-ul">
+                        <Link
+                          onClick={closeMobileMenue}
+                          to="/about-us"
+                          className="sf-with-ul"
+                        >
                           ABOUT US
                         </Link>
                       </li>
 
                       <li>
-                        <Link to="/general-enquiry" className="sf-with-ul">
+                        <Link
+                          onClick={closeMobileMenue}
+                          to="/general-enquiry"
+                          className="sf-with-ul"
+                        >
                           CONTACT US
                         </Link>
                       </li>
@@ -114,6 +124,7 @@ const MobileMenu = (props) => {
 
                   <li>
                     <Link
+                      onClick={closeMobileMenue}
                       to={{
                         pathname: "recipe-list",
                       }}
@@ -123,16 +134,29 @@ const MobileMenu = (props) => {
                   </li>
                   <li>
                     <li>
-                      <Link to={{ pathname: "/wishlist" }}>Wishlists</Link>
+                      <Link
+                        onClick={closeMobileMenue}
+                        to={{ pathname: "/wishlist" }}
+                      >
+                        Wishlists
+                      </Link>
                     </li>
 
-                    <Link to="/about-us" className="sf-with-ul">
+                    <Link
+                      onClick={closeMobileMenue}
+                      to="/about-us"
+                      className="sf-with-ul"
+                    >
                       ABOUT US
                     </Link>
                   </li>
 
                   <li>
-                    <Link to="/general-enquiry" className="sf-with-ul">
+                    <Link
+                      onClick={closeMobileMenue}
+                      to="/general-enquiry"
+                      className="sf-with-ul"
+                    >
                       CONTACT US
                     </Link>
                   </li>

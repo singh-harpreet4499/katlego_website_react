@@ -9007,7 +9007,8 @@ a:focus {
 }
 .footer-newsletter .form-control {
   height: 46px;
-  padding: 1.25rem 2rem;
+  padding: 2.25rem 3rem;
+  margin-right: -19px;
   font-size: 1.4rem;
   line-height: 1.5;
   font-weight: 300;
@@ -14148,7 +14149,7 @@ textarea .mfp-close {
   right: 2rem;
   display: block;
   width: 2rem;
-  height: 2rem;
+  /* height: 2rem; */
 }
 
 .fullscreen-container {

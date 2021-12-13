@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import logoImage from '../../libs/images/demos/demo-2/logo.png'
-import paymentImage from '../../libs/images/payments.png';
-import appstore from '../../libs/images/appstore.png';
-import playstore from '../../libs/images/playmarket.png';
-import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+import logoImage from "../../libs/images/demos/demo-2/logo.png";
+import paymentImage from "../../libs/images/payments.png";
+import appstore from "../../libs/images/appstore.png";
+import playstore from "../../libs/images/playmarket.png";
+import { useSelector } from "react-redux";
 function Footer(props) {
-  const user = useSelector(state=>state.user.currentUser);
-  const {app_data} = props
+  const user = useSelector((state) => state.user.currentUser);
+  const { app_data } = props;
   return (
     <div className="footer-middle">
       <div className="container">
@@ -20,9 +20,7 @@ function Footer(props) {
                 width="115"
                 height="15"
               />
-              <p>
-                We know your chicken like no one does!
-              </p>
+              <p>We know your chicken like no one does!</p>
 
               <div className="widget-about-info">
                 <div className="row">
@@ -30,7 +28,9 @@ function Footer(props) {
                     <span className="widget-about-title">
                       Got Question? Call us 24/7
                     </span>
-                    <a href="tel:123456789">{app_data ? app_data.support_phone : ''}</a>
+                    <a href="tel:123456789">
+                      {app_data ? app_data.support_phone : ""}
+                    </a>
                   </div>
                   <div className="col-sm-6 col-md-8">
                     <span className="widget-about-title">Payment Method</span>
@@ -54,22 +54,34 @@ function Footer(props) {
 
               <ul className="widget-list">
                 <li>
-                  <Link to={{
-                    pathname:'/about-us'
-                  }}>About Katlego</Link>
+                  <Link
+                    to={{
+                      pathname: "/about-us",
+                    }}
+                  >
+                    About Katlego
+                  </Link>
                 </li>
                 <li>
-                  <Link to={{
-                    pathname:'/my_account'
-                  }}>My Account</Link>
+                  <Link
+                    to={{
+                      pathname: "/my_account",
+                    }}
+                  >
+                    My Account
+                  </Link>
                 </li>
                 {/* <li>
                   <a href="faq.html">FAQ</a>
                 </li> */}
                 <li>
-                  <Link to={{
-                    pathname:'/general-enquiry'
-                  }} >Contact Us</Link>
+                  <Link
+                    to={{
+                      pathname: "/general-enquiry",
+                    }}
+                  >
+                    Contact Us
+                  </Link>
                 </li>
                 {/* {
                   !user ? 
@@ -80,7 +92,6 @@ function Footer(props) {
                 </li>
                 :""
                 } */}
-                
               </ul>
             </div>
           </div>
@@ -91,27 +102,43 @@ function Footer(props) {
 
               <ul className="widget-list">
                 <li>
-                  <Link to={{
-                    pathname:'/payment-methods'
-                  }}>Payment Methods</Link>
+                  <Link
+                    to={{
+                      pathname: "/payment-methods",
+                    }}
+                  >
+                    Payment Methods
+                  </Link>
                 </li>
                 {/* <li>
                   <a href="/">Money-back guarantee!</a>
                 </li> */}
                 <li>
-                  <Link to={{
-                    pathname:'/terms-and-conditions'
-                  }}>Terms and conditions</Link>
+                  <Link
+                    to={{
+                      pathname: "/terms-and-conditions",
+                    }}
+                  >
+                    Terms and conditions
+                  </Link>
                 </li>
                 <li>
-                  <Link to={{
-                    pathname:'privacy-policy'
-                  }}>Privacy Policy</Link>
+                  <Link
+                    to={{
+                      pathname: "privacy-policy",
+                    }}
+                  >
+                    Privacy Policy
+                  </Link>
                 </li>
                 <li>
-                  <Link to={{
-                    pathname:'shipping-policy'
-                  }}>Shipping Policy</Link>
+                  <Link
+                    to={{
+                      pathname: "shipping-policy",
+                    }}
+                  >
+                    Shipping Policy
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -122,19 +149,22 @@ function Footer(props) {
               <h4 className="widget-title">My Account</h4>
 
               <ul className="widget-list">
-                {
-                  !user ? 
+                {!user ? (
                   <li>
                     <Link to="/login">Sign In</Link>
                   </li>
-                  :''
-                }
-               
-                <li>
-                  <Link to={{
-                    pathname:'/checkout'
+                ) : (
+                  ""
+                )}
 
-                  }}>View Cart</Link>
+                <li>
+                  <Link
+                    to={{
+                      pathname: "/checkout",
+                    }}
+                  >
+                    View Cart
+                  </Link>
                 </li>
                 <li>
                   <Link to="/wishlist">My Wishlist</Link>
@@ -143,46 +173,66 @@ function Footer(props) {
                   <a href="/">Track My Order</a>
                 </li> */}
                 <li>
-                  <Link to={{
-                    pathname:'/general-enquiry'
-                  }} >Help</Link>
+                  <Link
+                    to={{
+                      pathname: "/general-enquiry",
+                    }}
+                  >
+                    Help
+                  </Link>
                   {/* <a href="/">Help</a> */}
                 </li>
               </ul>
             </div>
           </div>
 
-
           <div class="col-sm-3 col-md-3">
             <div class="download">
-                <span class="down-app">Download App</span>
-                <a href="https://play.google.com/store">
-                  <img src={appstore} alt="ios" />
-                </a>
-                <a href="https://play.google.com/store">
-                  <img src={playstore} alt="android" />
-                </a>
+              <span class="down-app">Download App</span>
+              <a href="https://play.google.com/store">
+                <img src={appstore} alt="ios" />
+              </a>
+              <a href="https://play.google.com/store">
+                <img src={playstore} alt="android" />
+              </a>
             </div>
           </div>
 
           <div class="col-sm-9 col-md-9">
             <div class="social-icons social-icons-color">
               <span class="social-label">Social Media</span>
-              <a href="https://www.facebook.com/katlegofoodsindia" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+              <a
+                href="https://www.facebook.com/katlegofoodsindia"
+                class="social-icon social-facebook"
+                title="Facebook"
+                target="_blank"
+              >
+                <i class="icon-facebook-f"></i>
+              </a>
               {/* <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a> */}
-              <a href="https://www.instagram.com/katlego_foods/" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-              <a href="https://www.youtube.com/watch?v=W0UYKgfQi9k" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+              <a
+                href="https://www.instagram.com/katlego_foods/"
+                class="social-icon social-instagram"
+                title="Instagram"
+                target="_blank"
+              >
+                <i class="icon-instagram"></i>
+              </a>
+              <a
+                href="https://www.youtube.com/watch?v=W0UYKgfQi9k"
+                class="social-icon social-youtube"
+                title="Youtube"
+                target="_blank"
+              >
+                <i class="icon-youtube"></i>
+              </a>
               {/* <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a> */}
             </div>
           </div>
-
-
-
         </div>
       </div>
     </div>
   );
 }
-
 
 export default Footer;
