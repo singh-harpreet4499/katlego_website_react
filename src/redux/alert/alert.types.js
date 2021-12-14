@@ -1,0 +1,6 @@
+
+export const UserActionTypes = {
+    SHOW_CUSTOM_ALERT:'SHOW_CUSTOM_ALERT',
+    CLOSE_CUSTOM_ALERT:'CLOSE_CUSTOM_ALERT'
+
+}
