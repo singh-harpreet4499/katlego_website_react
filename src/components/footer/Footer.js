@@ -3,7 +3,13 @@ import logoImage from '../../libs/images/demos/demo-2/logo.png'
 import paymentImage from '../../libs/images/payments.png';
 import appstore from '../../libs/images/appstore.png';
 import playstore from '../../libs/images/playmarket.png';
+
+import fssailogo from '../../libs/img/fssai.png';
+
+
 import { useSelector } from 'react-redux';
+import moment  from 'moment';
+// const moment = require('moment')
 function Footer(props) {
   const user = useSelector(state=>state.user.currentUser);
   const {app_data} = props
@@ -162,9 +168,13 @@ function Footer(props) {
                 <a href="https://play.google.com/store">
                   <img src={playstore} alt="android" />
                 </a>
+
+                {/* <span>
+                  <img style={{width:'50px'}} src={fssailogo} alt="android" />
+                </span> */}
             </div>
           </div>
-
+          {/* fssailogo */}
           <div class="col-sm-9 col-md-9">
             <div class="social-icons social-icons-color">
               <span class="social-label">Social Media</span>
@@ -179,6 +189,25 @@ function Footer(props) {
 
 
         </div>
+        
+          <div class="footer-bottom">
+            <div class="container">
+              <p class="footer-copyright">Copyright © {moment().format('YYYY')} Katlego. All Rights Reserved.</p>
+              <ul class="footer-menu">
+                <li>
+                <Link to={{
+                    pathname:'/terms-and-conditions'
+                  }}>Terms of Use</Link>
+                </li>
+                <li>
+                <Link to={{
+                    pathname:'privacy-policy'
+                  }}>Privacy Policy</Link>
+                </li>
+              </ul>      
+            </div>
+          </div>
+
       </div>
     </div>
   );
