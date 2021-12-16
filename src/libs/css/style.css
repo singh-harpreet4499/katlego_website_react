@@ -59,8 +59,6 @@
 /* font-family: 'Poppins', sans-serif; */
 /*--------------------- 1.General Styles ---------- */
 
-
-
 html {
   font-size: 62.5%;
   -webkit-text-size-adjust: 100%;
@@ -11754,6 +11752,7 @@ a:focus {
 }
 .product.product-11 .product-body {
   padding-bottom: 7rem;
+  background: beige;
 }
 .product.product-11 .product-action {
   bottom: 2rem;

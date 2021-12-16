@@ -1,16 +1,21 @@
-import { Link } from 'react-router-dom';
-import defaultImage from '../../libs/images/1.png'
+import { Link } from "react-router-dom";
+import defaultImage from "../../libs/images/1.png";
 
 function Category(props) {
   return (
     <div className="category position-relative">
       <div className="category-image">
-      <Link
-            to={{
-                pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
-                state:{...props}
-            }}>
-          <img  src={props.imageUrl}  alt={props.name}/>
+        <Link
+          to={{
+            pathname:
+              "/product-list/" +
+              props.name.replace(/\s+/g, "-") +
+              "/" +
+              props.id,
+            state: { ...props },
+          }}
+        >
+          <img src={props.imageUrl} alt={props.name} />
         </Link>
       </div>
 
@@ -25,12 +30,16 @@ function Category(props) {
         "
       >
         <Link
-        className="category-title text-truncate font-weight-normal"
-            to={{
-                pathname: "/product-list/"+props.name.replace(/\s+/g, '-')+"/"+(props.id),
-                state:{...props}
-            }}>
-       
+          className="category-title text-truncate font-weight-normal"
+          to={{
+            pathname:
+              "/product-list/" +
+              props.name.replace(/\s+/g, "-") +
+              "/" +
+              props.id,
+            state: { ...props },
+          }}
+        >
           {props.name}
         </Link>
       </div>

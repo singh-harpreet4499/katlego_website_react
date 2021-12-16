@@ -6,6 +6,8 @@ import defaultImage4 from "../../libs/images/banners/3cols/banner-4.jpg";
 import defaultImage5 from "../../libs/images/banners/3cols/banner-5.jpg";
 import defaultImage6 from "../../libs/images/banners/3cols/banner-6.jpg";
 
+import "./Category2.css";
+
 function Category2(props) {
   const { id, name, imageUrl, imagewithbgUrl } = props;
   const arr = [
@@ -57,7 +59,7 @@ function Category2(props) {
           state: { ...props },
         }}
       >
-        <div className="banner">
+        <div className="banner img1">
           <a href="/">
             <img
               src={
@@ -66,6 +68,7 @@ function Category2(props) {
                   : arr[Math.floor(Math.random() * arr.length)]
               }
               alt="Banner"
+              className="imageHover"
             />
           </a>
           <div className="banner-content">

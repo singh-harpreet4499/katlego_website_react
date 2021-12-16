@@ -1,0 +1,6 @@
+.imageHover {
+  transition: 0.5s ease;
+}
+.img1:hover .imageHover {
+  opacity: 0.4;
+}
