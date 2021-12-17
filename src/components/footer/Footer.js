@@ -87,7 +87,7 @@ function Footer(props) {
                 <li>
                   <Link
                     to={{
-                      pathname: "",
+                      pathname: "/blogs",
                     }}
                   >
                     Blog
