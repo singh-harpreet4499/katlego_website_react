@@ -165,10 +165,16 @@ const ProductDetails = (props) => {
             <ul class="thumb-bann">
               <li class="thumb-sli active">
                 <div
+                  className="image-responsive"
                   style={{ cursor: "pointer" }}
                   onClick={() => set_main_img(imageUrl)}
                 >
-                  <img src={imageUrl} width="80" height="80" />
+                  <img
+                    src={imageUrl}
+                    className="image-responsive-hide"
+                    height="80"
+                    width="90"
+                  />
                 </div>
               </li>
               {gallery &&
@@ -176,10 +182,16 @@ const ProductDetails = (props) => {
                   return (
                     <li class="thumb-sli active">
                       <div
+                        className="image-responsive-hide "
                         style={{ cursor: "pointer" }}
                         onClick={() => set_main_img(imagePath + dt)}
                       >
-                        <img src={imagePath + dt} width="80" height="80" />
+                        <img
+                          src={imagePath + dt}
+                          className="image-responsive"
+                          width="90"
+                          height="80"
+                        />
                       </div>
                     </li>
                   );

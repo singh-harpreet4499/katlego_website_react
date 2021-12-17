@@ -4,7 +4,7 @@ import paymentImage from "../../libs/images/payments.png";
 import appstore from "../../libs/images/appstore.png";
 import playstore from "../../libs/images/playmarket.png";
 import { useSelector } from "react-redux";
-import moment from "moment"
+import moment from "moment";
 function Footer(props) {
   const user = useSelector((state) => state.user.currentUser);
   const { app_data } = props;
@@ -84,6 +84,16 @@ function Footer(props) {
                     Contact Us
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to={{
+                      pathname: "",
+                    }}
+                  >
+                    Blog
+                  </Link>
+                </li>
+
                 {/* {
                   !user ? 
                   <li>
@@ -233,25 +243,33 @@ function Footer(props) {
         </div>
 
         <div class="footer-bottom">
-            <div class="container">
-              <p class="footer-copyright">Copyright © {moment().format('YYYY')} Katlego. All Rights Reserved.</p>
-              <ul class="footer-menu">
-                <li>
-                <Link to={{
-                    pathname:'/terms-and-conditions'
-                  }}>Terms of Use</Link>
-                </li>
-                <li>
-                <Link to={{
-                    pathname:'privacy-policy'
-                  }}>Privacy Policy</Link>
-                </li>
-              </ul>      
-            </div>
+          <div class="container">
+            <p class="footer-copyright">
+              Copyright © {moment().format("YYYY")} Katlego. All Rights
+              Reserved.
+            </p>
+            <ul class="footer-menu">
+              <li>
+                <Link
+                  to={{
+                    pathname: "/terms-and-conditions",
+                  }}
+                >
+                  Terms of Use
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={{
+                    pathname: "privacy-policy",
+                  }}
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
           </div>
-
-
-
+        </div>
       </div>
     </div>
   );

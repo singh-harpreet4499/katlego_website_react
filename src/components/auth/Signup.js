@@ -171,6 +171,16 @@ const Signup = (props) => {
               Already have an account! Sign in
             </Link>
           </p>
+          <p className="text-center">
+            <Link
+              className=" btn-danger btn-sm btn m-4 zindex"
+              to={{
+                pathname: "/",
+              }}
+            >
+              Skip <i className="icofont-bubble-right"></i>
+            </Link>
+          </p>
         </div>
       </div>
     </div>
