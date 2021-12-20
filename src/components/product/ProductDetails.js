@@ -11,6 +11,7 @@ import {
 } from "../server/api";
 import ProductCard from "./ProductCard";
 import ShowMoreText from "react-show-more-text";
+import "./ProductDetails.css";
 
 // img/recommend/thumb.png
 // import thumb1 from '../../libs/img/recommend/thumb.png'
@@ -171,7 +172,7 @@ const ProductDetails = (props) => {
                 >
                   <img
                     src={imageUrl}
-                    className="image-responsive-hide"
+                    className="image-responsive"
                     height="80"
                     width="90"
                   />

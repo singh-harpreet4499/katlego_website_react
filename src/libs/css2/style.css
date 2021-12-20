@@ -2013,3 +2013,6 @@ p.wallet_text {
   line-height: 1;
   margin-top: -0.7rem;
 }
+.btn {
+  font-size: 16px !important;
+}

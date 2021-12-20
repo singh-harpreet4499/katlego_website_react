@@ -1,9 +1,8 @@
 .image-responsive {
-  width: 90;
-  height: 80;
+  display: block;
 }
 @media screen and (max-width: 576px) {
-  .image-responsive-hide {
+  .image-responsive {
     display: none;
   }
 }
