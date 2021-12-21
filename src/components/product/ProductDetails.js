@@ -205,12 +205,12 @@ const ProductDetails = (props) => {
           {/* </div> */}
 
           <div className="col-lg-6">
-            <div className="recommend-slider mb-3">
-              <div className="osahan-slider-item">
+            <div className="recommend-slider mb-3 ">
+              <div className="osahan-slider-item ">
                 <img
                   src={main_image}
-                  style={{ width: "700px", height: "404px" }}
-                  className="img-fluid mx-auto shadow-sm rounded"
+                  style={{ width: "700px", height: "554px" }}
+                  className="img-fluid mx-auto shadow-sm rounded mobile-view"
                   alt="Responsive"
                 />
               </div>
