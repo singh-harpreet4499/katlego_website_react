@@ -173,8 +173,8 @@ const ProductDetails = (props) => {
                   <img
                     src={imageUrl}
                     className="image-responsive"
-                    height="80"
-                    width="90"
+                    height="70"
+                    width="80"
                   />
                 </div>
               </li>
@@ -190,7 +190,7 @@ const ProductDetails = (props) => {
                         <img
                           src={imagePath + dt}
                           className="image-responsive"
-                          width="90"
+                          width="70"
                           height="80"
                         />
                       </div>
@@ -209,7 +209,7 @@ const ProductDetails = (props) => {
               <div className="osahan-slider-item">
                 <img
                   src={main_image}
-                  style={{ width: "800px", height: "504px" }}
+                  style={{ width: "700px", height: "404px" }}
                   className="img-fluid mx-auto shadow-sm rounded"
                   alt="Responsive"
                 />
