@@ -17,6 +17,7 @@ import HoverImage from "react-hover-image";
 
 const Product = (props) => {
   const user = useSelector((state) => state.user.currentUser);
+  console.log(props);
 
   const {
     name,
@@ -28,6 +29,8 @@ const Product = (props) => {
     id,
     is_cart,
     cartdata,
+    net_wt,
+    unit,
     mark_as_new,
     mark_as_bestoffers,
     hoverimageUrl,
@@ -187,6 +190,11 @@ const Product = (props) => {
             ) : (
               <span className="new-price">₹{selling_price}</span>
             )}
+          </div>
+          <div>
+            <h6>
+              Net Weight: {net_wt} {unit}
+            </h6>
           </div>
         </div>
         <div className="product-action">

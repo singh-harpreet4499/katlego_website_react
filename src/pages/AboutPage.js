@@ -10,6 +10,8 @@ import { useEffect } from "react";
 // const parse = require('html-react-parser');
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import Testimonial from "../components/app/Testimonial";
+import FooterSupport from "../components/footer/FooterSupport";
 
 const AboutPage = (props) => {
   const [content, setContent] = useState("");
@@ -96,34 +98,93 @@ const AboutPage = (props) => {
                     </div> */}
           {/* <div className="mb-5"></div> */}
         </div>
-        <div
+        {/* <div
           className="bg-light-2 pt-6 pb-5"
           style={{
             backgroundPosition: "center bottom",
             backgroundRepeat: "repeat-x;",
           }}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 mb-3 mb-lg-0">
-                <h2 className="title">Who We Are</h2>
-                <div className="lead text-primary mb-3">{parse(content)}</div>
+        ></div> */}
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 mb-3 mb-lg-0">
+              <div className="text-center pb-3">
+                {parse(content)}
                 {/* <p className="lead text-primary mb-3">Pellentesque odio nisi, euismod pharetra a ultricies <br />in diam. Sed arcu. Cras consequat</p>
                                 <p className="mb-2">Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue. </p> */}
+                <img
+                  style={{ marginTop: "40px" }}
+                  src="http://139.59.67.166/katlego_website/assets/images/about/about-2/signature.png"
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-5 offset-lg-1">
+              <div className="about-images">
+                <img
+                  src={image5}
+                  alt=""
+                  style={{
+                    maxWidth: "100%",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 mb-3 mb-lg-10">
+              <h2 className="title">Our Vision</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi
+                neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium,
+                ligula sollicitudin laoreet viverra, tortor libero sodales leo,
+                eget blandit nunc tortor eu nibh.
+              </p>
+            </div>
+            <div className="col-lg-6">
+              <h2 className="title">Our Mission</h2>
+              <p>
+                Sed egestas, ante et vulputate volutpat, eros pede semper est,
+                vitae luctus metus libero eu augue. Morbi purus libero, faucibus
+                adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent
+                elementum hendrerit tortor. Sed semper lorem at felis.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-light-2 pt-6 pb-5">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-5 mb-3 mb-lg-0">
+                <h2 className="title">Who We Are</h2>
+                <p className="lead text-primary mb-3">
+                  Pellentesque odio nisi, euismod pharetra a ultricies <br />
+                  in diam. Sed arcu. Cras consequat
+                </p>
+                <p className="mb-2">
+                  Sed pretium, ligula sollicitudin laoreet viverra, tortor
+                  libero sodales leo, eget blandit nunc tortor eu nibh.
+                  Suspendisse potenti. Sed egestas, ante et vulputate volutpat,
+                  uctus metus libero eu augue.
+                </p>
+                <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                  VIEW OUR NEWS <i className="icon-long-arrow-right"></i>
+                </button>
               </div>
 
-              <div className="col-lg-5 offset-lg-1">
+              <div className="col-lg-6 offset-lg-1">
                 <div className="about-images">
-                  <img
-                    src={image5}
-                    alt=""
-                    style={{
-                      maxWidth: "100%",
-                    }}
-                  />
+                  <img src="http://139.59.67.166/katlego_website/assets/images/about/img-1.jpg" />
                 </div>
               </div>
             </div>
+            <Testimonial />
+            <FooterSupport />
           </div>
         </div>
       </div>
