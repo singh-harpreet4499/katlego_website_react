@@ -1,27 +1,29 @@
 .product.product-11 .btn-product {
-    text-transform: uppercase;
-    color: #333;
-    border: .1rem solid #ebebeb;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    padding-top: .8rem;
-    padding-bottom: .8rem;
-
+  text-transform: uppercase;
+  color: #333;
+  border: 0.1rem solid #ebebeb;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 .btn-product {
-    color: #22003f;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem !important;
-    line-height: 1;
-    transition: all .35s ease;
-    padding-top: 1.9rem;
-    padding-bottom: 1.9rem;
-    flex-grow: 1;
-    flex-basis: 0;
+  color: #22003f;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem !important;
+  line-height: 1;
+  transition: all 0.35s ease;
+  padding-top: 1.9rem;
+  padding-bottom: 1.9rem;
+  flex-grow: 1;
+  flex-basis: 0;
 }
-button{
-    background-color: #fff;
+button {
+  background-color: #fff;
+}
+.button-out-of-stock {
+  font-family: "Itim";
 }

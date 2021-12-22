@@ -1,5 +1,6 @@
-import chickenImage from '../../libs/images/chicken.png'
-import qualityImage from '../../libs/images/quality.png'
+import chickenImage from "../../libs/images/chicken.png";
+import qualityImage from "../../libs/images/quality.png";
+import fssaiimg from "../../libs/img/fssai.png";
 function FooterSupport(props) {
   return (
     <div>
@@ -12,7 +13,12 @@ function FooterSupport(props) {
                 <i className="icon-truck"></i>
               </span>
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">Express Delivery</h3>
+                <h3
+                  className="icon-box-title free-ship"
+                  style={{ paddingBottom: "15px" }}
+                >
+                  Free Shipping
+                </h3>
               </div>
             </div>
           </div>
@@ -22,24 +28,29 @@ function FooterSupport(props) {
                 <img src={chickenImage} alt="" />
               </span>
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">Best Quality</h3>
+                <h3
+                  className="icon-box-title free-ship"
+                  style={{ paddingBottom: "15px" }}
+                >
+                  Best Quality
+                </h3>
               </div>
             </div>
           </div>
           <div className="col-lg-4 col-sm-6 col-4">
             <div className="icon-box icon-box-card box-car text-center">
               <span className="icon-box-icon chi">
-                <img src={qualityImage}  alt="" />
+                <img src={fssaiimg} style={{ width: "60px" }} alt="" />
               </span>
 
               <div className="icon-box-content">
-                <h3 className="icon-box-title free-ship">Food Saftey Standards</h3>
+                <p style={{ fontSize: "12px" }}>Lc no. 10821999000436</p>
+                <h3 className="icon-box-title free-ship">FSSC </h3>
               </div>
             </div>
           </div>
         </div>
       </div>
-
 
       <div className="icon-boxes-container">
         <div className="container">
@@ -76,7 +87,9 @@ function FooterSupport(props) {
                 </span>
 
                 <div className="icon-box-content">
-                  <h3 className="icon-box-title">Customer Satisfaction Guarantee</h3>
+                  <h3 className="icon-box-title">
+                    Customer Satisfaction Guarantee
+                  </h3>
                   {/* <p>When you sign up</p> */}
                 </div>
               </div>
@@ -100,6 +113,5 @@ function FooterSupport(props) {
     </div>
   );
 }
-
 
 export default FooterSupport;

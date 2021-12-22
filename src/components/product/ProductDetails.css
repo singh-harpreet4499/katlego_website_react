@@ -1,0 +1,8 @@
+.image-responsive {
+  display: block;
+}
+@media screen and (max-width: 576px) {
+  .image-responsive {
+    display: none;
+  }
+}

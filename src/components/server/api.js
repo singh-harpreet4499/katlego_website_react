@@ -8,8 +8,8 @@ import store from '../../redux/store';
 const moment = require('moment');
 const axiosinstance = axios.create();
 // const BASE_URL = "http://localhost:3030/api/";
-const BASE_URL = "http://139.59.67.166:3030/api/";
-// const BASE_URL = "https://katlego.in:3030/api/";
+// const BASE_URL = "http://139.59.67.166:3030/api/";
+const BASE_URL = "https://katlego.in:3020/api/";
 
 
 // const get_session_token = () => {
@@ -379,6 +379,11 @@ export const fetch_wishlists = async (data={}) => {
 };
 
 
+export const get_blogs = async (data={}) => {
+  const serverdata = await hitServerApi("get_blogs", data);
+  return serverdata;
+};
+
 
 export const change_password_by_old_password = async (data={}) => {
   const serverdata = await hitServerApi("change_password_by_old_password", data);
@@ -514,6 +519,31 @@ export const remove_to_wishlist = async (data) => {
 
 export const cancel_order_user = async (data) => {
   const serverdata = await hitServerApi("cancel_order_user", data);
+  return serverdata;
+};
+
+export const get_blog_categories = async (data) => {
+  const serverdata = await hitServerApi("get_blog_categories", data);
+  return serverdata;
+};
+
+export const get_blog_by_category = async (data) => {
+  const serverdata = await hitServerApi("get_blog_by_category", data);
+  return serverdata;
+};
+
+export const get_popular_blogs = async (data) => {
+  const serverdata = await hitServerApi("get_popular_blogs", data);
+  return serverdata;
+};
+
+export const get_related_blogs = async (data) => {
+  const serverdata = await hitServerApi("get_related_blogs", data);
+  return serverdata;
+};
+
+export const get_blog_details = async (data) => {
+  const serverdata = await hitServerApi("get_blog_details", data);
   return serverdata;
 };
 

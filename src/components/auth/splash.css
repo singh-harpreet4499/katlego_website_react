@@ -6,6 +6,11 @@
     height: auto !important;
     margin-bottom: 0px !important;
 } */
-.splash_image{
-    height: 100vh;
+.splash_image {
+  height: 100vh;
+}
+@media screen and (max-width: 576px) {
+  .splash_image-hide {
+    display: none;
+  }
 }
