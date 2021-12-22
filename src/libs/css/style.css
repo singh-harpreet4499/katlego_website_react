@@ -1156,7 +1156,7 @@ blockquote.text-white cite span {
 }
 .dropdown-cart-action .btn {
   font-size: 1.3rem;
-  min-width: 110px;
+  /* min-width: 110px; */
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
@@ -23271,7 +23271,7 @@ figure {
 .table th {
   padding: 0.75rem;
   vertical-align: top;
-  border-top: 1px solid #dee2e6;
+  /* border-top: 1px solid #dee2e6; */
 }
 .rat {
   font-family: "Lato", sans-serif;
