@@ -50,6 +50,8 @@ import { setSettingsData } from "./redux/global/global.action";
 import OrderDetail from "./pages/OrderDetail";
 import Wishlist from "./pages/Wishlist";
 import Blog from "./components/account/Blog/Blog";
+import BlogDetails from "./components/account/Blog/BlogDetails";
+// import BlogDetails from "./components/account/Blog/BlogDetails";
 
 const App = (props) => {
   const dispatch = useDispatch();
@@ -160,6 +162,14 @@ const App = (props) => {
 
   // const blogpage = <Blog />;
   const recipePage = <RecipeList user_login={user} />;
+
+  const blogdetails =(
+    <BlankTemplate
+      component={<BlogDetails user_login={user} />}
+      title={"Blog Detail"}
+    />
+  );
+  
   return (
     <div>
       {!canmove ? (
@@ -262,6 +272,13 @@ const App = (props) => {
           <Route
             path="/wish-list/:id"
             render={() => <Template component={productlistcomponent} />}
+          />
+
+<Route
+            path="/blog-details/:title/:id"
+            render={() => (
+              <Template component={blogdetails} hide_newsletter={true} />
+            )}
           />
 
           <Route
