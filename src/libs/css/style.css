@@ -13395,6 +13395,7 @@ small.form-text {
 }
 .owl-carousel .instagram-feed {
   margin-bottom: 0;
+  height: 200px;
 }
 .instagram-feed:after {
   content: "";

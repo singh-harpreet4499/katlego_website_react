@@ -352,15 +352,16 @@ export const fetch_wishlists = async (data = {}) => {
   return serverdata;
 };
 
-
-export const get_blogs = async (data={}) => {
+export const get_blogs = async (data = {}) => {
   const serverdata = await hitServerApi("get_blogs", data);
   return serverdata;
 };
 
-
-export const change_password_by_old_password = async (data={}) => {
-  const serverdata = await hitServerApi("change_password_by_old_password", data);
+export const change_password_by_old_password = async (data = {}) => {
+  const serverdata = await hitServerApi(
+    "change_password_by_old_password",
+    data
+  );
   return serverdata;
 };
 
@@ -504,17 +505,23 @@ export const get_blog_details = async (data) => {
   return serverdata;
 };
 
+export const get_insta_feeds = async (data) => {
+  const serverdata = await hitServerApi("get_insta_feeds", data);
+  return serverdata;
+};
 
-export const showAlertMessage = (title='alert',message='',success=false,danger=false) => {
-  const alert_config =  {
-      show_alert:true,
-      title:title,
-      message:message,
-      success:success,
-      danger:danger
-  }
-  store.dispatch(showCustomAlert(alert_config))
-}
-
-
-
+export const showAlertMessage = (
+  title = "alert",
+  message = "",
+  success = false,
+  danger = false
+) => {
+  const alert_config = {
+    show_alert: true,
+    title: title,
+    message: message,
+    success: success,
+    danger: danger,
+  };
+  store.dispatch(showCustomAlert(alert_config));
+};

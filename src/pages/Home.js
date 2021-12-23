@@ -17,6 +17,7 @@ import Pressrelease from "../components/app/Pressrelease";
 import Testimonial from "../components/app/Testimonial";
 import "./Home.css";
 import InstagramEmbed from "react-instagram-embed";
+import InstaFeed from "../components/InstaFeed/InstaFeed";
 
 class Home extends React.Component {
   constructor(props) {
@@ -145,7 +146,7 @@ class Home extends React.Component {
         {/* <Heading title="Our Customers Say" /> */}
         <Testimonial />
         <Pressrelease />
-
+        <InstaFeed />
         <FooterSupport />
       </div>
     );
