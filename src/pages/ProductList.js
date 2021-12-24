@@ -235,6 +235,12 @@ const ProductList = (props) => {
                       <h6 class="m-0">ADDITIONAL FILTERS</h6>
                     </div>
                     <div class="px-3 pt-3">
+                      <input
+                        type="range"
+                        className="custom-range"
+                        min={0}
+                        max={100}
+                      ></input>
                       <div class="form-row">
                         <div class="form-group col-6">
                           <label>Min</label>

@@ -20,6 +20,7 @@ import "./ProductDetails.css";
 // import thumb4 from '../../libs/img/recommend/thumb-3.png'
 // import thumb5 from '../../libs/img/recommend/thumb-4.png'
 import defaultImage from "../../libs/images/demos/demo-2/products/product-5-1.jpg";
+import RecipeSlider from "../OurRecipeSlider/RecipeSlider";
 
 const ProductDetails = (props) => {
   const dispatch = useDispatch();
@@ -493,8 +494,10 @@ const ProductDetails = (props) => {
         ) : (
           ""
         )}
+        <RecipeSlider />
       </div>
     </section>
+
     // </main>
   );
 };
