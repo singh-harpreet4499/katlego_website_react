@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import CustomAlert from "../components/alert/CustomAlert";
 import ScrollToTop from "react-scroll-to-top";
 import InstagramEmbed from "react-instagram-embed";
+import {isMobile} from 'react-device-detect';
 
 const Template = (props) => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const Template = (props) => {
         message={alert_config.message}
       />
 
-      <div className=" page-wrapper">
+      <div className={isMobile ? "container-fluid page-wrapper" : "page-wrapper"}>
         {props.component}
         {props.hide_newsletter === true ? "" : <Newsletter />}
         {/* <button id="scroll-top" title="Back to Top" class="show"><i class="icon-arrow-up"></i></button> */}
