@@ -1,0 +1,9 @@
+.owl-stage-style {
+  transform: translate3d(0px, 0px, 0px);
+  transition: all 0s ease 0s;
+  width: 3250px;
+}
+.owl-item-cloned-style {
+  width: 229px;
+  margin-right: 21px;
+}
