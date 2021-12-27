@@ -18,6 +18,7 @@ import Testimonial from "../components/app/Testimonial";
 import "./Home.css";
 import InstagramEmbed from "react-instagram-embed";
 import InstaFeed from "../components/InstaFeed/InstaFeed";
+import OurPartner from "../components/OurPartners/OurPartner";
 
 class Home extends React.Component {
   constructor(props) {
@@ -147,6 +148,7 @@ class Home extends React.Component {
         <Testimonial />
         <Pressrelease />
         <InstaFeed />
+        <OurPartner />
         <FooterSupport />
       </div>
     );

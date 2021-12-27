@@ -47,33 +47,6 @@ const RecipeSliderItem = (props) => {
   );
 };
 
-const dataRecipe = {
-  nav: true,
-  dots: false,
-  margin: 21,
-  loop: true,
-  responsive: {
-    0: {
-      items: 2,
-    },
-    480: {
-      items: 2,
-    },
-    768: {
-      items: 3,
-    },
-    992: {
-      items: 4,
-    },
-    1200: {
-      items: 4,
-    },
-    1600: {
-      items: 4,
-    },
-  },
-};
-
 const RecipeSlider = (props) => {
   const [Recipedata, setRecipeData] = useState(null);
 
