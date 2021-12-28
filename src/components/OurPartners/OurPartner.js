@@ -163,7 +163,7 @@ const OurPartner = (props) => {
 
       <OwlCarousel
         className="owl-carousel mt-3 mb-3 owl-simple owl-loaded owl-drag"
-        dataToggle="Owl"
+        dataToggle="owl"
         {...dataPartner}
       >
         <OurPartnerItem />
