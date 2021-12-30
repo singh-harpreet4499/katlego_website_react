@@ -10622,6 +10622,7 @@ a:focus {
 
 .product-title a {
   color: inherit;
+  font-family: -webkit-pictograph;
 }
 .product-title a:hover,
 .product-title a:focus {

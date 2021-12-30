@@ -8,6 +8,7 @@ import {
 
 import SpinLoader from "../components/loader/SpinLoader";
 import FooterSupport from "../components/footer/FooterSupport";
+import RangeSlider from "./RangeSlider";
 
 const ProductList = (props) => {
   const urlparamsdata = useParams();
@@ -235,12 +236,8 @@ const ProductList = (props) => {
                       <h6 class="m-0">ADDITIONAL FILTERS</h6>
                     </div>
                     <div class="px-3 pt-3">
-                      <input
-                        type="range"
-                        className="custom-range"
-                        min={0}
-                        max={100}
-                      ></input>
+                      <RangeSlider />
+
                       <div class="form-row">
                         <div class="form-group col-6">
                           <label>Min</label>
@@ -250,6 +247,7 @@ const ProductList = (props) => {
                             onChange={handleChange}
                             placeholder="₹0"
                             min="0"
+                            value=""
                             type="number"
                           />
                         </div>
@@ -351,5 +349,4 @@ const ProductList = (props) => {
     );
   }
 };
-
 export default ProductList;
