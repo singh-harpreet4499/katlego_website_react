@@ -29,12 +29,12 @@ const dataPartner = {
 };
 
 const OurPartnerItem = (props) => {
-  const {partners} = props
+  const { partners } = props;
   return (
     <div className="owl-stage-outer">
       <div className="owl-stage owl-stage-partner">
-        {
-          partners.length && partners.map((dt)=>{
+        {partners.length &&
+          partners.map((dt) => {
             return (
               <div
                 className="owl-item bra active"
@@ -44,38 +44,27 @@ const OurPartnerItem = (props) => {
                   <img src={dt.imageUrl} />
                 </a>
               </div>
-
-            )
-          })
-        }
-        
-        
-        
-        
-       
-        
-       
-        
+            );
+          })}
       </div>
     </div>
   );
 };
 
 const OurPartner = (props) => {
-  const [partners,setPartner] = useState([]);
-  const [updatedd,setUpdatedd] = useState(0)
+  const [partners, setPartner] = useState([]);
+  const [updatedd, setUpdatedd] = useState(0);
 
   const get_data = () => {
     // console.log('get_data');
-    fetch_partners({})
-    .then(rs=> {
-
-      return rs && rs.status && setPartner(rs.data)}) && setUpdatedd(1)
-  }
+    fetch_partners({}).then((rs) => {
+      return rs && rs.status && setPartner(rs.data);
+    }) && setUpdatedd(1);
+  };
   useEffect(() => {
-    get_data()
-  }, [])
-  return partners.length ?  (
+    get_data();
+  }, []);
+  return partners.length ? (
     <div className="container">
       <div className="mt-2 mb-3"></div>
       <h2 className="title text-center story">Our Partners</h2>
@@ -85,7 +74,6 @@ const OurPartner = (props) => {
         dataToggle="owl"
         {...dataPartner}
       >
-
         <OurPartnerItem partners={partners} />
 
         <div className="owl-nav disabled">
@@ -108,6 +96,8 @@ const OurPartner = (props) => {
         <div className="owl-dots disabled"></div>
       </OwlCarousel>
     </div>
-  ) : <></>
+  ) : (
+    <></>
+  );
 };
 export default OurPartner;

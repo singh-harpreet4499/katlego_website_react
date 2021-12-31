@@ -193,7 +193,8 @@ const Product = (props) => {
           </div>
           <div>
             <h6 className="net-weight">
-              Net Weight: {net_wt} {unit}
+              Net Weight:{net_wt}
+              {unit}
             </h6>
           </div>
         </div>

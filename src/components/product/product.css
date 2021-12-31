@@ -28,5 +28,6 @@ button {
   font-family: "Itim";
 }
 .net-weight {
-  font-family: -webkit-pictograph;
+  font-family: monospace;
+  font-size: 1.3rem;
 }
