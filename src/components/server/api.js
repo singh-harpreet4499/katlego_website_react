@@ -470,6 +470,12 @@ export const fetch_press_release = async (data) => {
   return serverdata;
 };
 
+export const fetch_partners = async (data) => {
+  const serverdata = await hitServerApi("fetch_partners", data);
+  return serverdata;
+};
+
+
 export const remove_to_wishlist = async (data) => {
   const serverdata = await hitServerApi("remove_to_wishlist", data);
   return serverdata;

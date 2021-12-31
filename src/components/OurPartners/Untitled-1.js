@@ -1,7 +1,7 @@
 import "./OurPartner.css";
 import OwlCarousel from "react-owl-carousel";
-import { fetch_partners } from "../server/api";
 import { useEffect, useState } from "react";
+import { fetch_partners } from "../server/api";
 
 const dataPartner = {
   nav: false,
@@ -29,39 +29,15 @@ const dataPartner = {
 };
 
 const OurPartnerItem = (props) => {
-  const {partners} = props
   return (
-    <div className="owl-stage-outer">
-      <div className="owl-stage owl-stage-partner">
-        {
-          partners.length && partners.map((dt)=>{
-            return (
-              <div
-                className="owl-item bra active"
-                style={{ width: "169.667px", widthRight: "30px" }}
-              >
-                <a className="brand">
-                  <img src={dt.imageUrl} />
-                </a>
-              </div>
-
-            )
-          })
-        }
-        
-        
-        
-        
-       
-        
-       
-        
-      </div>
-    </div>
+   
+       <></>
+      
   );
 };
 
 const OurPartner = (props) => {
+
   const [partners,setPartner] = useState([]);
   const [updatedd,setUpdatedd] = useState(0)
 
@@ -74,8 +50,9 @@ const OurPartner = (props) => {
   }
   useEffect(() => {
     get_data()
-  }, [])
-  return partners.length ?  (
+  }, [updatedd])
+  const partner_item = <OurPartnerItem partners={partners}  />
+  return !partners.length ? <></> :(
     <div className="container">
       <div className="mt-2 mb-3"></div>
       <h2 className="title text-center story">Our Partners</h2>
@@ -85,8 +62,25 @@ const OurPartner = (props) => {
         dataToggle="owl"
         {...dataPartner}
       >
-
-        <OurPartnerItem partners={partners} />
+         <div className="owl-stage-outer">
+      <div className="owl-stage owl-stage-partner">
+        {/* {partner_item} */}
+        {
+          partners.map((dt)=>{
+            return (
+              <div
+                className="owl-item active bra cloned"
+                style={{ width: "169.667px", widthRight: "30px" }}
+              >
+                <a className="brand">
+                  <img src={dt.imageUrl} />
+                </a>
+              </div>
+            )
+          })
+        }
+        </div>
+        </div>
 
         <div className="owl-nav disabled">
           <button className="owl-prev" type="button">
@@ -108,6 +102,6 @@ const OurPartner = (props) => {
         <div className="owl-dots disabled"></div>
       </OwlCarousel>
     </div>
-  ) : <></>
+  );
 };
 export default OurPartner;
