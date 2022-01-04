@@ -5,8 +5,11 @@ import appstore from "../../libs/images/appstore.png";
 import playstore from "../../libs/images/playmarket.png";
 import { useSelector } from "react-redux";
 import moment from "moment";
-function Footer(props) {
+const Footer =(props) => {
   const user = useSelector((state) => state.user.currentUser);
+  const settings = useSelector(state=>state.global.settings);
+  
+  
   const { app_data } = props;
   return (
     <div className="footer-middle">
@@ -21,7 +24,7 @@ function Footer(props) {
                 width="115"
                 height="15"
               />
-              <p>We know your chicken like no one does!</p>
+              <p>{settings ? settings.footer_tagline : 'We know your chicken like no one does!'} </p>
 
               <div className="widget-about-info">
                 <div className="row">

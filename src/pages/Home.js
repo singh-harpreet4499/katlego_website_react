@@ -59,10 +59,11 @@ class Home extends React.Component {
   render() {
     const { best_sellers, categories, combos, bannners, hotselling } =
       this.state;
+      // return <PopupModal />
 
     return (
       <div className="">
-        {/* <PopupModal trigger={true} /> */}
+        <PopupModal trigger={true} />
         <Header canMove={1} categories={categories} />
         <HomeSlider banners={bannners} />
         <ExperienceRow />

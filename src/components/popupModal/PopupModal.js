@@ -1,15 +1,34 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "./PopupModal.css";
+// import "./PopupModal.css";
 import defaultImage1 from "../../libs/img/popupModalPhoto/apple.png";
 import defaultImage2 from "../../libs/img/popupModalPhoto/playstore.webp";
-
-const PopupModal = (props) => {
+import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
+import appstore from "../../libs/images/appstore.png";
+import playstore from "../../libs/images/playmarket.png";
+import { useSelector } from "react-redux";
+/*
+const PopupModal1 = (props) => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [timedPopup, settimedPopup] = useState(false);
 
-  <PopupModal trigger={buttonPopup} setTrigger={setButtonPopup} />;
-  <PopupModal trigger={timedPopup} setTrigger={settimedPopup} />;
+  return (<Modal.Dialog>
+    <Modal.Header closeButton>
+      <Modal.Title>Modal title</Modal.Title>
+    </Modal.Header>
+
+    <Modal.Body>
+      <p>Modal body text goes here.</p>
+    </Modal.Body>
+
+    <Modal.Footer>
+      <Button variant="secondary">Close</Button>
+      <Button variant="primary">Save changes</Button>
+    </Modal.Footer>
+  </Modal.Dialog>)
+
+  // <PopupModal trigger={buttonPopup} setTrigger={setButtonPopup} />;
+  // <PopupModal trigger={timedPopup} setTrigger={settimedPopup} />;
 
   useEffect(() => {
     setTimeout(() => {
@@ -69,5 +88,73 @@ const PopupModal = (props) => {
     ""
   );
 };
+
+*/
+
+const PopupModal =(props) => {
+  const settings = useSelector(state=>state.global.settings);
+
+  const [show, setShow] = useState(false);
+  const [dw_txt,setDwTxt] = useState('')
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const set_interval = () => {
+    const interval = parseInt(settings.show_popup_download);
+    setDwTxt(settings.download_text)
+    if(interval){
+      setTimeout(() => {
+        setShow(true)
+      }, interval*1000);
+  
+    }
+    
+  }
+  // download_text
+  useEffect(() => {
+    if(settings){
+      set_interval()
+    }
+    
+}, [settings])
+
+
+  return (
+    <>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Download App</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div >
+            <div class="download" style={{textAlign:"center"}}>
+              <span class="down-app">{dw_txt}</span>
+              <a href="https://play.google.com/store" className="mr-2">
+                <img style={{width:'200px'}} src={playstore} alt="android" />
+              </a>
+              <a href="https://www.apple.com/in/app-store/">
+                <img style={{width:'200px'}} src={appstore} alt="ios" />
+              </a>
+              
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
 
 export default PopupModal;
