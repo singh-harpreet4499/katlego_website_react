@@ -1,9 +1,23 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import "./PopupModal.css";
 import defaultImage1 from "../../libs/img/popupModalPhoto/apple.png";
 import defaultImage2 from "../../libs/img/popupModalPhoto/playstore.webp";
 
 const PopupModal = (props) => {
-  return (
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [timedPopup, settimedPopup] = useState(false);
+
+  <PopupModal trigger={buttonPopup} setTrigger={setButtonPopup} />;
+  <PopupModal trigger={timedPopup} setTrigger={settimedPopup} />;
+
+  useEffect(() => {
+    setTimeout(() => {
+      settimedPopup(true);
+    }, 3000);
+  }, []);
+
+  return props.trigger ? (
     <div>
       <div className="container">
         <div className="row">
@@ -12,7 +26,10 @@ const PopupModal = (props) => {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title  text-primary">Modal title</h5>
-                  <button className="btn btn-secondary">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => props.setTrigger(false)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -24,6 +41,7 @@ const PopupModal = (props) => {
                       <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
                   </button>
+                  {props.children}
                 </div>
                 <div className="modal-body">
                   <button className="col-lg-6 col-md-6 col-6 shadow p-3 mb-5 bg-body rounded">
@@ -34,7 +52,12 @@ const PopupModal = (props) => {
                   </button>
                 </div>
                 <div className="modal-footer">
-                  <button className="btn btn-secondary">Close</button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => props.setTrigger(false)}
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>
@@ -42,6 +65,8 @@ const PopupModal = (props) => {
         </div>
       </div>
     </div>
+  ) : (
+    ""
   );
 };
 
