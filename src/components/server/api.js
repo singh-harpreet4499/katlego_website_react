@@ -475,7 +475,6 @@ export const fetch_partners = async (data) => {
   return serverdata;
 };
 
-
 export const remove_to_wishlist = async (data) => {
   const serverdata = await hitServerApi("remove_to_wishlist", data);
   return serverdata;
@@ -513,6 +512,11 @@ export const get_blog_details = async (data) => {
 
 export const get_insta_feeds = async (data) => {
   const serverdata = await hitServerApi("get_insta_feeds", data);
+  return serverdata;
+};
+
+export const get_recipe_details = async (data) => {
+  const serverdata = await hitServerApi("get_recipe_details", data);
   return serverdata;
 };
 

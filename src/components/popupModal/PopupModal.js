@@ -91,34 +91,30 @@ const PopupModal1 = (props) => {
 
 */
 
-const PopupModal =(props) => {
-  const settings = useSelector(state=>state.global.settings);
+const PopupModal = (props) => {
+  const settings = useSelector((state) => state.global.settings);
 
   const [show, setShow] = useState(false);
-  const [dw_txt,setDwTxt] = useState('')
+  const [dw_txt, setDwTxt] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const set_interval = () => {
     const interval = parseInt(settings.show_popup_download);
-    setDwTxt(settings.download_text)
-    if(interval){
+    setDwTxt(settings.download_text);
+    if (interval) {
       setTimeout(() => {
-        setShow(true)
-      }, interval*1000);
-  
+        setShow(true);
+      }, interval * 1000);
     }
-    
-  }
+  };
   // download_text
   useEffect(() => {
-    if(settings){
-      set_interval()
+    if (settings) {
+      set_interval();
     }
-    
-}, [settings])
-
+  }, [settings]);
 
   return (
     <>
@@ -131,16 +127,15 @@ const PopupModal =(props) => {
           <Modal.Title>Download App</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div >
-            <div class="download" style={{textAlign:"center"}}>
+          <div>
+            <div class="download" style={{ textAlign: "center" }}>
               <span class="down-app">{dw_txt}</span>
               <a href="https://play.google.com/store" className="mr-2">
-                <img style={{width:'200px'}} src={playstore} alt="android" />
+                <img style={{ width: "200px" }} src={playstore} alt="android" />
               </a>
               <a href="https://www.apple.com/in/app-store/">
-                <img style={{width:'200px'}} src={appstore} alt="ios" />
+                <img style={{ width: "200px" }} src={appstore} alt="ios" />
               </a>
-              
             </div>
           </div>
         </Modal.Body>
@@ -155,6 +150,6 @@ const PopupModal =(props) => {
       </Modal>
     </>
   );
-}
+};
 
 export default PopupModal;
