@@ -20,6 +20,8 @@ const ProductList = (props) => {
 
   const [filtered, setFiltered] = useState([]);
 
+  const [weightwise,setWeightWise] = useState(null)
+
   const [formData, updateFormData] = useState({
     sort_by: "",
     min_amount: 0,
@@ -64,6 +66,34 @@ const ProductList = (props) => {
       setCanMove(1);
     });
   };
+
+  const set_weight_measure = (ms) => {
+    // setFiltered(e);
+    // net_Wt
+    if (compData.products.length) {
+      var dataprod = compData.products;
+      if(ms=='250'){
+        const d1 = dataprod.filter((obj)=>{
+          return obj.net_wt == 250
+        });
+        setFiltered(d1);
+
+
+      }else if(ms == '500'){
+        const d2 = dataprod.filter((obj)=>{
+          return obj.net_wt == 500
+        });
+        setFiltered(d2);
+
+      }else if(ms == '1'){
+        const d3 = dataprod.filter((obj)=>{
+          return obj.net_wt >=1 && obj.unit == 'KG'
+        });
+        setFiltered(d3);
+
+      }
+    }
+  }
 
   const apply_filter = () => {
     toggleFilterModal();
@@ -298,11 +328,51 @@ const ProductList = (props) => {
               <div className="col-lg-12">
                 <div className="osahan-listing">
                   <div className="d-flex align-items-center mb-3">
+                    <div className="heading mb-1" >
                     <h4>
                       {urlparamsdata.id == "products"
                         ? "Wishlists"
                         : urlparamsdata.categoryName}
                     </h4>
+                    </div>
+                    <ul className="nav nav-pills nav-border-anim gram-tab">
+                      <li className="nav-item nav-item-style">
+                        <button
+                        onClick={()=>set_weight_measure('250')}
+                          className="nav-link active nav-link-active-style"
+                          id="top-all-link"
+                        >
+                          250gms
+                        </button>
+                      </li>
+                      <li className="nav-item nav-item-style2">
+                        <button
+                        onClick={()=>set_weight_measure('500')}
+
+                          className="nav-link "
+                          id="top-fur-link"
+                          style={{ backgroundColor: "#9b9b9b" }}
+                        >
+                          500gms
+                        </button>
+                      </li>
+                      <li className="nav-item ">
+                        <button
+                        onClick={()=>set_weight_measure('1')}
+
+                          className="nav-link "
+                          id="top-decor-link"
+                          style={{
+                            backgroundColor: "#d3d3d3",
+                            borderBottomRightRadius: "6px",
+                            paddingRight: "25px",
+                            paddingLeft: "20px",
+                          }}
+                        >
+                          1kg+
+                        </button>
+                      </li>
+                    </ul>
                     <div className="m-0 text-center ml-auto">
                       <div
                         onClick={toggleFilterModal}
@@ -317,17 +387,17 @@ const ProductList = (props) => {
                   <div className="row">
                     {filtered.length
                       ? filtered.map(({ id, ...otherData }) => {
-                          return (
-                            <ProductCard
-                              column_not_cut={false}
-                              key={id}
-                              id={id}
-                              {...otherData}
-                            />
-                          );
-                        })
+                        return (
+                          <ProductCard
+                            column_not_cut={false}
+                            key={id}
+                            id={id}
+                            {...otherData}
+                          />
+                        );
+                      })
                       : compData.products.length
-                      ? compData.products.map(({ id, ...otherData }) => {
+                        ? compData.products.map(({ id, ...otherData }) => {
                           return (
                             <ProductCard
                               column_not_cut={false}
@@ -337,7 +407,7 @@ const ProductList = (props) => {
                             />
                           );
                         })
-                      : ""}
+                        : ""}
                   </div>
                 </div>
               </div>

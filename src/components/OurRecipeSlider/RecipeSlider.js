@@ -2,6 +2,7 @@ import OwlCarousel from "react-owl-carousel";
 import "./RecipeSlider.css";
 import { get_recipes } from "../server/api";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const OwlRecipe = {
   nav: false,
@@ -61,12 +62,19 @@ const RecipeSlider = (props) => {
   return (
     <div>
       <center>
-        <button
+        {/* <button
           type="submit"
           className="btn btn-success view-mor hidden-sm hidden-xs"
-        >
+        > */}
+          <Link
+          className="btn btn-success view-mor hidden-sm hidden-xs"
+           to={{
+            pathname: "/recipe-list"
+        }}
+          >
           View More
-        </button>
+          </Link>
+        {/* </button> */}
       </center>
       <h5 className="mt-3 mb-3">Our Recipes</h5>
 
