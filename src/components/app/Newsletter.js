@@ -1,6 +1,40 @@
+import { useState } from "react";
 import newsletterimage from "../../libs/images/backgrounds/bg-2.jpg";
+import { add_subscribes, showAlertMessage } from "../server/api";
 
 function Newsletter(props) {
+  const [formData, updateFormData] = useState({
+    email:""
+  });
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email } = formData;
+    if (email === "") {
+      showAlertMessage("Error!","Please add email to subscribe",false,true);
+    }  else {
+      add_subscribes({
+        email:email
+      })
+      .then((rs)=>{
+        if(rs.status){
+          showAlertMessage('Success',rs.messgae,true,false)
+        }else{
+          showAlertMessage('Error',rs.messgae,false,true)
+
+        }
+      })
+    
+    }
+  };
   return (
     <div
       className="footer-newsletter bg-image"
@@ -25,10 +59,12 @@ function Newsletter(props) {
                 offset-lg-3
               "
           >
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <div className="input-group">
                 <input
+                 onChange={handleChange}
                   type="email"
+                  name="email"
                   className="form-control"
                   placeholder="Enter your Email Address"
                   aria-label="Email Adress"

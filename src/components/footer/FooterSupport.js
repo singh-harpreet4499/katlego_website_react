@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import chickenImage from "../../libs/images/chicken.png";
 import qualityImage from "../../libs/images/quality.png";
 import fssaiimg from "../../libs/img/fssai.png";
 function FooterSupport(props) {
+  const settings = useSelector((state) => state.global.settings);
+
   return (
     <div>
       <div className="mb-4"></div>
@@ -44,7 +47,7 @@ function FooterSupport(props) {
               </span>
 
               <div className="icon-box-content">
-                <p style={{ fontSize: "12px" }}>Lc no. 10821999000436</p>
+                <p style={{ fontSize: "12px" }}>Lc no. {settings ? settings.lc_no : ''}</p>
                 <h3 className="icon-box-title free-ship">FSSC </h3>
               </div>
             </div>
@@ -62,7 +65,10 @@ function FooterSupport(props) {
                 </span>
                 <div className="icon-box-content">
                   <h3 className="icon-box-title">Free Shipping</h3>
-                  <p>orders ₹800 or more</p>
+                  {
+                    settings && settings.delivery_free_applicable ? <p>orders ₹{settings.delivery_free_applicable} or more</p> : ''
+                  }
+                  
                 </div>
               </div>
             </div>

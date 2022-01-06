@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Infomsg from "../components/app/Infomsg";
-import { add_collaborate_data, showAlertMessage } from "../components/server/api";
+import { add_collaborate_data, get_collabarations, showAlertMessage } from "../components/server/api";
 
 const Collabrate = (props) => {
     const user = useSelector(state=>state.user.currentUser);
   const [errormessage,setErrormessage] = useState('');
   const [cursor_allow,setCursorAllow] = useState(1);
+  const [collab_type,setCollabType] = useState([])
 
     const [formData, updateFormData] = useState({
         name: user?user.name:'',
@@ -48,9 +49,16 @@ const Collabrate = (props) => {
               setErrormessage("Something went wrong, Please try after some time!")
           }
         }
-       
-    
     };
+
+    const get_collab_data = () => {
+        get_collabarations({})
+        .then(rs=>rs && rs.status && setCollabType(rs.data))
+    }
+    useEffect(()=>{
+        get_collab_data()
+
+    },[])
 
     return (
         <main className="main">
@@ -193,10 +201,19 @@ const Collabrate = (props) => {
 
                                     <div class="col-sm-4">
                                         <label for="cphone" class="sr-only">Vehicle</label>
-                                        <select  id="state" onChange={handleChange} name="type" class="form-control" required="">
-                                            <option value="City">Collaboration Type</option>
-                                            <option value="Delhi">Chef</option>
-                                            <option value="Agar">Restaurant</option>
+                                        <select  id="state" onChange={handleChange} name="type" class="form-control" >
+                                            <option value="">Collaboration Type</option>
+                                            {
+                                                collab_type.map((dt)=>{
+                                                    return (
+                                                        <option value={dt.name}>{dt.name.toUpperCase()}</option>
+
+                                                    )
+                                                })
+
+                                            }
+                                            {/* <option value="Delhi">Chef</option>
+                                            <option value="Agar">Restaurant</option> */}
 
                                         </select>
                                     </div>
