@@ -234,16 +234,16 @@ const ProductCard = (props) => {
                                       !selling_price ? '' :
                                       (mrp>selling_price ? (
                                           <>
-                                         <h6 className="price m-0 text-success chi-pri">₹{selling_price}/{unit}</h6><strike className="pri"> MRP₹{mrp}/{unit}</strike>
+                                         <h6 className="price m-0 text-success chi-pri">₹{selling_price}</h6><strike className="pri"> MRP₹{mrp}</strike>
                                           </>
                                       )
                                       : 
-                                      (<h6 className="price m-0 text-success chi-pri">₹{selling_price}/{unit}</h6>))
+                                      (<h6 className="price m-0 text-success chi-pri">₹{selling_price}</h6>))
                                   }
                                       
                                   </div>
                                   <div className="col-md-4">
-                                      <p className="piec">Pieces: {no_of_pieces} <br />Net Wt: {net_wt} gms</p>
+                                      <p className="piec">Pieces: {no_of_pieces} <br />Net Wt: {net_wt} {unit}</p>
                                   </div>
                                   <div className="col-md-4">
                                   {

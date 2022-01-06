@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { add_career_data, showAlertMessage } from "../components/server/api";
+import { useEffect, useState } from "react";
+import { add_career_data, get_jobs, showAlertMessage } from "../components/server/api";
 import Infomsg from "../components/app/Infomsg"
-
+import moment from 'moment';
 
 const Career = (props) => {
     const {user_login} = props
+    const [openings,setOpenings] = useState([])
 
     const emptyobj = {
         user_id:props.user_login?props.user_login.id:0,
@@ -48,39 +49,61 @@ const Career = (props) => {
 
     }
 
+    const get_opening_data = () => {
+
+        get_jobs({})
+        .then(rs=>rs && rs.status && setOpenings(rs.data))
+
+    }
+
+    useEffect(()=>{
+        get_opening_data()
+
+    },[])
+
     return (
         <main class="main">
             <div class="page-content">
                 <div class="container">
                     <div class="mt-3 mb-5 mt-md-1"> </div>
                     <div class="touch-container row">
-                        <div class="col-md-12 col-lg-12">
+                    { openings && openings.length && 
+                        (<div class="col-md-12 col-lg-12">
                             <h2 class="title mb-1">Current Openings</h2>
                             {/* <p class="mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> */}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="hot-jobs-list">
-                                        <div class="row justify-content-center">
-                                            <div class="col-lg-7">
-                                                <div class="hot-jobs-content">
-                                                    <h3><a href="#">Master Chef</a></h3>
-                                                    <span class="sub-title">Professional</span>
-                                                    <ul>
-                                                        <li><span>Location:</span> New Delhi</li>
-                                                        <li><span>Vacancy:</span> 05</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="hot-jobs-btn">
-                                                    <p><span class="dead">Deadline: </span>Dec 30, 2021</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {
+                                            openings.map((dt)=>{
+                                                return (
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-lg-7">
+                                                            <div class="hot-jobs-content">
+                                                                <h3><a href="#">{dt.title}</a></h3>
+                                                                <span class="sub-title">Professional</span>
+                                                                <ul>
+                                                                    <li><span>Location:</span> {dt.location}</li>
+                                                                    <li><span>Vacancy:</span> {dt.vacancy}</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="hot-jobs-btn">
+                                                                <p><span class="dead">Deadline: </span>{moment(dt.end_date).format('MMM DD, YYYY')}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                )
+                                            })
+                                        }
+                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>)
+}
 
 
 

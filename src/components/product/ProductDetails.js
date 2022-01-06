@@ -210,7 +210,7 @@ const ProductDetails = (props) => {
               <div className="osahan-slider-item ">
                 <img
                   src={main_image}
-                  style={{ width: "700px", height: "554px" }}
+                  style={{ width: "100%", height: "450px" }}
                   className="img-fluid mx-auto shadow-sm rounded mobile-view"
                   alt="Responsive"
                 />

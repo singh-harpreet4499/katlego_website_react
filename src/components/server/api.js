@@ -515,6 +515,19 @@ export const get_insta_feeds = async (data) => {
   return serverdata;
 };
 
+export const get_jobs = async (data) => {
+  const serverdata = await hitServerApi("get_jobs", data);
+  return serverdata;
+};
+export const get_collabarations = async (data) => {
+  const serverdata = await hitServerApi("get_collabarations", data);
+  return serverdata;
+};
+
+export const add_subscribes = async (data) => {
+  const serverdata = await hitServerApi("add_subscribes", data);
+  return serverdata;
+};
 export const get_recipe_details = async (data) => {
   const serverdata = await hitServerApi("get_recipe_details", data);
   return serverdata;

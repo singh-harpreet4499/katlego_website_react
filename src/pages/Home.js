@@ -20,7 +20,6 @@ import InstagramEmbed from "react-instagram-embed";
 import InstaFeed from "../components/InstaFeed/InstaFeed";
 import OurPartner from "../components/OurPartners/OurPartner";
 import PopupModal from "../components/popupModal/PopupModal";
-import RecipeInner from "../components/OurRecipeSlider/RecipeInner";
 
 class Home extends React.Component {
   constructor(props) {
@@ -154,7 +153,6 @@ class Home extends React.Component {
         <Pressrelease />
         <InstaFeed />
         <OurPartner />
-        <RecipeInner />
         <FooterSupport />
       </div>
     );

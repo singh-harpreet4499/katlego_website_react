@@ -2,6 +2,8 @@ import OwlCarousel from "react-owl-carousel";
 import "./RecipeSlider.css";
 import { get_recipes } from "../server/api";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import RecipeInnerModal from "./RecipeInner";
 
 const OwlRecipe = {
   nav: false,
@@ -30,6 +32,8 @@ const OwlRecipe = {
 };
 
 const RecipeSliderItem = (props) => {
+  const [modalShow, setModalShow] = React.useState(false);
+
   console.log("recp", props);
   return (
     <div className="product product-4 text-center">
@@ -40,7 +44,13 @@ const RecipeSliderItem = (props) => {
       </figure>
       <div className="product-body">
         <h3 className="product-title bone1">
-          <a>{props.title}</a>
+          <a onClick={() => setModalShow(true)}>
+            {props.title}
+            <RecipeInnerModal
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
+          </a>
         </h3>
       </div>
     </div>
@@ -61,12 +71,19 @@ const RecipeSlider = (props) => {
   return (
     <div>
       <center>
-        <button
+        {/* <button
           type="submit"
           className="btn btn-success view-mor hidden-sm hidden-xs"
+        > */}
+        <Link
+          className="btn btn-success view-mor hidden-sm hidden-xs"
+          to={{
+            pathname: "/recipe-list",
+          }}
         >
           View More
-        </button>
+        </Link>
+        {/* </button> */}
       </center>
       <h5 className="mt-3 mb-3">Our Recipes</h5>
 
