@@ -52,7 +52,7 @@ const Signup = (props) => {
       setCursorAllow(0);
 
       const response = await user_signup_otp(formData);
-      console.log(response);
+     // console.log(response);
       if (response.status) {
         history.push("/otp", {
           phone: "9896449941",

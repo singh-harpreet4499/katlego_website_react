@@ -141,7 +141,7 @@ function Dealday(props) {
                     to={{
                       pathname:
                         "/product-details/" +
-                        first_product.hifen_name +
+                        first_product.hifen_name.toLowerCase() +
                         "/" +
                         first_product.id,
                     }}
@@ -157,7 +157,7 @@ function Dealday(props) {
                       to={{
                         pathname:
                           "/product-details/" +
-                          second_product.hifen_name +
+                          second_product.hifen_name.toLowerCase() +
                           "/" +
                           second_product.id,
                       }}
@@ -175,7 +175,7 @@ function Dealday(props) {
                         to={{
                           pathname:
                             "/product-details/" +
-                            second_product.hifen_name +
+                            second_product.hifen_name.toLowerCase() +
                             "/" +
                             second_product.id,
                         }}
@@ -195,7 +195,7 @@ function Dealday(props) {
                   to={{
                     pathname:
                       "/product-details/" +
-                      third_product.hifen_name +
+                      third_product.hifen_name.toLowerCase() +
                       "/" +
                       third_product.id,
                   }}
@@ -213,7 +213,7 @@ function Dealday(props) {
                     to={{
                       pathname:
                         "/product-details/" +
-                        third_product.hifen_name +
+                        third_product.hifen_name.toLowerCase() +
                         "/" +
                         third_product.id,
                     }}

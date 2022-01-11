@@ -41,7 +41,7 @@ const HomeCategoryItem = ({
     <div className="set-slide">
       <Link
         to={{
-          pathname: "/product-details/" + hifen_name + "/" + id,
+          pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
         }}
         className="setfire"
       >
@@ -123,7 +123,7 @@ const HomeCategoryItem2 = ({
   >
     <Link
       to={{
-        pathname: "/product-details/" + hifen_name + "/" + id,
+        pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
       }}
       className="fire fire_new"
     >

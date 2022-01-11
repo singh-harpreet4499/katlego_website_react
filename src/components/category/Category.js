@@ -9,7 +9,7 @@ function Category(props) {
           to={{
             pathname:
               "/product-list/" +
-              props.name.replace(/\s+/g, "-") +
+              props.name.replace(/\s+/g, "-").toLowerCase() +
               "/" +
               props.id,
             state: { ...props },
@@ -34,7 +34,7 @@ function Category(props) {
           to={{
             pathname:
               "/product-list/" +
-              props.name.replace(/\s+/g, "-") +
+              props.name.replace(/\s+/g, "-").toLowerCase() +
               "/" +
               props.id,
             state: { ...props },

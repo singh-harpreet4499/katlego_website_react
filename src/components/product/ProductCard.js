@@ -189,7 +189,7 @@ const ProductCard = (props) => {
               <div className="list-card-image">
                   <Link className="text-dark"
                        to={{
-                        pathname: "/product-details/"+hifen_name+"/"+(id),
+                        pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id),
                     }}
                   >
                       <div className="member-plan position-absolute">
@@ -203,7 +203,7 @@ const ProductCard = (props) => {
                       <div className="p-3">
                       <Link
                                             to={{
-                                                pathname: "/product-details/"+hifen_name+"/"+(id),
+                                                pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id),
                                             }}>
                           {/* <LazyImage src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" /> */}
                           <HoverImage

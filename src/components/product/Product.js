@@ -17,7 +17,7 @@ import HoverImage from "react-hover-image";
 
 const Product = (props) => {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(props);
+  // console.log(props);
 
   const {
     name,
@@ -135,7 +135,7 @@ const Product = (props) => {
 
           <Link
             to={{
-              pathname: "/product-details/" + hifen_name + "/" + id,
+              pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
             }}
           >
             {combo_product ? (
@@ -173,7 +173,7 @@ const Product = (props) => {
           <h3 className="product-title">
             <Link
               to={{
-                pathname: "/product-details/" + hifen_name + "/" + id,
+                pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
               }}
             >
               {name ? name : ""}

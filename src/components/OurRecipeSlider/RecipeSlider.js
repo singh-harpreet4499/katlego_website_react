@@ -31,7 +31,7 @@ const OwlRecipe = {
 };
 
 const RecipeSliderItem = (props) => {
-  console.log("recp", props);
+  // console.log("recp", props);
   return (
     <div className="product product-4 text-center">
       <figure className="product-media">
