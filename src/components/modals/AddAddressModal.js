@@ -20,9 +20,9 @@ import { setOrderConf } from "../../redux/order/order.action";
 export const getPostcodeByLatLng = async (lat, lng) => {
   if (!lat || !lng) return null;
   const res = await fetch(`https://api.postcodes.io/?lon=${lng}&lat=${lat}`);
-  console.log("====================================");
-  console.log("getPostcodeByLatLng", res);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log("getPostcodeByLatLng", res);
+  // console.log("====================================");
   return res;
 };
 
@@ -179,7 +179,7 @@ const AddAddressModal = (props) => {
     setAddress(address);
     geocodeByAddress(address)
       .then(async (results) => {
-        console.log("====================================", results);
+        // console.log("====================================", results);
 
         const ad = {
           state: results[0]["address_components"][2]["long_name"],
@@ -187,7 +187,7 @@ const AddAddressModal = (props) => {
           landmark: results[0]["address_components"][0]["long_name"],
         };
         updateFormData({ ...ad });
-        console.log("====================================");
+        // console.log("====================================");
         // updateFormData({
         //     state:results[0]['address_components'][2]['long_name'],
         //     city:results[0]['address_components'][1]['long_name'],

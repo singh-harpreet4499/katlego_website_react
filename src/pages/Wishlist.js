@@ -128,7 +128,7 @@ const ProductRow = (props) => {
           <figure class="product-media">
             <Link
               to={{
-                pathname: "/product-details/" + hifen_name + "/" + id,
+                pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
               }}
             >
               <img src={imageUrl} alt="Product image" />
@@ -137,7 +137,7 @@ const ProductRow = (props) => {
           <h3 class="product-title">
             <Link
               to={{
-                pathname: "/product-details/" + hifen_name + "/" + id,
+                pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
               }}
             >
               {name}

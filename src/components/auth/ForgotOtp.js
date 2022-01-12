@@ -31,7 +31,7 @@ const ForgotOtp = (props) => {
       };
 
       const handleChangeOTP = (otp) => {
-          console.log(otp);
+         // console.log(otp);
         setRequestdata({
             ...requestdata,
             otp:otp

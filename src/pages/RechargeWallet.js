@@ -88,7 +88,7 @@ const RechargeWallet = (props) => {
                 };
                 // alert(JSON.stringify(data))
                 const result = await recharge_user_wallet_web(data);
-                console.log(result);
+                // console.log(result);
                 if(result.status){
                     // alert(result.message)
                     dispatch(setCurrentUser({

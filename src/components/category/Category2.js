@@ -55,7 +55,7 @@ function Category2(props) {
       <Link
         to={{
           pathname:
-            "/product-list/" + props.name.replace(/\s+/g, "-") + "/" + props.id,
+            "/product-list/" + props.name.replace(/\s+/g, "-").toLowerCase() + "/" + props.id,
           state: { ...props },
         }}
       >
@@ -80,7 +80,7 @@ function Category2(props) {
               to={{
                 pathname:
                   "/product-list/" +
-                  props.name.replace(/\s+/g, "-") +
+                  props.name.replace(/\s+/g, "-").toLowerCase() +
                   "/" +
                   props.id,
                 state: { ...props },

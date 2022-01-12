@@ -59,7 +59,7 @@ const Search = (props) => {
                             <div class="docname ch">
                                 <Link
                                 to={{
-                                    pathname: "/product-details/"+data.hifen_name+"/"+(data.id),
+                                    pathname: "/product-details/"+data.hifen_name.toLowerCase()+"/"+(data.id),
                                 }}
                                 >
                                     <div class="search-content" onClick={()=>clear_search(data.name)}>

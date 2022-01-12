@@ -26,7 +26,7 @@ export const NavCartItem =  (props) => {
                 
                   to={{
                     key: uuidv4()+props.id,
-                    pathname: "/product-details/"+props.hifen_name+"/"+(props.id),
+                    pathname: "/product-details/"+props.hifen_name.toLowerCase()+"/"+(props.id),
                 }}
                 >{props.name}</Link>
             </h4>
@@ -42,7 +42,7 @@ export const NavCartItem =  (props) => {
              to={{
                 key:  uuidv4()+props.name,
 
-                pathname: "/product-details/"+props.hifen_name+"/"+(props.id),
+                pathname: "/product-details/"+props.hifen_name.toLowerCase()+"/"+(props.id),
                 
              }}
             className="product-image">

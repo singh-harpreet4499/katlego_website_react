@@ -162,14 +162,14 @@ const CartItem = (props) => {
     return (
         <div className="osahan-cart">
             <div className="cart-items bg-white position-relative border-bottom">
-                <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}} className="position-absolute">
+                <Link to={{pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id)}} className="position-absolute">
                     {
                         parseInt(discount)>0 ? <span className="badge badge-danger m-3">{discount}%</span>  : ''
                     }
                 </Link>
                 <div className="d-flex  align-items-center p-3">
-                    <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}}><img src={imageUrl} alt="x" className="img-fluid" /></Link>
-                    <Link to={{pathname: "/product-details/"+hifen_name+"/"+(id)}}  className="ml-3 text-dark text-decoration-none w-100">
+                    <Link to={{pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id)}}><img src={imageUrl} alt="x" className="img-fluid" /></Link>
+                    <Link to={{pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id)}}  className="ml-3 text-dark text-decoration-none w-100">
                         <h5 className="mb-1">{name}</h5>
                         <p className="text-muted mb-2"> {parseFloat(mrp) > parseFloat(selling_price) ? <del className="text-success mr-1">₹{mrp}{'/'}{net_wt+''+unit}</del> : ''}  ₹{selling_price}{'/'}{net_wt+''+unit}</p>
                         <div className="d-flex align-items-center">

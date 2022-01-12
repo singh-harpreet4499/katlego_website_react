@@ -102,7 +102,7 @@ axiosinstance.interceptors.response.use(
             res.data.token;
           // localStorage.setItem("accessToken", res.data.token);
           await set_session(res);
-          console.log("Access token refreshed!");
+          // console.log("Access token refreshed!");
           await axiosinstance(originalRequest);
         } else {
           localStorage.clear();
@@ -211,9 +211,9 @@ export const get_session = async (response) => {
     refreshToken: refreshToken,
   };
 
-  console.log("====================================");
-  console.log("dhfff", obj);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log("dhfff", obj);
+  // console.log("====================================");
   return obj;
 };
 
@@ -298,7 +298,7 @@ export const fetch_products_by_category = async (data) => {
 
 export const user_profile = async (data = {}) => {
   const serverdata = await hitServerApi("user_profile", data);
-  console.log("serverdata", serverdata);
+  // console.log("serverdata", serverdata);
   return serverdata;
 };
 

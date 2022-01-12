@@ -20,7 +20,7 @@ const ProductList = (props) => {
 
   const [filtered, setFiltered] = useState([]);
 
-  const [weightwise,setWeightWise] = useState(null)
+  const [weightwise, setWeightWise] = useState(null);
 
   const [formData, updateFormData] = useState({
     sort_by: "",
@@ -72,28 +72,24 @@ const ProductList = (props) => {
     // net_Wt
     if (compData.products.length) {
       var dataprod = compData.products;
-      if(ms=='250'){
-        const d1 = dataprod.filter((obj)=>{
-          return obj.net_wt == 250
+      if (ms == "250") {
+        const d1 = dataprod.filter((obj) => {
+          return obj.net_wt == 250;
         });
         setFiltered(d1);
-
-
-      }else if(ms == '500'){
-        const d2 = dataprod.filter((obj)=>{
-          return obj.net_wt == 500
+      } else if (ms == "500") {
+        const d2 = dataprod.filter((obj) => {
+          return obj.net_wt == 500;
         });
         setFiltered(d2);
-
-      }else if(ms == '1'){
-        const d3 = dataprod.filter((obj)=>{
-          return obj.net_wt >=1 && obj.unit == 'KG'
+      } else if (ms == "1") {
+        const d3 = dataprod.filter((obj) => {
+          return obj.net_wt >= 1 && obj.unit == "KG";
         });
         setFiltered(d3);
-
       }
     }
-  }
+  };
 
   const apply_filter = () => {
     toggleFilterModal();
@@ -266,33 +262,13 @@ const ProductList = (props) => {
                       <h6 class="m-0">ADDITIONAL FILTERS</h6>
                     </div>
                     <div class="px-3 pt-3">
-                      <RangeSlider />
-
-                      <div class="form-row">
-                        <div class="form-group col-6">
-                          <label>Min</label>
-                          <input
-                            class="form-control"
-                            name="min_amount"
-                            onChange={handleChange}
-                            placeholder="₹0"
-                            min="0"
-                            value=""
-                            type="number"
-                          />
-                        </div>
-                        <div class="form-group text-right col-6">
-                          <label>Max</label>
-                          <input
-                            class="form-control"
-                            name="max_amount"
-                            onChange={handleChange}
-                            placeholder="₹1,0000"
-                            min="0"
-                            type="number"
-                          />
-                        </div>
-                      </div>
+                      <RangeSlider
+                        min={0}
+                        max={1000}
+                        onChange={({ min, max }) =>
+                          console.log(`min = ${min}, max = ${max}`)
+                        }
+                      />
                     </div>
                   </div>
                 </div>
@@ -328,17 +304,17 @@ const ProductList = (props) => {
               <div className="col-lg-12">
                 <div className="osahan-listing">
                   <div className="d-flex align-items-center mb-3">
-                    <div className="heading mb-1" >
-                    <h4>
-                      {urlparamsdata.id == "products"
-                        ? "Wishlists"
-                        : urlparamsdata.categoryName}
-                    </h4>
+                    <div className="heading mb-1">
+                      <h4>
+                        {urlparamsdata.id == "products"
+                          ? "Wishlists"
+                          : urlparamsdata.categoryName}
+                      </h4>
                     </div>
                     <ul className="nav nav-pills nav-border-anim gram-tab">
                       <li className="nav-item nav-item-style">
                         <button
-                        onClick={()=>set_weight_measure('250')}
+                          onClick={() => set_weight_measure("250")}
                           className="nav-link active nav-link-active-style"
                           id="top-all-link"
                         >
@@ -347,8 +323,7 @@ const ProductList = (props) => {
                       </li>
                       <li className="nav-item nav-item-style2">
                         <button
-                        onClick={()=>set_weight_measure('500')}
-
+                          onClick={() => set_weight_measure("500")}
                           className="nav-link "
                           id="top-fur-link"
                           style={{ backgroundColor: "#9b9b9b" }}
@@ -358,8 +333,7 @@ const ProductList = (props) => {
                       </li>
                       <li className="nav-item ">
                         <button
-                        onClick={()=>set_weight_measure('1')}
-
+                          onClick={() => set_weight_measure("1")}
                           className="nav-link "
                           id="top-decor-link"
                           style={{
@@ -387,17 +361,6 @@ const ProductList = (props) => {
                   <div className="row">
                     {filtered.length
                       ? filtered.map(({ id, ...otherData }) => {
-                        return (
-                          <ProductCard
-                            column_not_cut={false}
-                            key={id}
-                            id={id}
-                            {...otherData}
-                          />
-                        );
-                      })
-                      : compData.products.length
-                        ? compData.products.map(({ id, ...otherData }) => {
                           return (
                             <ProductCard
                               column_not_cut={false}
@@ -407,7 +370,18 @@ const ProductList = (props) => {
                             />
                           );
                         })
-                        : ""}
+                      : compData.products.length
+                      ? compData.products.map(({ id, ...otherData }) => {
+                          return (
+                            <ProductCard
+                              column_not_cut={false}
+                              key={id}
+                              id={id}
+                              {...otherData}
+                            />
+                          );
+                        })
+                      : ""}
                   </div>
                 </div>
               </div>

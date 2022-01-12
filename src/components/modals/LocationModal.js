@@ -77,7 +77,7 @@ const LocationModal = (props) => {
       fetch_location_by_id({
         id: location_id,
       }).then((rs) => {
-        console.log("rs", rs);
+        // console.log("rs", rs);
         if (rs.status) {
           const obj = {
             is_set: 1,
@@ -141,11 +141,11 @@ const LocationModal = (props) => {
         latitude: setlc.data.latitude,
         longitude: setlc.data.longitude,
       };
-      console.log(lat_lon);
+      // console.log(lat_lon);
       setCurrentLatLon(lat_lon);
 
       const check_service_location = await check_if_service_location(lat_lon);
-      console.log("check_service_location", check_service_location);
+      // console.log("check_service_location", check_service_location);
       if (check_service_location.status) {
         setPincode(check_service_location.pincode);
         setAddress(check_service_location.formatted_address);

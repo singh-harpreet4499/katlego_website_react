@@ -36,7 +36,7 @@ class Home extends React.Component {
   }
 
   loadEssentialdata = async () => {
-    console.log("loadEssentialdata");
+    // console.log("loadEssentialdata");
     await fetch_homepage_web({}).then((response) => {
       if (response.status) {
         this.setState({

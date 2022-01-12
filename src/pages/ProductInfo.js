@@ -16,7 +16,7 @@ const ProductInfo = () => {
     await fetch_product_details({
       id: id,
     }).then((rs) => {
-      console.log("product details", rs);
+      // console.log("product details", rs);
       if (rs.status) {
         setProductData(rs.data);
         setParamData(params);
