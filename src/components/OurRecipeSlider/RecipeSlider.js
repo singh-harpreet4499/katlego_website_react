@@ -36,24 +36,26 @@ const RecipeSliderItem = (props) => {
 
   console.log("recp", props);
   return (
-    <div className="product product-4 text-center">
-      <figure className="product-media">
-        <a>
-          <img src={props.imageUrl} />
-        </a>
-      </figure>
-      <div className="product-body">
-        <h3 className="product-title bone1">
-          <a onClick={() => setModalShow(true)}>
-            {props.title}
-            <RecipeInnerModal
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            />
+    <>
+      <div
+        onClick={() => {
+          setModalShow(true);
+        }}
+        className="product product-4 text-center"
+      >
+        <figure className="product-media">
+          <a>
+            <img src={props.imageUrl} />
           </a>
-        </h3>
+        </figure>
+        <div className="product-body">
+          <h3 className="product-title bone1">
+            <a>{props.title}</a>
+          </h3>
+        </div>
       </div>
-    </div>
+      <RecipeInnerModal show={modalShow} onHide={() => setModalShow(false)} />
+    </>
   );
 };
 

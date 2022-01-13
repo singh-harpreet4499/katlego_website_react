@@ -1,0 +1,18 @@
+.header-popularSearches {
+  font-size: 14px;
+  color: #4a4a4a;
+  line-height: 2.9;
+}
+.faqs {
+  font-size: 13px;
+  color: #4a4a4a;
+  line-height: 2.9;
+}
+.disclaimer {
+  margin-top: 25px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  border-top: 1px solid #eaeaea;
+  color: #4a4a4a;
+}

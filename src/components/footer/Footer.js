@@ -5,11 +5,11 @@ import appstore from "../../libs/images/appstore.png";
 import playstore from "../../libs/images/playmarket.png";
 import { useSelector } from "react-redux";
 import moment from "moment";
-const Footer =(props) => {
+import "./Footer.css";
+const Footer = (props) => {
   const user = useSelector((state) => state.user.currentUser);
-  const settings = useSelector(state=>state.global.settings);
-  
-  
+  const settings = useSelector((state) => state.global.settings);
+
   const { app_data } = props;
   return (
     <div className="footer-middle">
@@ -24,7 +24,11 @@ const Footer =(props) => {
                 width="115"
                 height="15"
               />
-              <p>{settings ? settings.footer_tagline : 'We know your chicken like no one does!'} </p>
+              <p>
+                {settings
+                  ? settings.footer_tagline
+                  : "We know your chicken like no one does!"}{" "}
+              </p>
 
               <div className="widget-about-info">
                 <div className="row">
@@ -272,10 +276,66 @@ const Footer =(props) => {
               </li>
             </ul>
           </div>
+          <div>
+            <h2 className="header-popularSearches">
+              <strong>POPULAR SEARCHES</strong>
+            </h2>
+          </div>
+          <div>
+            <h4 className="faqs">
+              <strong>
+                We will sell only the meat that we would eat ourselves.
+              </strong>
+            </h4>
+            <p>
+              At Licious, we're big meat-lovers. And by big, we mean huge. So
+              when it comes to the meat we put on your plate, we're extremely
+              picky. Every single product is handpicked by a team with years of
+              experience.
+            </p>
+            <h4 className="faqs" style={{ marginTop: "20px" }}>
+              <strong> If it's not fresh, we won't sell it</strong>
+            </h4>
+            <p>
+              For meat to stay fresh and retain its natural juices, it needs to
+              be stored at a temperature between 0° and 5°C. We maintain this
+              temperature from the time we procure the product to cleaning,
+              cutting and storing it, until it leaves for delivery. And even
+              when it's out for delivery, we keep it chilled right up to your
+              doorstep.Did we mention that we're obsessed?.
+            </p>
+            <h4 className="faqs" style={{ marginTop: "20px" }}>
+              <strong>We will charge only for what you buy</strong>
+            </h4>
+            <p>
+              Doesn't everyone do this? Not really. Most other places first
+              weigh the meat, then cut up the pieces, and throw out the parts
+              which aren't fit to eat, such as offal, gizzard, wingtips, etc.
+              But you still pay based on the original weight even though what
+              you finally get is 10% to 30% less
+            </p>
+          </div>
+          <div>
+            <h5 className="disclaimer">
+              <strong>
+                © 2022 Delightful Gourmet Pvt Ltd. All Rights Reserved.
+              </strong>
+            </h5>
+            <p>
+              Licious is your one-stop fresh meat delivery shop. In here, you
+              get nothing but the freshest meat & seafood, delivered straight to
+              your doorstep. Now you can buy meat online anytime at your
+              convenience. Indulge in our diverse selection: Chicken, Mutton,
+              Seafood (Fish, Prawns, Crabs), Marinades & Cold Cuts. All our
+              products are completely natural and healthy. Once you've
+              experienced Licious, you'll never go back to the old way of buying
+              meat and seafood.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Footer;

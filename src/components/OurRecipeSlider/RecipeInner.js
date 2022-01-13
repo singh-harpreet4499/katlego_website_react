@@ -29,7 +29,7 @@ function RecipeInnerModal(props) {
   );
 }
 
-const RecipeInner = () => {
+const RecipeInner = ({ onHide, show }) => {
   const [Recipedata, setRecipeData] = useState(null);
 
   const load_data = () => {
@@ -41,16 +41,16 @@ const RecipeInner = () => {
   useEffect(() => {
     load_data();
   }, []);
-  const [modalShow, setModalShow] = React.useState(false);
+  // const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <>
-      <Button variant="primary" onClick={() => setModalShow(true)}></Button>
+      {/* <Button variant="primary" onClick={() => setModalShow(true)}></Button> */}
       {Recipedata &&
         Recipedata.map((td) => {
           return <RecipeInnerModal {...td} />;
         })}
-      <RecipeInnerModal show={modalShow} onHide={() => setModalShow(false)} />
+      <RecipeInnerModal show={show} onHide={() => onHide()} />
     </>
   );
 };
