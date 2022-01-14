@@ -101,7 +101,6 @@ const RecipeSlider = (props) => {
             Recipedata.map((td) => {
               return <RecipeSliderItem {...td} />;
             })}
-          {/* <RecipeSliderItem /> */}
         </OwlCarousel>
       </div>
     </div>
