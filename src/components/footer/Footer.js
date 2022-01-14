@@ -6,11 +6,25 @@ import playstore from "../../libs/images/playmarket.png";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import "./Footer.css";
+import { useEffect, useState } from "react";
+import { fetch_popular_searches } from "../server/api";
 const Footer = (props) => {
   const user = useSelector((state) => state.user.currentUser);
   const settings = useSelector((state) => state.global.settings);
 
   const { app_data } = props;
+  const [popularsearches, setPopularSearches] = useState([]);
+
+  const get_data = () => {
+    fetch_popular_searches({})
+      .then(rs => {
+        return rs && rs.status ? setPopularSearches(rs.data) : false
+      })
+  }
+
+  useEffect(() => {
+    get_data()
+  }, [])
   return (
     <div className="footer-middle">
       <div className="container">
@@ -250,7 +264,7 @@ const Footer = (props) => {
         </div>
 
         <div class="footer-bottom">
-          <div class="container">
+          {/* <div class="container">
             <p class="footer-copyright">
               Copyright © {moment().format("YYYY")} Katlego. All Rights
               Reserved.
@@ -275,61 +289,62 @@ const Footer = (props) => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
           <div>
             <h2 className="header-popularSearches">
               <strong>POPULAR SEARCHES</strong>
             </h2>
           </div>
           <div>
-            <h4 className="faqs">
-              <strong>
-                We will sell only the meat that we would eat ourselves.
-              </strong>
-            </h4>
-            <p>
-              At Licious, we're big meat-lovers. And by big, we mean huge. So
-              when it comes to the meat we put on your plate, we're extremely
-              picky. Every single product is handpicked by a team with years of
-              experience.
-            </p>
-            <h4 className="faqs" style={{ marginTop: "20px" }}>
-              <strong> If it's not fresh, we won't sell it</strong>
-            </h4>
-            <p>
-              For meat to stay fresh and retain its natural juices, it needs to
-              be stored at a temperature between 0° and 5°C. We maintain this
-              temperature from the time we procure the product to cleaning,
-              cutting and storing it, until it leaves for delivery. And even
-              when it's out for delivery, we keep it chilled right up to your
-              doorstep.Did we mention that we're obsessed?.
-            </p>
-            <h4 className="faqs" style={{ marginTop: "20px" }}>
-              <strong>We will charge only for what you buy</strong>
-            </h4>
-            <p>
-              Doesn't everyone do this? Not really. Most other places first
-              weigh the meat, then cut up the pieces, and throw out the parts
-              which aren't fit to eat, such as offal, gizzard, wingtips, etc.
-              But you still pay based on the original weight even though what
-              you finally get is 10% to 30% less
-            </p>
+            {
+              popularsearches ?
+                popularsearches.map((dt) => {
+                  return (
+                    <>
+                      <h4 className="faqs">
+                        <strong>
+                          {dt.title}
+                        </strong>
+                      </h4>
+                      <p>
+                        {dt.desc}
+                      </p>
+                    </>
+                  )
+                })
+
+                : ''
+            }
+
           </div>
           <div>
             <h5 className="disclaimer">
               <strong>
-                © 2022 Delightful Gourmet Pvt Ltd. All Rights Reserved.
+                Copyright © {moment().format("YYYY")} Katlego. All Rights Reserved.
               </strong>
+              {/* <ul class="footer-menu">
+                <li>
+                  <Link
+                    to={{
+                      pathname: "/terms-and-conditions",
+                    }}
+                  >
+                    Terms of Use
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={{
+                      pathname: "privacy-policy",
+                    }}
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul> */}
             </h5>
             <p>
-              Licious is your one-stop fresh meat delivery shop. In here, you
-              get nothing but the freshest meat & seafood, delivered straight to
-              your doorstep. Now you can buy meat online anytime at your
-              convenience. Indulge in our diverse selection: Chicken, Mutton,
-              Seafood (Fish, Prawns, Crabs), Marinades & Cold Cuts. All our
-              products are completely natural and healthy. Once you've
-              experienced Licious, you'll never go back to the old way of buying
-              meat and seafood.
+              {settings?settings.footer_at_bottom:''}
             </p>
           </div>
         </div>

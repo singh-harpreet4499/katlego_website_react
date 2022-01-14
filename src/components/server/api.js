@@ -261,6 +261,12 @@ export const fetch_faqs = async (data) => {
   return serverdata;
 };
 
+export const fetch_popular_searches = async (data) => {
+  const serverdata = await hitServerApi("fetch_popular_searches", data);
+  return serverdata;
+};
+
+
 export const fetch_homepage_web_auth = async (data) => {
   const serverdata = await hitServerApi("fetch_homepage_web_auth", data);
   return serverdata;
@@ -532,6 +538,9 @@ export const get_recipe_details = async (data) => {
   const serverdata = await hitServerApi("get_recipe_details", data);
   return serverdata;
 };
+
+
+
 
 export const showAlertMessage = (
   title = "alert",
