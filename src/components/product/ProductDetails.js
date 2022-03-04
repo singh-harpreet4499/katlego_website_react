@@ -161,9 +161,49 @@ const ProductDetails = (props) => {
     <section className="py-4 osahan-main-body">
       <div className="container">
         <div className="row">
-          {/* <div class="col-md-1">  */}
-
-          {gallery ? (
+          {/* <div class="col-md-1">
+            {gallery ? (
+              <ul class="thumb-bann">
+                <li class="thumb-sli active">
+                  <div
+                    className="image-responsive"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => set_main_img(imageUrl)}
+                  >
+                    <img
+                      src={imageUrl}
+                      className="image-responsive"
+                      height="70"
+                      width="80"
+                    />
+                  </div>
+                </li>
+                {gallery &&
+                  gallery.split("|").map((dt) => {
+                    return (
+                      <li class="thumb-sli active">
+                        <div
+                          className="image-responsive-hide "
+                          style={{ cursor: "pointer" }}
+                          onClick={() => set_main_img(imagePath + dt)}
+                        >
+                          <img
+                            src={imagePath + dt}
+                            className="image-responsive"
+                            width="70"
+                            height="80"
+                          />
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            ) : (
+              ""
+            )}
+          </div> */}
+          <div class="col-md-1">
+            {/* {gallery ? ( */}
             <ul class="thumb-bann">
               <li class="thumb-sli active">
                 <div
@@ -171,47 +211,38 @@ const ProductDetails = (props) => {
                   style={{ cursor: "pointer" }}
                   onClick={() => set_main_img(imageUrl)}
                 >
+                  <img src={imageUrl} className="image-responsive sideImage" />
+                </div>
+              </li>
+              {/* {gallery &&
+                  gallery.split("|").map((dt) => {
+                    return ( */}
+              <li class="thumb-sli active">
+                <div
+                  className="image-responsive-hide "
+                  style={{ cursor: "pointer" }}
+                  onClick={() => set_main_img(imagePath)}
+                >
                   <img
-                    src={imageUrl}
-                    className="image-responsive"
-                    height="70"
-                    width="80"
+                    src={imagePath}
+                    className="image-responsive sideImage sideMargin"
                   />
                 </div>
               </li>
-              {gallery &&
-                gallery.split("|").map((dt) => {
-                  return (
-                    <li class="thumb-sli active">
-                      <div
-                        className="image-responsive-hide "
-                        style={{ cursor: "pointer" }}
-                        onClick={() => set_main_img(imagePath + dt)}
-                      >
-                        <img
-                          src={imagePath + dt}
-                          className="image-responsive"
-                          width="70"
-                          height="80"
-                        />
-                      </div>
-                    </li>
-                  );
-                })}
+              {/* );
+              })} */}
             </ul>
-          ) : (
-            ""
-          )}
-
-          {/* </div> */}
+            {/* ) : (
+              ""
+            )} */}
+          </div>
 
           <div className="col-lg-6">
             <div className="recommend-slider mb-3 ">
               <div className="osahan-slider-item ">
                 <img
                   src={main_image}
-                  style={{ width: "100%", height: "450px" }}
-                  className="img-fluid mx-auto shadow-sm rounded mobile-view"
+                  className="img-fluid mx-auto shadow-sm rounded imgProduct mobile-view"
                   alt="Responsive"
                 />
               </div>

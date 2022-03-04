@@ -7,11 +7,24 @@
   }
 }
 
-.mobile-view {
-  height: 70px;
+.sideMargin {
+  margin-top: 40px;
 }
+.sideImage {
+  width: 70px;
+  height: 80px;
+}
+
+.imgProduct {
+  width: 100%;
+  height: 450px;
+}
+/* .mobile-view {
+  height: 70px;
+} */
 @media screen and (max-width: 576px) {
-  .mobile-view {
-    height: 70px;
+  .imgProduct {
+    width: 100%;
+    height: 300px;
   }
 }

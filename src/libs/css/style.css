@@ -965,6 +965,7 @@ blockquote.text-white cite span {
 .cart-dropdown .dropdown-menu.dropdown-menu-right,
 .compare-dropdown .dropdown-menu.dropdown-menu-right {
   right: -1px;
+  height: auto;
 }
 .cart-dropdown .btn-remove,
 .compare-dropdown .btn-remove {
