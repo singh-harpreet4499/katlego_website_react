@@ -12,14 +12,12 @@ function RecipeInnerModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props.title}
+          <a>{props.title} </a>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src={props.imageUrl} alt={props.title} />
-        <p>
-          {props.description}
-        </p>
+        <img src={props.imagrUrl} />
+        <p>{props.titles}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
@@ -28,12 +26,12 @@ function RecipeInnerModal(props) {
   );
 }
 
-const RecipeInner = ({ onHide, show,...otherData }) => {
-  const [Recipedata, setRecipeData] = useState(null);
+const RecipeInner = ({ onHide, show }, props) => {
+  const [Recipedatas, getRecipeData] = useState(null);
 
   const load_data = () => {
     get_recipe_details().then(
-      (rs) => rs && rs.status && setRecipeData(rs.data)
+      (rs) => rs && rs.status && getRecipeData(rs.data)
     );
   };
 
@@ -41,15 +39,26 @@ const RecipeInner = ({ onHide, show,...otherData }) => {
     load_data();
   }, []);
   // const [modalShow, setModalShow] = React.useState(false);
-
+  console.log(Recipedatas);
   return (
     <>
-      {/* <Button variant="primary" onClick={() => setModalShow(true)}></Button> */}
-      {/* {Recipedata &&
-        Recipedata.map((td) => { */}
-           {/* <RecipeInnerModal {...otherData} />; */}
-        {/* })} */}
-      <RecipeInnerModal {...otherData} show={show} onHide={() => onHide()} />
+      {Recipedatas &&
+        Recipedatas.map((td) => {
+          return (
+            <RecipeInnerModal
+              {...td}
+              show={show}
+              onHide={() => onHide()}
+              // title={"Chicken Florentine"}
+              // imagrUrl={
+              //   "http://139.59.67.166/katlego_website/assets/images/chicken-gallery-big.jpg"
+              // }
+              // titles={
+              //   "High quality Fresh Orange fruit exporters from South Korea for sale. All citrus trees belong to the single."
+              // }
+            />
+          );
+        })}
     </>
   );
 };
