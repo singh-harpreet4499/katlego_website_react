@@ -12,14 +12,13 @@ function RecipeInnerModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Chicken Florentine
+          {props.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src="http://139.59.67.166/katlego_website/assets/images/chicken-gallery-big.jpg" />
+        <img src={props.imageUrl} alt={props.title} />
         <p>
-          High quality Fresh Orange fruit exporters from South Korea for sale.
-          All citrus trees belong to the single.
+          {props.description}
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -29,7 +28,7 @@ function RecipeInnerModal(props) {
   );
 }
 
-const RecipeInner = ({ onHide, show }) => {
+const RecipeInner = ({ onHide, show,...otherData }) => {
   const [Recipedata, setRecipeData] = useState(null);
 
   const load_data = () => {
@@ -46,11 +45,11 @@ const RecipeInner = ({ onHide, show }) => {
   return (
     <>
       {/* <Button variant="primary" onClick={() => setModalShow(true)}></Button> */}
-      {Recipedata &&
-        Recipedata.map((td) => {
-          return <RecipeInnerModal {...td} />;
-        })}
-      <RecipeInnerModal show={show} onHide={() => onHide()} />
+      {/* {Recipedata &&
+        Recipedata.map((td) => { */}
+           {/* <RecipeInnerModal {...otherData} />; */}
+        {/* })} */}
+      <RecipeInnerModal {...otherData} show={show} onHide={() => onHide()} />
     </>
   );
 };

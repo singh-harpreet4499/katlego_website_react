@@ -36,7 +36,6 @@ class Home extends React.Component {
   }
 
   loadEssentialdata = async () => {
-    // console.log("loadEssentialdata");
     await fetch_homepage_web({}).then((response) => {
       if (response.status) {
         this.setState({
@@ -57,9 +56,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { best_sellers, categories, combos, bannners, hotselling } =
-      this.state;
-    // return <PopupModal />
+    const { best_sellers, categories, combos, bannners, hotselling } = this.state;
 
     return (
       <div className="">
@@ -69,7 +66,7 @@ class Home extends React.Component {
         <ExperienceRow />
 
         <div className="container">
-          <Heading title="best sellers" horizontalLine={false} />
+          {best_sellers.length ? <Heading title="best sellers" horizontalLine={false} /> : <></>}
 
           <div className="tab-content">
             <div
@@ -85,7 +82,8 @@ class Home extends React.Component {
                       <Product id={id} key={id} {...otherData} />
                     ))
                   ) : (
-                    <SpinLoader />
+                    // <SpinLoader />
+                    <></>
                   )}
                 </div>
               </div>
@@ -102,7 +100,8 @@ class Home extends React.Component {
             {this.state.canMove ? (
               <ProductSlider products={combos} />
             ) : (
-              <SpinLoader />
+              // <SpinLoader />
+              <></>
             )}
           </>
         ) : (

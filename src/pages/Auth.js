@@ -6,7 +6,7 @@ const Auth = (props) => {
    
 
     return (
-        <div>
+        <div className="container">
             <Splash auth_component={component ? component :<Signup />} />
             
         </div>

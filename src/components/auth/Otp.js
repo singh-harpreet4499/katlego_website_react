@@ -71,7 +71,8 @@ const Otp = (props) => {
         setCursorAllow(0);
         set_session(response)
         dispatch(setCurrentUser(response.data,response.token,response.refreshtoken))
-        history.push('/')
+        // history.push('/')
+        window.location.href = "/";
     }else{
         setRequestdata({
             ...requestdata,

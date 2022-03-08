@@ -15,7 +15,12 @@ const RechargeWallet = (props) => {
 
 
     const handleChange = (e) => {
-        setRechargeAmount(e.target.value.trim())
+        if(parseFloat(e.target.value)<=0){
+            setRechargeAmount(1)
+        }else{
+            setRechargeAmount(e.target.value.trim())
+
+        }
     };
 
     useEffect(() => {

@@ -60,7 +60,8 @@ const Login = (props) => {
             dispatch(updatecarts(rs));
           }
         });
-        history.push("/");
+        // history.push("/");
+        window.location.href = "/";
       } else {
         setCursorAllow(1);
 

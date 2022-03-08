@@ -118,7 +118,7 @@ import HoverImage from 'react-hover-image/build';
 
 const ProductCard = (props) => {
 
-  const {name,imageUrl,mrp,discount,selling_price,unit,hifen_name,net_wt,gross_wt,id,is_cart,cartdata,no_of_pieces,hoverimageUrl,stock}=props
+  const {name,imageUrl,mrp,discount,selling_price,unit,hifen_name,net_wt,gross_wt,id,is_cart,cartdata,no_of_pieces,hoverimageUrl,stock,hover_image}=props
   const dispatch = useDispatch();
 
   const user = useSelector(state=>state.user.currentUser);
@@ -206,12 +206,27 @@ const ProductCard = (props) => {
                                                 pathname: "/product-details/"+hifen_name.toLowerCase()+"/"+(id),
                                             }}>
                           {/* <LazyImage src={imageUrl} alt="" className="img-fluid item-img w-100 mb-2" /> */}
-                          <HoverImage
+                          {
+                              hover_image ?
+                              <HoverImage
+                              src={imageUrl?imageUrl:defaultImage}
+                              className="img-fluid item-img w-100 mb-2" 
+                              hoverSrc={hoverimageUrl}
+                              alt={name}
+                          />
+                              :
+                              <img
+                              src={imageUrl?imageUrl:defaultImage}
+                              className="img-fluid item-img w-100 mb-2" 
+                              alt={name}
+                          />
+                          }
+                          {/* <HoverImage
                                 src={imageUrl?imageUrl:defaultImage}
                                 className="img-fluid item-img w-100 mb-2" 
                                 hoverSrc={hoverimageUrl}
                                 alt={name}
-                            />
+                            /> */}
                           <h6 className="text-success curr">{name}</h6>
                           </Link>
                           <ul className="anti hidden-xs hidden-sm">

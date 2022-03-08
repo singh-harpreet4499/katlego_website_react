@@ -93,7 +93,6 @@ const ProductList = (props) => {
 
   const apply_filter = () => {
     toggleFilterModal();
-
     const { sort_by } = formData;
     var min_amount = parseFloat(formData.min_amount);
     var max_amount = parseFloat(formData.max_amount);
@@ -308,7 +307,7 @@ const ProductList = (props) => {
                       <h4>
                         {urlparamsdata.id == "products"
                           ? "Wishlists"
-                          : urlparamsdata.categoryName}
+                          : urlparamsdata.categoryName ? urlparamsdata.categoryName.toUpperCase() : ''}
                       </h4>
                     </div>
                     <ul className="nav nav-pills nav-border-anim gram-tab">

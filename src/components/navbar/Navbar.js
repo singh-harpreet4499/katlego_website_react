@@ -445,9 +445,9 @@ class Navbar extends React.Component {
                   <i className="icon-bars"></i>
                 </button>
 
-                <Link to={{ pathname: "/" }} className="logo">
+                <a href="/" className="logo">
                   <img src={logo} alt="Katlego" width="160" />
-                </Link>
+                </a>
 
                 <nav className="main-nav">
                   {this.state.nav ? (

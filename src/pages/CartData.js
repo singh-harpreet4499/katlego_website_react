@@ -66,7 +66,7 @@ const AddressItem = (props) => {
     return (
         <div style={{cursor:"pointer"}} className="custom-control col-lg-6 custom-radio mb-3 position-relative border-custom-radio"  onClick={()=>select_shipping_location(id)} >
             <input type="radio" id={'customRadioInline1'+id} name={'customRadioInline1'+id} className="custom-control-input"  />
-            <label className="custom-control-label w-100" htmlFor={'customRadioInline1'+id}>
+            <label className="custom-control-label w-100" htmlFor={'customRadioInline1'+id} style={{cursor:"pointer"}}>
                 {/* <div> */}
                     <div className="p-3 bg-white rounded shadow-sm w-100" >
                         <div className="d-flex align-items-center mb-2">
@@ -78,7 +78,12 @@ const AddressItem = (props) => {
                         <p className="small text-muted m-0">{props.main_society + ' '+ props.main_location}</p>
                         <p className="pt-2 m-0 text-right"><span className="small"><span style={{cursor:"pointer"}} onClick={delete_add}  className="text-decoration-none text-info">Delete</span></span></p>
                     </div>
-                    <button className="btn btn-light border-top btn-lg btn-block"  onClick={()=>select_shipping_location(id)}>
+                    <button className="btn btn-light border-top btn-lg btn-block delierybutton"
+                    style={{
+                        backgroundColor:orderConfd.address_id===id ? '#28a745': '#eb2627' ,
+                        color:'#fff !important',
+                    }}
+                    onClick={()=>select_shipping_location(id)}>
                         Deliver Here
                     </button>
                 {/* </div> */}

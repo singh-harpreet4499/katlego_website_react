@@ -19,6 +19,7 @@ const Recipe = (props) => {
                 />
                 <RecipeInner
                   show={modalShow}
+                  {...props}
                   onHide={() => setModalShow(false)}
                 />
                 <div className="row">

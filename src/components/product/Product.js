@@ -20,6 +20,7 @@ const Product = (props) => {
   // console.log(props);
 
   const {
+    hover_image,
     name,
     imageUrl,
     mrp,
@@ -145,12 +146,19 @@ const Product = (props) => {
                 className="product-image"
               />
             ) : (
+              hover_image ?
               <HoverImage
                 src={imageUrl ? imageUrl : defaultImage}
                 hoverSrc={hoverimageUrl}
                 alt="Product"
                 className="product-image"
               />
+              :
+              <img
+              src={imageUrl ? imageUrl : defaultImage}
+              alt="Product"
+              className="product-image"
+            />
             )}
           </Link>
           {user ? (

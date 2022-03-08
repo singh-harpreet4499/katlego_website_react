@@ -34,7 +34,7 @@ const OwlRecipe = {
 const RecipeSliderItem = (props) => {
   const [modalShow, setModalShow] = React.useState(false);
 
-  console.log("recp", props);
+  // console.log("recp", props);
   return (
     <>
       <div
@@ -54,29 +54,34 @@ const RecipeSliderItem = (props) => {
           </h3>
         </div>
       </div>
-      <RecipeInnerModal show={modalShow} onHide={() => setModalShow(false)} />
+      <RecipeInnerModal show={modalShow} {...props} onHide={() => setModalShow(false)} />
     </>
   );
 };
 
 const RecipeSlider = (props) => {
-  const [Recipedata, setRecipeData] = useState(null);
+  const [Recipedata, setRecipeData] = useState([]);
+  const [isUpdate,setUpdate] = useState(0)
 
   const load_data = () => {
-    get_recipes().then((rs) => rs && rs.status && setRecipeData(rs.data));
+     get_recipes().then((rs) => {
+      if(rs.status){
+        setRecipeData(rs.data)
+        setUpdate(1)
+      }
+        
+    });
   };
 
   useEffect(() => {
     load_data();
+   
   }, []);
 
   return (
     <div>
       <center>
-        {/* <button
-          type="submit"
-          className="btn btn-success view-mor hidden-sm hidden-xs"
-        > */}
+
         <Link
           className="btn btn-success view-mor hidden-sm hidden-xs"
           to={{
@@ -93,16 +98,22 @@ const RecipeSlider = (props) => {
         className="owl-carousel owl-simple carousel-equal-height carousel-with-shadow  owl-loaded owl-drag"
         dataToggle="owl"
       >
-        <OwlCarousel
-          className="owl-carousel mt-3 mb-3 owl-simple owl-loading owl-drag"
-          {...OwlRecipe}
-        >
-          {Recipedata &&
-            Recipedata.map((td) => {
-              return <RecipeSliderItem {...td} />;
-            })}
-          {/* <RecipeSliderItem /> */}
-        </OwlCarousel>
+        {
+          Recipedata.length ?
+              <OwlCarousel
+              className="owl-carousel mt-3 mb-3 owl-simple owl-loading owl-drag"
+              {...OwlRecipe}
+            >
+              {Recipedata &&
+                Recipedata.map((td) => {
+                  return <RecipeSliderItem {...td} />;
+                })}
+              {/* <RecipeSliderItem /> */}
+            </OwlCarousel>
+
+          :''
+        }
+       
       </div>
     </div>
   );

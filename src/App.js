@@ -82,6 +82,7 @@ const App = (props) => {
         dispatch(setSettingsData(ress.data));
       }
     });
+    // debugger;
     setCanMove(1);
   };
 

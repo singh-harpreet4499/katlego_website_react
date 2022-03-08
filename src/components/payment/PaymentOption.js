@@ -19,6 +19,8 @@ const PaymentOption = (props) => {
   const user_login = user;
   const cartdata = useSelector((state) => state.cart);
   const orderconfg = useSelector((state) => state.orderConf);
+  const settings = useSelector(state=>state.global.settings);
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -107,7 +109,7 @@ const PaymentOption = (props) => {
         contact: user_login ? user_login.phone : "",
       },
       notes: {
-        address: "Soumya Dey Corporate Office",
+        address: "",
       },
       theme: {
         color: "#61dafb",
@@ -205,30 +207,67 @@ const PaymentOption = (props) => {
 
   const set_payment_mode = (index) => {
     // alert(index)
-    if (index == 0) {
-      dispatch(
-        setOrderConf({
-          ...orderconfg,
-          payment_mode: "cod",
-        })
-      );
-    } else if (index == 1) {
+    if(!(parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0))){
+      if (index == 0) {
+        dispatch(
+          setOrderConf({
+            ...orderconfg,
+            payment_mode: "wallet",
+          })
+        );
+      } else if (index == 1) {
+        dispatch(
+          setOrderConf({
+            ...orderconfg,
+            payment_mode: "online",
+          })
+        );
+      } 
+    }else{
+      if (index == 0) {
+        dispatch(
+          setOrderConf({
+            ...orderconfg,
+            payment_mode: "cod",
+          })
+        );
+      } else if (index == 1) {
+        dispatch(
+          setOrderConf({
+            ...orderconfg,
+            payment_mode: "wallet",
+          })
+        );
+      } else if (index == 2) {
+        dispatch(
+          setOrderConf({
+            ...orderconfg,
+            payment_mode: "online",
+          })
+        );
+      }
+    }
+    
+    // alert(JSON.stringify(orderconfg))
+  };
+
+  useEffect(()=>{
+    if(!(parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0))){
+      
       dispatch(
         setOrderConf({
           ...orderconfg,
           payment_mode: "wallet",
         })
       );
-    } else if (index == 2) {
-      dispatch(
-        setOrderConf({
-          ...orderconfg,
-          payment_mode: "online",
-        })
-      );
     }
-    // alert(JSON.stringify(orderconfg))
-  };
+
+  },[cartdata])
+
+//   .delierybutton {
+//     background-color: #28a745;
+//     color: #fff !important;
+// }
 
   return (
     <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
@@ -255,7 +294,7 @@ const PaymentOption = (props) => {
       >
         <Tabs onSelect={(index) => set_payment_mode(index)}>
           <TabList>
-            {user.cod == 1 ? <Tab>Cash On Delivery</Tab> : ""}
+            {user.cod == 1 && (parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0)) ? <Tab>Cash On Delivery</Tab> : ""}
             <Tab>Wallet</Tab>
             <Tab>Credit/Debit Card/Net Banking</Tab>
           </TabList>
