@@ -1,8 +1,8 @@
-import React from "react";
+import { React, useState } from "react";
 import RecipeInner from "../OurRecipeSlider/RecipeInner";
 
 const Recipe = (props) => {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const { title, imageUrl, time, difficulty } = props;
   return (
     <>

@@ -19,7 +19,7 @@ const PaymentOption = (props) => {
   const user_login = user;
   const cartdata = useSelector((state) => state.cart);
   const orderconfg = useSelector((state) => state.orderConf);
-  const settings = useSelector(state=>state.global.settings);
+  const settings = useSelector((state) => state.global.settings);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -207,7 +207,12 @@ const PaymentOption = (props) => {
 
   const set_payment_mode = (index) => {
     // alert(index)
-    if(!(parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0))){
+    if (
+      !(
+        parseFloat(cartdata ? cartdata.total_amount : 0) <
+        parseFloat(settings ? settings.cod_setup : 0)
+      )
+    ) {
       if (index == 0) {
         dispatch(
           setOrderConf({
@@ -222,8 +227,8 @@ const PaymentOption = (props) => {
             payment_mode: "online",
           })
         );
-      } 
-    }else{
+      }
+    } else {
       if (index == 0) {
         dispatch(
           setOrderConf({
@@ -247,13 +252,17 @@ const PaymentOption = (props) => {
         );
       }
     }
-    
+
     // alert(JSON.stringify(orderconfg))
   };
 
-  useEffect(()=>{
-    if(!(parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0))){
-      
+  useEffect(() => {
+    if (
+      !(
+        parseFloat(cartdata ? cartdata.total_amount : 0) <
+        parseFloat(settings ? settings.cod_setup : 0)
+      )
+    ) {
       dispatch(
         setOrderConf({
           ...orderconfg,
@@ -261,13 +270,12 @@ const PaymentOption = (props) => {
         })
       );
     }
+  }, [cartdata]);
 
-  },[cartdata])
-
-//   .delierybutton {
-//     background-color: #28a745;
-//     color: #fff !important;
-// }
+  //   .delierybutton {
+  //     background-color: #28a745;
+  //     color: #fff !important;
+  // }
 
   return (
     <div className="card border-0 osahan-accor rounded shadow-sm overflow-hidden mt-3">
@@ -294,7 +302,13 @@ const PaymentOption = (props) => {
       >
         <Tabs onSelect={(index) => set_payment_mode(index)}>
           <TabList>
-            {user.cod == 1 && (parseFloat(cartdata?cartdata.total_amount:0)<parseFloat(settings?settings.cod_setup:0)) ? <Tab>Cash On Delivery</Tab> : ""}
+            {user.cod == 1 &&
+            parseFloat(cartdata ? cartdata.total_amount : 0) <
+              parseFloat(settings ? settings.cod_setup : 0) ? (
+              <Tab>Cash On Delivery</Tab>
+            ) : (
+              ""
+            )}
             <Tab>Wallet</Tab>
             <Tab>Credit/Debit Card/Net Banking</Tab>
           </TabList>
@@ -302,24 +316,32 @@ const PaymentOption = (props) => {
           <TabPanel>
             <div>
               <div className="tab-pane ">
-                <div class="custom-control custom-checkbox pt-4 m-4">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customControlAutosizing"
-                    required
-                  />
-                  <label
-                    class="custom-control-label"
-                    for="customControlAutosizing"
-                  >
-                    <b>Cash</b>
-                    <br />
-                    <p class="small text-muted m-0">
-                      Please keep exact change handy to help us serve you better
-                    </p>
-                  </label>
-                </div>
+                {!(
+                  parseFloat(cartdata ? cartdata.total_amount : 0) <
+                  parseFloat(settings ? settings.cod_setup : 0)
+                ) ? (
+                  ""
+                ) : (
+                  <div class="custom-control custom-checkbox pt-4 m-4">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="customControlAutosizing"
+                      required
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="customControlAutosizing"
+                    >
+                      <b>Cash</b>
+                      <br />
+                      <p class="small text-muted m-0">
+                        Please keep exact change handy to help us serve you
+                        better
+                      </p>
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
           </TabPanel>
