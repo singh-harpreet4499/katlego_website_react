@@ -217,7 +217,7 @@ const ProductDetails = (props) => {
               {/* {gallery &&
                   gallery.split("|").map((dt) => {
                     return ( */}
-              <li class="thumb-sli active">
+              <li class="thumb-sli ">
                 <div
                   className="image-responsive-hide "
                   style={{ cursor: "pointer" }}
@@ -225,7 +225,7 @@ const ProductDetails = (props) => {
                 >
                   <img
                     src={imagePath}
-                    className="image-responsive sideImage sideMargin"
+                    className="image-responsive sideImage "
                   />
                 </div>
               </li>

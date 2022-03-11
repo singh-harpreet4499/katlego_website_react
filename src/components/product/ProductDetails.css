@@ -1,9 +1,19 @@
 .image-responsive {
   display: block;
 }
+.thumb-sli {
+  margin-bottom: 20px;
+}
 @media screen and (max-width: 576px) {
   .image-responsive {
-    display: none;
+    display: inline-block;
+  }
+  .thumb-bann li {
+    display: inline-block;
+    padding-right: 10px;
+  }
+  .thumb-sli {
+    margin-bottom: 0px;
   }
 }
 

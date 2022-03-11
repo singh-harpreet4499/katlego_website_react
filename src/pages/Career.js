@@ -41,7 +41,7 @@ const Career = (props) => {
         .then((rs) => {
           if (rs.status) {
             setFormdata(emptyobj);
-            showAlertMessage("Success", "Send Successfully", true, false);
+            showAlertMessage("Submitted Successfully", "", true, false);
           } else {
             showAlertMessage(
               "Oops",
