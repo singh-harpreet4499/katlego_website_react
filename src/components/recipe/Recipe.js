@@ -1,8 +1,14 @@
-import { React, useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import img2 from "../../libs/img/chicken12.png";
 import RecipeInner from "../OurRecipeSlider/RecipeInner";
 
 const Recipe = (props) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modal, setModalShow] = useState(false);
+  const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
+  // const [modalShow, setModalShow] = React.useState(false);
   const { title, imageUrl, time, difficulty } = props;
   return (
     <>
@@ -15,13 +21,42 @@ const Recipe = (props) => {
                   src={imageUrl}
                   className="img-fluid item-img w-100 mb-1"
                   alt={title}
-                  onClick={() => setModalShow(true)}
+                  onClick={handleShow}
+
+                  // onClick={() => setModalShow(true)}
                 />
-                <RecipeInner
+                {/* <RecipeInner
                   show={modalShow}
                   {...props}
                   onHide={() => setModalShow(false)}
-                />
+                /> */}
+                <Modal
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={modal}
+                  onHide={handleClose}
+                  animation={false}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>{title}</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <img src={imageUrl} />
+                    <p>
+                      There's a reason boneless chicken breast recipes are a
+                      staple of any good weeknight dinner arsenal. Chicken
+                      happens to be a super versatile, crowd-pleasing main, not
+                      to mention it's full of the protein and other nutrients
+                      that we need every day
+                    </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                 <div className="row">
                   <div className="col-md-8">
                     <h6 className="butt">{title}</h6>
