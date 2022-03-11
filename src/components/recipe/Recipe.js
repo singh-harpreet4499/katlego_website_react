@@ -59,7 +59,9 @@ const Recipe = (props) => {
                 </Modal>
                 <div className="row">
                   <div className="col-md-8">
-                    <h6 className="butt">{title}</h6>
+                    <h6 className="butt" onClick={handleShow}>
+                      {title}
+                    </h6>
                   </div>
                   <div className="col-md-4">
                     <div className="ratings rati">
