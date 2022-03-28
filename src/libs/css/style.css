@@ -23750,3 +23750,6 @@ figure {
 .adjust_icon {
   font-size: 30px !important;
 }
+input[type="number"]::-webkit-inner-spin-button {
+  opacity: 0;
+}
