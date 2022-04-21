@@ -10807,7 +10807,7 @@ a:focus {
 }
 .ratings:before,
 .ratings-val:before {
-  content: "\f318""\f318""\f318""\f318""\f318";
+  content: "\f318";
 }
 
 .ratings-val {
@@ -23752,4 +23752,8 @@ figure {
 }
 input[type="number"]::-webkit-inner-spin-button {
   opacity: 0;
+}
+.modalHeightWidth {
+  width: 100%;
+  height: 250px;
 }

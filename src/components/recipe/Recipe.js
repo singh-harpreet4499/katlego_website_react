@@ -42,7 +42,7 @@ const Recipe = (props) => {
                     <Modal.Title>{title}</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <img src={imageUrl} />
+                    <img src={imageUrl} class="modalHeightWidth" />
                     <p>
                       There's a reason boneless chicken breast recipes are a
                       staple of any good weeknight dinner arsenal. Chicken
