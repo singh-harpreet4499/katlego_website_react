@@ -14,6 +14,7 @@ import { setRedirectFalse } from "../../redux/redirect/redirect.action";
 import ProductLabel from "./ProductLabel";
 import LazyImage from "../image/LazyImage";
 import HoverImage from "react-hover-image";
+import Emitter from "../../Emitter";
 
 const Product = (props) => {
   const user = useSelector((state) => state.user.currentUser);
@@ -38,6 +39,7 @@ const Product = (props) => {
     combo_product,
     stock,
   } = props;
+
   const dispatch = useDispatch();
 
   const [compData, setCompData] = useState({
@@ -62,6 +64,12 @@ const Product = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  };
+
+  const updateQtyOnly = (qty) => {
+    setCompData({
+      qty: qty,
+    });
   };
 
   const updateCartQty = async (logic) => {
@@ -102,7 +110,13 @@ const Product = (props) => {
       });
     }
   };
-
+  useEffect(() => {
+    Emitter.on(`remove_cart_${id}`, (data) => {
+      if (data.id == id) {
+        updateQtyOnly(0);
+      }
+    });
+  }, []);
   const handleChange = (e) => {
     e.preventDefault();
     updateCartQty(e.target.name);
@@ -136,7 +150,8 @@ const Product = (props) => {
 
           <Link
             to={{
-              pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
+              pathname:
+                "/product-details/" + hifen_name.toLowerCase() + "/" + id,
             }}
           >
             {combo_product ? (
@@ -145,20 +160,19 @@ const Product = (props) => {
                 alt="Product"
                 className="product-image"
               />
-            ) : (
-              hover_image ?
+            ) : hover_image ? (
               <HoverImage
                 src={imageUrl ? imageUrl : defaultImage}
                 hoverSrc={hoverimageUrl}
                 alt="Product"
                 className="product-image"
               />
-              :
+            ) : (
               <img
-              src={imageUrl ? imageUrl : defaultImage}
-              alt="Product"
-              className="product-image"
-            />
+                src={imageUrl ? imageUrl : defaultImage}
+                alt="Product"
+                className="product-image"
+              />
             )}
           </Link>
           {user ? (
@@ -181,7 +195,8 @@ const Product = (props) => {
           <h3 className="product-title">
             <Link
               to={{
-                pathname: "/product-details/" + hifen_name.toLowerCase() + "/" + id,
+                pathname:
+                  "/product-details/" + hifen_name.toLowerCase() + "/" + id,
               }}
             >
               {name ? name : ""}

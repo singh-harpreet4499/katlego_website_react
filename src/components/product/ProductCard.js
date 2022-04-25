@@ -8,6 +8,7 @@ import discounticon from "../../libs/images/discounticon.png";
 import "./productcard.css";
 import LazyImage from "../image/LazyImage";
 import HoverImage from "react-hover-image/build";
+import Emitter from "../../Emitter";
 // const ProductCard = async (props) => {
 //   const [formData, updateFormData] = useState({
 //     qty: 1,
@@ -193,6 +194,7 @@ const ProductCard = (props) => {
         qty: 0,
       });
     }
+
     // console.log('ppppp',props);
   }, [props]);
 
