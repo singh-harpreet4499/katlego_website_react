@@ -6153,7 +6153,7 @@ a:focus {
 }
 .product.product-list .btn-product.btn-cart {
   color: #22134c;
-  border-bolor: #22134c;
+  border-color: #22134c;
 }
 .product.product-list .btn-product.btn-cart:hover,
 .product.product-list .btn-product.btn-cart:focus {
@@ -7886,7 +7886,7 @@ a:focus {
 }
 .product.product-list .btn-product.btn-cart {
   color: #22134c;
-  border-bolor: #22134c;
+  border-color: #22134c;
 }
 .product.product-list .btn-product.btn-cart:hover,
 .product.product-list .btn-product.btn-cart:focus {
@@ -8042,7 +8042,7 @@ a:focus {
 }
 
 .mobile-search .form-control:focus {
-  border-color: #22134c;
+  border-color: #22134c;  
 }
 
 .nav.nav-pills-mobile .nav-link.active,
@@ -10778,7 +10778,7 @@ a:focus {
 }
 .ratings:before,
 .ratings-val:before {
-  content: "\f318""\f318""\f318""\f318""\f318";
+  content: "\f318";
 }
 
 .ratings-val {
@@ -16971,6 +16971,7 @@ button:focus {
   z-index: 2;
   visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .portfolio-overlay .portfolio-content.portfolio-content-center {
   bottom: auto;
@@ -19585,7 +19586,7 @@ button:focus {
   font-family: "molla";
   font-style: normal;
   font-weight: normal;
-  speak: none;
+  speak-as: none;
   display: inline-block;
   text-decoration: inherit;
   text-align: center;

@@ -691,6 +691,7 @@ blockquote.text-white cite span {
 .header-right {
   display: flex;
   align-items: center;
+  margin-left: -60px;
 }
 
 .header-right {
@@ -6150,7 +6151,7 @@ a:focus {
 }
 .product.product-list .btn-product.btn-cart {
   color: #22003f;
-  border-bolor: #22003f;
+  border-color: #22003f;
 }
 .product.product-list .btn-product.btn-cart:hover,
 .product.product-list .btn-product.btn-cart:focus {
@@ -7883,7 +7884,7 @@ a:focus {
 }
 .product.product-list .btn-product.btn-cart {
   color: #22003f;
-  border-bolor: #22003f;
+  border-color: #22003f;
 }
 .product.product-list .btn-product.btn-cart:hover,
 .product.product-list .btn-product.btn-cart:focus {
@@ -17021,6 +17022,7 @@ textarea .mfp-close {
   z-index: 2;
   visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .portfolio-overlay .portfolio-content.portfolio-content-center {
   bottom: auto;
@@ -19636,7 +19638,7 @@ textarea .mfp-close {
   font-family: "molla";
   font-style: normal;
   font-weight: normal;
-  speak: none;
+  speak-as: none;
   display: inline-block;
   text-decoration: inherit;
   text-align: center;
