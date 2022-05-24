@@ -810,6 +810,9 @@ label {
   color: #fff;
   border-color: #28a744;
   background-color: #28a744;
+  width: 17px;
+  height: 17px;
+  right: 6px;
 }
 
 /* Dark Mode */

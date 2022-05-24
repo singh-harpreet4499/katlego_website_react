@@ -307,7 +307,9 @@ const ProductList = (props) => {
                       <h4>
                         {urlparamsdata.id == "products"
                           ? "Wishlists"
-                          : urlparamsdata.categoryName ? urlparamsdata.categoryName.toUpperCase() : ''}
+                          : urlparamsdata.categoryName
+                          ? urlparamsdata.categoryName.toUpperCase()
+                          : ""}
                       </h4>
                     </div>
                     <ul className="nav nav-pills nav-border-anim gram-tab">
@@ -316,8 +318,12 @@ const ProductList = (props) => {
                           onClick={() => set_weight_measure("250")}
                           className="nav-link active nav-link-active-style"
                           id="top-all-link"
+                          style={{
+                            marginLeft: "-5px",
+                            marginTop: "5px",
+                          }}
                         >
-                          250gms
+                          250 gms
                         </button>
                       </li>
                       <li className="nav-item nav-item-style2">
@@ -325,9 +331,13 @@ const ProductList = (props) => {
                           onClick={() => set_weight_measure("500")}
                           className="nav-link "
                           id="top-fur-link"
-                          style={{ backgroundColor: "#9b9b9b" }}
+                          style={{
+                            backgroundColor: "#9b9b9b",
+                            marginLeft: "0px",
+                            marginTop: "5px",
+                          }}
                         >
-                          500gms
+                          500 gms
                         </button>
                       </li>
                       <li className="nav-item ">
@@ -338,11 +348,13 @@ const ProductList = (props) => {
                           style={{
                             backgroundColor: "#d3d3d3",
                             borderBottomRightRadius: "6px",
-                            paddingRight: "25px",
+                            paddingRight: "12px",
                             paddingLeft: "20px",
+                            marginLeft: "0px",
+                            marginTop: "5px",
                           }}
                         >
-                          1kg+
+                          1 kg+
                         </button>
                       </li>
                     </ul>
