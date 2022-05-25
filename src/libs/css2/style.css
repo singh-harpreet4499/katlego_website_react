@@ -602,6 +602,8 @@ span.c-number {
   ~ .custom-control-label::before {
   border-color: #28a744 !important;
   border: 2px solid #28a744 !important;
+  padding-bottom: 32px;
+  padding-left: 60px;
 }
 
 .list-card-image .price {
