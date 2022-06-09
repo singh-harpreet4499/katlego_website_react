@@ -22716,9 +22716,9 @@ textarea .mfp-close {
   color: #fff;
 }
 @media (max-width: 567px) {
-  .header-dropdown {
+  /* .header-dropdown {
     display: none;
-  }
+  } */
   .owl-simple .owl-nav .owl-next {
     display: none;
   }
@@ -23758,4 +23758,10 @@ input[type="number"]::-webkit-inner-spin-button {
 .modalHeightWidth {
   width: 100%;
   height: 250px;
+}
+
+@media only screen and (max-width: 575px) {
+  .video {
+    margin-top: -50px;
+  }
 }

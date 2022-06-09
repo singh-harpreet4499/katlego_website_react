@@ -141,20 +141,6 @@ const OrderHistory = (props) => {
                   id="myTab"
                   role="tablist"
                 >
-                  <li className="nav-item" role="presentation">
-                    <a
-                      className={
-                        orderstatus === "completed"
-                          ? "nav-link border-0 text-dark py-3 active"
-                          : "nav-link border-0 text-dark py-3"
-                      }
-                      onClick={() => setOrderStatus("completed")}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <i className="icofont-check-alt mr-2 text-success mb-0"></i>{" "}
-                      Completed
-                    </a>
-                  </li>
                   <li className="nav-item border-top" role="presentation">
                     <a
                       className={
@@ -169,6 +155,21 @@ const OrderHistory = (props) => {
                       In Progress
                     </a>
                   </li>
+                  <li className="nav-item" role="presentation">
+                    <a
+                      className={
+                        orderstatus === "completed"
+                          ? "nav-link border-0 text-dark py-3 active"
+                          : "nav-link border-0 text-dark py-3"
+                      }
+                      onClick={() => setOrderStatus("completed")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <i className="icofont-check-alt mr-2 text-success mb-0"></i>{" "}
+                      Completed
+                    </a>
+                  </li>
+
                   <li className="nav-item border-top" role="presentation">
                     <a
                       className={
