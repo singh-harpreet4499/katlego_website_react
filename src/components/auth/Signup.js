@@ -3,6 +3,9 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import Infomsg from "../app/Infomsg";
 import { user_signup_otp } from "../server/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Signup = (props) => {
   let history = useHistory();
@@ -19,8 +22,22 @@ const Signup = (props) => {
   const [errormessage, setErrormessage] = useState("");
   const [can_move, setCanmove] = useState(0);
   const [cursor_allow, setCursorAllow] = useState(1);
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordInput, setPasswordInput] = useState("");
+  const handlePasswordChange = (evnt) => {
+    setPasswordInput(evnt.target.value);
+  };
+
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
+  };
 
   const handleChange = (e) => {
+    handlePasswordChange(e);
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
@@ -52,7 +69,7 @@ const Signup = (props) => {
       setCursorAllow(0);
 
       const response = await user_signup_otp(formData);
-     // console.log(response);
+      // console.log(response);
       if (response.status) {
         history.push("/otp", {
           phone: "9896449941",
@@ -120,11 +137,23 @@ const Signup = (props) => {
               <label htmlFor="exampleInputPassword1">Password</label>
               <input
                 placeholder="Enter Password"
-                type="password"
+                type={passwordType}
                 name="password"
                 className="form-control"
                 onChange={handleChange}
               />
+              <div className="input-group-btn ">
+                <button
+                  className="btn btn-outline-primary eyeButtonLarge"
+                  onClick={togglePassword}
+                >
+                  {passwordType === "password" ? (
+                    <i className="">{eye}</i>
+                  ) : (
+                    <i className="">{eye}</i>
+                  )}
+                </button>
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword2">
@@ -132,11 +161,23 @@ const Signup = (props) => {
               </label>
               <input
                 placeholder="Enter Confirmation Password"
-                type="password"
+                type={passwordType}
                 name="confirmpassword"
                 className="form-control"
                 onChange={handleChange}
               />
+              <div className="input-group-btn ">
+                <button
+                  className="btn btn-outline-primary eyeButtonLarge"
+                  onClick={togglePassword}
+                >
+                  {passwordType === "password" ? (
+                    <i className="">{eye}</i>
+                  ) : (
+                    <i className="">{eye}</i>
+                  )}
+                </button>
+              </div>
             </div>
             <button
               type="submit"

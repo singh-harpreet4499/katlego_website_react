@@ -26,6 +26,20 @@ const Login = (props) => {
     setPasswordShown(passwordShown ? false : true);
   };
 
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordInput, setPasswordInput] = useState("");
+  const handlePasswordChange = (evnt) => {
+    setPasswordInput(evnt.target.value);
+  };
+
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
+  };
+
   let history = useHistory();
   const dispatch = useDispatch();
 
@@ -38,6 +52,7 @@ const Login = (props) => {
   const [cursor_allow, setCursorAllow] = useState(1);
 
   const handleChange = (e) => {
+    handlePasswordChange(e);
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
@@ -108,16 +123,71 @@ const Login = (props) => {
                 // maxlength="6"
               />
             </div>
+
+            {/* <div className="row">
+              <div className="col-sm-3">
+                <div className="input-group my-4 mx-4">
+                  <input
+                    type={passwordType}
+                    onChange={handlePasswordChange}
+                    value={passwordInput}
+                    name="password"
+                    class="form-control"
+                    placeholder="Password"
+                  />
+                  <div className="input-group-btn">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={togglePassword}
+                    >
+                      {passwordType === "password" ? (
+                        <i className="">{eye}</i>
+                      ) : (
+                        <i className="">{eye}</i>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input
                 placeholder="Enter Password"
                 name="password"
                 onChange={handleChange}
-                type={passwordShown ? "text" : "password"}
+                type={passwordType}
                 className="form-control"
+                // value={passwordInput}
               />
+              <div className="input-group-btn ">
+                <button
+                  className="btn btn-outline-primary eyeButtonLarge"
+                  onClick={togglePassword}
+                >
+                  {passwordType === "password" ? (
+                    <i className="">{eye}</i>
+                  ) : (
+                    <i className="">{eye}</i>
+                  )}
+                </button>
+              </div>
+
               {/* <i onClick={togglePasswordVisiblity}>{eye}</i> */}
+              {/* <svg
+                onClick={togglePasswordVisiblity}
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-eye-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+              </svg> */}
+
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

@@ -23765,3 +23765,14 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-top: -50px;
   }
 }
+.eyeButtonLarge {
+  float: right;
+    top: -37px;
+    position: relative;
+    bottom: 0;
+    right: 3px;
+}
+.eyeButtonLarge1 {
+  margin-top: -69px;
+  margin-left: 450px;
+}
