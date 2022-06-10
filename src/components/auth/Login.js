@@ -123,34 +123,6 @@ const Login = (props) => {
                 // maxlength="6"
               />
             </div>
-
-            {/* <div className="row">
-              <div className="col-sm-3">
-                <div className="input-group my-4 mx-4">
-                  <input
-                    type={passwordType}
-                    onChange={handlePasswordChange}
-                    value={passwordInput}
-                    name="password"
-                    class="form-control"
-                    placeholder="Password"
-                  />
-                  <div className="input-group-btn">
-                    <button
-                      className="btn btn-outline-primary"
-                      onClick={togglePassword}
-                    >
-                      {passwordType === "password" ? (
-                        <i className="">{eye}</i>
-                      ) : (
-                        <i className="">{eye}</i>
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input
@@ -159,7 +131,6 @@ const Login = (props) => {
                 onChange={handleChange}
                 type={passwordType}
                 className="form-control"
-                // value={passwordInput}
               />
               <div className="input-group-btn ">
                 <button
