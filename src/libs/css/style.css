@@ -23767,12 +23767,38 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .eyeButtonLarge {
   float: right;
-    top: -37px;
-    position: relative;
-    bottom: 0;
-    right: 3px;
+  top: -37px;
+  position: relative;
+  bottom: 0;
+  right: 3px;
 }
 .eyeButtonLarge1 {
   margin-top: -69px;
   margin-left: 450px;
+}
+.video_setting1 {
+  width: 600px;
+  height: 350px;
+}
+
+@media (max-width: 567px) {
+  .video_setting1 {
+    width: 400px !important;
+    height: 250px !important;
+  }
+}
+@media (max-width: 567px) {
+  .headingcold {
+    font-size: 10px;
+  }
+}
+@media (max-width: 567px) {
+  .smallButton {
+    font-size: 10px !important;
+  }
+}
+@media (max-width: 567px) {
+  .smallButton2 {
+    font-size: 10px !important;
+  }
 }

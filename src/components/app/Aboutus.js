@@ -51,10 +51,10 @@ const AboutusSection = (props) => {
       <div className="tab-pane-carousel col-sm-12 col-md-6 col-lg-6 px-0">
         <div className="video-poster">
           <video
-            className="video_setting"
+            class=" video_setting1"
             ref={vidRef}
-            width="600"
-            height="350"
+            // width="600"
+            // height="350"
             autoPlay={false}
             controls
           >

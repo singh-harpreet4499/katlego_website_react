@@ -1553,13 +1553,11 @@ background-size:cover; }*/
 .order-1 img {
   width: 100%;
 }
+
 @media (max-width: 567px) {
   .carousel-item .mask img {
     height: 130px;
   }
-  /* .video_setting {
-    width: 100% !important;
-  } */
 }
 
 /*end slider*/

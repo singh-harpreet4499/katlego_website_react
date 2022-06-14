@@ -300,11 +300,11 @@ const ProductList = (props) => {
         <section className="py-4 osahan-main-body">
           <div className="container">
             <div className="row">
-              <div className="col-lg-12">
+              <div className="col-lg-12 col-12">
                 <div className="osahan-listing">
                   <div className="d-flex align-items-center mb-3">
                     <div className="heading mb-1">
-                      <h4>
+                      <h4 className="headingcold">
                         {urlparamsdata.id == "products"
                           ? "Wishlists"
                           : urlparamsdata.categoryName
@@ -316,10 +316,10 @@ const ProductList = (props) => {
                       <li className="nav-item nav-item-style">
                         <button
                           onClick={() => set_weight_measure("250")}
-                          className="nav-link active nav-link-active-style"
+                          className="nav-link active nav-link-active-style smallButton"
                           id="top-all-link"
                           style={{
-                            marginLeft: "-5px",
+                            marginLeft: "5px",
                             marginTop: "5px",
                           }}
                         >
@@ -329,7 +329,7 @@ const ProductList = (props) => {
                       <li className="nav-item nav-item-style2">
                         <button
                           onClick={() => set_weight_measure("500")}
-                          className="nav-link "
+                          className="nav-link smallButton"
                           id="top-fur-link"
                           style={{
                             backgroundColor: "#9b9b9b",
@@ -343,7 +343,7 @@ const ProductList = (props) => {
                       <li className="nav-item ">
                         <button
                           onClick={() => set_weight_measure("1")}
-                          className="nav-link "
+                          className="nav-link smallButton"
                           id="top-decor-link"
                           style={{
                             backgroundColor: "#d3d3d3",
@@ -361,8 +361,8 @@ const ProductList = (props) => {
                     <div className="m-0 text-center ml-auto">
                       <div
                         onClick={toggleFilterModal}
-                        style={{ cursor: "pointer" }}
-                        className="btn text-muted bg-white mr-2"
+                        style={{ cursor: "pointer", marginTop: "-20px" }}
+                        className=" text-muted bg-white mr-2 smallButton2"
                       >
                         <i className="icofont-filter mr-1"></i> Filter {"&"}{" "}
                         Sort
