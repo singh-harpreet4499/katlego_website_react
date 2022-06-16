@@ -92,6 +92,7 @@ const RangeSlider = ({ min, max, onChange }) => {
             onChange={(event) => {
               const value = Math.min(+event.target.value, maxVal - 1);
               setMinVal(value);
+              // console.log(minVal);
               event.target.value = value.toString();
             }}
             className={classnames("thumb thumb--zindex-3", {

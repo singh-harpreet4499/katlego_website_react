@@ -230,35 +230,44 @@ function nFormatter(num, digits) {
 }
 
 const ConditionalLink = (props) => {
-  const {items} = useSelector(state => state.cart);
-  if(items.length){
-    return <Link
-    // onClick={this.props.cart.length==0 ? false : true}
-      to={{
-        pathname: "/checkout",
-      }}
-      className="dropdown-toggle"
-      role="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-      data-display="static"
-    >{props.children}</Link>
-  }else{
-     return <span
-     style={{cursor:"pointer"}}
-    //  href="#"
-     onClick={()=>showAlertMessage('','No Items in your Cart',false,true)}
-     className="dropdown-toggle"
-    //  role="button"
-    //  data-toggle="dropdown"
-    //  aria-haspopup="true"
-    //  aria-expanded="false"
-    //  data-display="static"
-     >{props.children}</span>
+  const { items } = useSelector((state) => state.cart);
+  if (items.length) {
+    return (
+      <Link
+        // onClick={this.props.cart.length==0 ? false : true}
+        to={{
+          pathname: "/checkout",
+        }}
+        className="dropdown-toggle"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        data-display="static"
+      >
+        {props.children}
+      </Link>
+    );
+  } else {
+    return (
+      <span
+        style={{ cursor: "pointer" }}
+        //  href="#"
+        onClick={() =>
+          showAlertMessage("oops!", "No Items in your Cart", false, true)
+        }
+        className="dropdown-toggle"
+        //  role="button"
+        //  data-toggle="dropdown"
+        //  aria-haspopup="true"
+        //  aria-expanded="false"
+        //  data-display="static"
+      >
+        {props.children}
+      </span>
+    );
   }
-
-}
+};
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -299,29 +308,29 @@ class Navbar extends React.Component {
 
     const setlc = !this.props.isGeolocationAvailable
       ? {
-        status: false,
-        message: "Your browser does not support Geolocation",
-        location_enabled: true,
-      }
+          status: false,
+          message: "Your browser does not support Geolocation",
+          location_enabled: true,
+        }
       : !this.props.isGeolocationEnabled
-        ? {
+      ? {
           status: false,
           message: "Geolocation is not enabled",
           location_enabled: false,
         }
-        : this.props.coords
-          ? {
-            status: true,
-            message: "",
-            location_enabled: true,
-            data: this.props.coords,
-          }
-          : {
-            status: false,
-            message: "",
-            location_enabled: true,
-            data: this.props.coords,
-          };
+      : this.props.coords
+      ? {
+          status: true,
+          message: "",
+          location_enabled: true,
+          data: this.props.coords,
+        }
+      : {
+          status: false,
+          message: "",
+          location_enabled: true,
+          data: this.props.coords,
+        };
 
     if (setlc.status) {
       const lat_lon = {
@@ -468,7 +477,9 @@ class Navbar extends React.Component {
                                   to={{
                                     pathname:
                                       "/product-list/" +
-                                      dt.name.replace(/\s+/g, "-").toLowerCase() +
+                                      dt.name
+                                        .replace(/\s+/g, "-")
+                                        .toLowerCase() +
                                       "/" +
                                       dt.id,
                                     state: { ...dt },
@@ -526,41 +537,41 @@ class Navbar extends React.Component {
                                 <div className="row">
                                   {navbar_category.length
                                     ? navbar_category.map((data) => {
-                                      return (
-                                        <div className="col-md-6">
-                                          <div className="menu-title">
-                                            {data.name.toUpperCase()}
+                                        return (
+                                          <div className="col-md-6">
+                                            <div className="menu-title">
+                                              {data.name.toUpperCase()}
+                                            </div>
+                                            <ul>
+                                              {data.products.length
+                                                ? data.products.map(
+                                                    ({
+                                                      id,
+                                                      name,
+                                                      hifen_name,
+                                                    }) => {
+                                                      return (
+                                                        <li>
+                                                          <Link
+                                                            to={{
+                                                              pathname:
+                                                                "/product-details/" +
+                                                                hifen_name.toLowerCase() +
+                                                                "/" +
+                                                                id,
+                                                            }}
+                                                          >
+                                                            {name}
+                                                          </Link>
+                                                        </li>
+                                                      );
+                                                    }
+                                                  )
+                                                : ""}
+                                            </ul>
                                           </div>
-                                          <ul>
-                                            {data.products.length
-                                              ? data.products.map(
-                                                ({
-                                                  id,
-                                                  name,
-                                                  hifen_name,
-                                                }) => {
-                                                  return (
-                                                    <li>
-                                                      <Link
-                                                        to={{
-                                                          pathname:
-                                                            "/product-details/" +
-                                                            hifen_name.toLowerCase() +
-                                                            "/" +
-                                                            id,
-                                                        }}
-                                                      >
-                                                        {name}
-                                                      </Link>
-                                                    </li>
-                                                  );
-                                                }
-                                              )
-                                              : ""}
-                                          </ul>
-                                        </div>
-                                      );
-                                    })
+                                        );
+                                      })
                                     : ""}
                                 </div>
                               </div>
@@ -642,9 +653,7 @@ class Navbar extends React.Component {
                 </div>
                 {this.props.currentUser ? (
                   <div className="dropdown cart-dropdown">
-                    <ConditionalLink
-                  
-                    >
+                    <ConditionalLink>
                       <i className="icon-shopping-cart"></i>
                       {this.props.cart.length ? (
                         <span className="cart-count">
@@ -730,22 +739,22 @@ class Navbar extends React.Component {
                     <ul>
                       {locations.length
                         ? locations.map(({ id, name }) => {
-                          return (
-                            <li key={id}>
-                              <div
-                                style={{ cursor: "pointer" }}
-                                onClick={() =>
-                                  this.setState({
-                                    location_modal:
-                                      !this.state.location_modal,
-                                  })
-                                }
-                              >
-                                {name}
-                              </div>
-                            </li>
-                          );
-                        })
+                            return (
+                              <li key={id}>
+                                <div
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() =>
+                                    this.setState({
+                                      location_modal:
+                                        !this.state.location_modal,
+                                    })
+                                  }
+                                >
+                                  {name}
+                                </div>
+                              </li>
+                            );
+                          })
                         : ""}
                     </ul>
                   </div>

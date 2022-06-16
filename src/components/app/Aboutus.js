@@ -127,7 +127,7 @@ const AboutusSection = (props) => {
         </div>
       </div>
 
-      <div className="home__tabs__body col-sm-12 col-md-6 col-lg-6 text-center text-md-left">
+      <div className="home__tabs__body col-sm-12 col-md-6 col-lg-6 text-center text-md-left promise">
         <div className="home__tabs__title">About Us</div>
         <div className="home__tabs__description py-3">
           <p className="abo-para">{parse(app_data.about_us)}</p>
@@ -194,7 +194,7 @@ const Aboutus = (props) => {
   return (
     <div className="container">
       <hr className="mt-2 mb-3" />
-      <div className="home__tabs">
+      <div className="home__tabs marTop">
         <div className="row">
           <div className="col-12 col-md-9 col-lg-6 d-flex align-items-center what-we"></div>
 

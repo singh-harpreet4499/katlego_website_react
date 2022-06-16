@@ -94,8 +94,13 @@ const ProductList = (props) => {
   const apply_filter = () => {
     toggleFilterModal();
     const { sort_by } = formData;
+
     var min_amount = parseFloat(formData.min_amount);
+    // console.log(sort_by, "hi");
+    // console.log(min_amount, "hello");
     var max_amount = parseFloat(formData.max_amount);
+    // console.log(compData, "hi1");
+    // console.log(max_amount, "hello1");
     if (compData.products.length) {
       var dataprod = compData.products;
       if (sort_by === "cost_low_to_high") {
@@ -124,6 +129,7 @@ const ProductList = (props) => {
         const f = dataprod.sort((a, b) => {
           return a.selling_price >= parseFloat(min_amount);
         });
+        // console.log(filtered);
         setFiltered(f);
       } else if (max_amount != 0) {
         const d = dataprod.sort((a, b) => {
@@ -132,6 +138,7 @@ const ProductList = (props) => {
             b.selling_price <= parseFloat(max_amount)
           );
         });
+        // console.log(filtered);
         setFiltered(d);
       } else if (min_amount != 0) {
         const e = dataprod.sort((a, b) => {
@@ -140,6 +147,7 @@ const ProductList = (props) => {
             b.selling_price <= parseFloat(max_amount)
           );
         });
+        // console.log(filtered);
         setFiltered(e);
       }
     }

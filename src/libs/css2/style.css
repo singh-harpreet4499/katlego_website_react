@@ -2080,3 +2080,10 @@ button.btn.btn-light.border-top.btn-lg.btn-block.delierybutton {
     width: "5em";
   }
 } */
+.marTop {
+  margin-top: -30px;
+}
+.promise {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
